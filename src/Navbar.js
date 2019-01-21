@@ -3,11 +3,17 @@ import './css/navbar.scss';
 
 class Navbar extends Component {
     //Were keeping track of state so that we can render the appropriate navbar based on the user
-    state = {
-      
+    state = {}
+
+    componentDidMount() {
+      // when page loads, set state of token to token in local storage
+      this.setState({token: localStorage.getItem('token')})
     }
 
     render() { 
+      // if no token is available, navbar won't render. I.e if no user is logged in, don't display navbar yet
+    const {token} = this.state
+    if(!token) return null;
     return (
       <div className="Navbar">
           <p>Home</p>
