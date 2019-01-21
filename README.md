@@ -62,3 +62,10 @@
     "contactNumber": "String"
 }
 ```
+
+# Packages
+
+Sass
+```
+npm i node-sass
+```

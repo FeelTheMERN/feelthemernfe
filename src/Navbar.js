@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './css/navbar.scss';
 
 class Navbar extends Component {
     //Were keeping track of state so that we can render the appropriate navbar based on the user
@@ -8,9 +9,9 @@ class Navbar extends Component {
 
     render() { 
     return (
-      <div>
-          <h1>Home</h1>
-          <h1>Calendar</h1>
+      <div className="Navbar">
+          <p>Home</p>
+          <p>Calendar</p>
       </div>
     )
   }

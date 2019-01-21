@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './css/App.css';
+import './css/App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // import axios from 'axios';
 import Navbar from './Navbar';
@@ -11,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>{/* Using react-router-dom */}
-        <div className="app">
+        <div className="App">
           <Navbar />
           <Switch>
              <Route path="/" component={Welcome} exact/>
