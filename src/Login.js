@@ -11,9 +11,9 @@ class Login extends Component {
     }
 
     //redirect() redirects the user to their home page based on the user role
-    redirect() {
-        // needs an if statement
-        this.props.history.push('/home')
+    redirect(isAdmin) {
+        if(isAdmin) this.props.history.push('/admin/home')
+        this.props.history.push('user/home')
     }
 
     //submitForm() sends the username and password using axios. we should recieve a token which is then stored on local storage. once complete it runs the redirect funtion.
@@ -24,10 +24,10 @@ class Login extends Component {
         const data = { username, password }
         axios.post(url, data)
             .then(resp => { // save token to local storage
-                const { token } = resp.data
+                const { token, isAdmin } = resp.data
                 localStorage.setItem('token', token)
                 this.setState({message: 'You are logged in', error: null})
-                this.redirect()
+                this.redirect(isAdmin)
                 })
             .catch(err => {
                 const { status } = err.response
