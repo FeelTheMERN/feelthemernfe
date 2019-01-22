@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+import logo from "./assets/logo/logo.png"
 class Login extends Component {
     state = {};
 
@@ -42,15 +42,19 @@ class Login extends Component {
         const {error, message} = this.state
         return (
             <>
-                <form>
-                    <label htmlFor="username">Username:</label>
-                    <input type="text" id="username" onChange={this.handleInputChange}/>
-                    <label htmlFor="password">Password:</label>
-                    <input type="text" id="password" onChange={this.handleInputChange}/>
-                    <button onClick={this.submitForm}>Login</button>
-                </form>
-            { error && <p>{error}</p>}
-            { message && <p>{message}</p>}
+            <div className="spread">
+                <img id="logo" src={logo} alt="SkyeFIT Logo"></img>
+                    <h2>Log In</h2>
+                    <form>
+                        <label htmlFor="username">Username:</label>
+                        <input type="text" id="username" onChange={this.handleInputChange}/>
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" id="password" onChange={this.handleInputChange}/>
+                        <button onClick={this.submitForm}>Login</button>
+                    </form>
+                { error && <p>{error}</p>}
+                { message && <p>{message}</p>}
+            </div>
             </>
         )
     }
