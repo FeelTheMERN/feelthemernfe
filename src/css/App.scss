@@ -64,7 +64,7 @@ form {
   height: 250px;
 }
 
-#username, #password {
+input {
   font-size: 10pt;
   width: 250px;
   padding: 5px;
@@ -73,7 +73,7 @@ form {
   border: 1px solid blue;
 }
 
-#username:focus, #password:focus { 
+input:focus { 
   border: 1px solid $orange;
   text-decoration: none;  
   box-shadow: none;
