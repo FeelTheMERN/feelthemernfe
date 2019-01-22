@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import logo from "./assets/logo/logo.png"
 class Login extends Component {
     state = {};
 

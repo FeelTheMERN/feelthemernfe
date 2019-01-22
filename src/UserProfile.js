@@ -92,7 +92,7 @@ class UserProfile extends Component {
         <PrintKeyValue obj={user.contact} key={user._id}/>
         <p>{user.notes}</p>
         <p>{user.remainingSessions}</p>
-        <button onClick={this.showTransactions}>transactions</button>
+        <button onClick={this.showTransactions}>Sessions</button>
         { printTransaction && <p>{printTransaction}</p>}
       </>
     )
