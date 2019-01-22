@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
 import logo from "./assets/logo/logo.png"
-import './css/welcome.scss';
 import Login from './Login';
 
 // change to functional component because we don't need to change state on this page
