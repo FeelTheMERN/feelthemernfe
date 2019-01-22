@@ -7,7 +7,7 @@ import './css/welcome.scss';
 class Welcome extends Component {
   render() {
     return (
-      <div className="welcome">
+      <div className="spread">
         <img id="logo" src={logo} alt="SkyeFIT Logo"></img>
           <div>
             <p>Welcome to</p>
