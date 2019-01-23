@@ -42,8 +42,24 @@ $lightorange: #FF613875;
   border: 1px solid $orange;
 }
 
+.small {
+  color: blue;
+  border: none;
+  text-decoration: none;
+  min-width: 30px;
+}
+
+.small:hover {
+  color: $orange;
+  border: none;
+}
+
 #logo {
   width: 200px;
+}
+
+#icon {
+  width: 75px;
 }
 
 .spread {
@@ -80,3 +96,10 @@ input:focus {
   outline: none;
 }
 
+.horizontal-spread {
+  display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  justify-content: space-around;
+  width: 100vw;
+}
