@@ -5,8 +5,8 @@ const ClientNotesForm = (props) => {
   return (
     <div>
       <form>
-            <label htmlFor="height">Client Notes:</label>
-            <input type="text-field" id="height" onChange={props.handleInputChange}/>
+            <label htmlFor="notes">Client Notes:</label>
+            <textarea rows="30" cols="90" id="notes" onChange={props.handleInputChange} value={props.notes}/>
         </form>
     </div>
   )

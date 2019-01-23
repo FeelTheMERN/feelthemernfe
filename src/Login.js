@@ -11,8 +11,6 @@ class Login extends Component {
 
     //redirect() redirects the user to their home page based on the user role
     redirect = (isAdmin) => {
-        console.log(isAdmin)
-        console.log(this.props)
         if(isAdmin) return this.props.history.push('/admin/home')
         this.props.history.push('user/home')
     }
@@ -27,7 +25,6 @@ class Login extends Component {
 
         const { username, password } = this.state        
         const data = { username, password }
-        console.log(url)
         axios.post(url, data)
             .then(resp => { // save token to local storage
                 const { token, isAdmin } = resp.data
@@ -44,7 +41,7 @@ class Login extends Component {
             <>
                 <form>
                     <label htmlFor="username">Username:</label>
-                    <input type="text" id="username" onChange={this.handleInputChange}/>
+                    <input type="text" id="username" onChange={this.handleInputChange} />
                     <label htmlFor="password">Password:</label>
                     <input type="password" id="password" onChange={this.handleInputChange}/>
                     <button onClick={this.submitForm}>Login</button>
