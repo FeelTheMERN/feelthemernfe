@@ -9,6 +9,7 @@ import Login from './Login';
 import ListUsers from './ListUsers';
 import UserProfile from './UserProfile';
 import NewUser from './NewUser'
+import AdminHome from './AdminHome'
 
 class App extends Component {
   render() {
@@ -20,6 +21,7 @@ class App extends Component {
              <Route path="/" component={Welcome} exact/>
              <Route path="/login" component={Login} exact/>
              <Route path="/admin" component={Login} exact/>
+             <Route path="/admin/home" component={AdminHome} exact/>
              <Route path="/admin/new-user" component={NewUser} exact/>
              <Route path="/admin/users" component={ListUsers} exact/>
              <Route path="/admin/users/:id" component={UserProfile} exact/>

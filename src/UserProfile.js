@@ -3,59 +3,7 @@ import axios from 'axios';
 import PrintKeyValue from './PrintKeyValue';
 
 class UserProfile extends Component {
-  state = {
-    user: {
-      _id: "1",
-      username: "johnsmith",
-      password: "password",
-      contact: {
-          email: "johnsmith@gmail.com",
-          contactNumber: "0412 345 678"
-      },
-      personalAttribute: {
-          firstName: "John",
-          lastName: "Smith",
-          dob: "01.01.1990",
-          gender: "Male",
-          height: 172,
-          weightLog: [92, 85],
-          goalWeight: 70,
-          bodyFatLog: [20, 17],
-          goalBodyFat: 10,
-          goal: "Lose weight"
-      },
-      notes: "Low blood pressure",
-      transactionalHistory: [
-          {
-              date: "01.21.2019",
-              amountReceived: 200,
-              pricePerSession: 50,
-              totalSessions: 4
-          }
-      ],
-      remainingSessions: 3,
-      sessions: [
-          {
-              date: "01.22.2019",
-              time: "22:00",
-              location: "Moorabin"
-          }
-      ],
-      dietaryRequirements: ["Vegetarian"],
-      mealPlans: [
-          {
-              day1: [
-                  [{qty: "5", foodItem: "Mushrooms"},{qty: "2", foodItem: "Tomatoes"} ],
-                  [{qty: "10", foodItem: "Beans"},{qty: "50", foodItem: "Tofus"} ]
-              ],
-              day2: [
-                  [{qty: "5", foodItem: "Apples"},{qty: "4", foodItem: "Pumpkins"} ],
-                  [{qty: "2", foodItem: "Bananas"},{qty: "1", foodItem: "Bread"} ]
-              ]
-          }
-      ]
-      }
-  };
+  state = {};
 
   //when component mounts a get request for a single user is triggered and the user state is set to the data that comes back.
   componentDidMount(){
