@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import logo from "./assets/logo/logo.png"
 class Login extends Component {
     state = {};
 
@@ -49,9 +48,6 @@ class Login extends Component {
         const {error, message} = this.state
         return (
             <>
-            <div className="spread">
-                <img id="logo" src={logo} alt="SkyeFIT Logo"></img>
-                    <h2>Log In</h2>
                     <form>
                         <label htmlFor="username">Username:</label>
                         <input type="text" id="username" onChange={this.handleInputChange}/>
@@ -61,7 +57,6 @@ class Login extends Component {
                     </form>
                 { error && <p>{error}</p>}
                 { message && <p>{message}</p>}
-            </div>
             </>
         )
     }

@@ -42,7 +42,7 @@ class UserProfile extends Component {
         <p>{user.notes}</p>
         <h1>Remaining Sessions</h1>
         <p>{user.remainingSessions}</p>
-        <button onClick={this.showTransactions}>transactions</button>
+        <button onClick={this.showTransactions}>Sessions</button>
         { printTransaction && <p>{printTransaction}</p>}
       </>
     )
