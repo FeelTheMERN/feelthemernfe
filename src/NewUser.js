@@ -6,20 +6,47 @@ import ClientAttributeForm from './ClientAttributeForm';
 import ClientNotesForm from './ClientNotesForm'
 
 class NewUser extends Component {
-    state = {};
+    state = {
+        username: '',
+        email: '',
+        password: '',
+        contactNumber: '',
+        handleInputChange: '',
+        firstName: '',
+        lastName: '',
+        dob: '',
+        gender: '',
+        handleInputChange: '', 
+        setBodyFat: '',
+        height: '',
+        weight: '',
+        bodyFat: '',
+        fatMass: '',
+        leanMass: '',
+        goalWeight: '',
+        goalBodyFat: '',
+        notes: ''
+    };
+
+    componentWillUnmount = () => {
+        console.log('unmounted')
+      }
 
     //componentDidMount() renders the first form when the page loads. It passes the component handle input change so that state is set on this page.
     componentDidMount() {
-        const form = <AccountDetailForm handleInputChange={this.handleInputChange}/>
         const title = "Client Account Details"
         const formPage = 1
-        this.setState({ form, title, formPage })
+        this.setState({ title, formPage })
     }
     
     //handleInputChange keeps track of the imput fields by setting state of username and password
     handleInputChange = (e) => {
+        console.log(e.currentTarget.id)
         const {value, id} = e.currentTarget;
-        this.setState({[id]: value})
+        this.setState({[id]: value}, () => {
+            console.log('UPDATED')
+            console.log(this.state)
+        })
     }
 
     //redirect() redirects the user to their home page based on the user role
@@ -29,9 +56,8 @@ class NewUser extends Component {
     }
 
     //setBodyFat() is a function passed to ClientAttributeForm so that we can set state of bodyFat on this component
-    setBodyFat = (value) => {
-        this.setState({bodyFat: value})
-        console.log("in the main set bodyfat")
+    setBodyFat = (value1, value2, value3) => {
+        this.setState({bodyFat: value1, fatMass: value2, leanMass: value3})
     }
 
     //submitForm() sends the username and password using axios. we should recieve a token which is then stored on local storage. once complete it runs the redirect funtion.
@@ -49,25 +75,19 @@ class NewUser extends Component {
         const { formPage } = this.state;
         
         if(formPage === 1) {
-            console.log(this.state.username)
-            const form = <PersonalDetailForm handleInputChange={this.handleInputChange}/>;
             const title = "Client Personal Details"
             const newformPage = formPage + 1
-            this.setState({form, title, formPage: newformPage }) 
+            this.setState({ title, formPage: newformPage }) 
         }
         if(formPage === 2) {
-            console.log(this.state.username)
-            const form = <ClientAttributeForm handleInputChange={this.handleInputChange} setBodyFat={this.setBodyFat}/>;
             const title = "Client Attributes"
             const newformPage = formPage + 1
-            this.setState({form, title, formPage: newformPage }) 
+            this.setState({ title, formPage: newformPage }) 
         }
         if(formPage === 3) {
-            console.log(this.state.bodyFat)
-            const form = <ClientNotesForm handleInputChange={this.handleInputChange}/>;
             const title = "Client Notes"
             const newformPage = formPage + 1
-            this.setState({form, title, formPage: newformPage }) 
+            this.setState({ title, formPage: newformPage }) 
         }
     }
 
@@ -77,36 +97,59 @@ class NewUser extends Component {
         const { formPage } = this.state;
     
         if(formPage === 2){
-            const form = <AccountDetailForm handleInputChange={this.handleInputChange}/>
             const title = "Client Account Details"
             const newformPage = formPage - 1
-            this.setState({ form, title, formPage: newformPage })
+            this.setState({ title, formPage: newformPage })
         }
         if(formPage === 3){
-            const form = <PersonalDetailForm handleInputChange={this.handleInputChange}/>
             const title = "Client Personal Details"
             const newformPage = formPage - 1
-            this.setState({ form, title, formPage: newformPage })
+            this.setState({ title, formPage: newformPage })
         }
         if(formPage === 4) {
-            const form = <ClientAttributeForm handleInputChange={this.handleInputChange} setBodyFat={this.setBodyFat}/>;
             const title = "Client Attributes"
             const newformPage = formPage - 1
-            this.setState({form, title, formPage: newformPage }) 
+            this.setState({ title, formPage: newformPage }) 
         }
     }
 
     render() {
-        const { form, title, formPage } = this.state
-        if(!form) return <h1>Loading...</h1>
-        console.log(formPage)
+        const { title, formPage } = this.state
         return (
             <>
-                { title && <h1>{title}</h1>}
-                { form && <>{form}</>}
+                { title && <h1>{title}</h1> }
+                { formPage === 1 && <AccountDetailForm 
+                        handleInputChange={this.handleInputChange} 
+                        username={this.state.username} 
+                        email={this.state.email}
+                        password={this.state.password}
+                        contactNumber={this.state.contactNumber}/> }
+                { formPage === 2 && <PersonalDetailForm 
+                        handleInputChange={this.handleInputChange}
+                        firstName={this.state.firstName}
+                        lastName={this.state.lastName}
+                        dob={this.state.dob}
+                        gender={this.state.gender}/>} 
+                { formPage === 3 && <ClientAttributeForm 
+                        handleInputChange={this.handleInputChange}  
+                        setBodyFat={this.setBodyFat}
+                        height={this.state.height}
+                        weight={this.state.weight}
+                        bodyFat={this.state.bodyFat}
+                        fatMass={this.state.fatMass}
+                        leanMass={this.state.leanMass}
+                        goalWeight={this.state.goalWeight}
+                        goalBodyFat={this.state.goalBodyFat}
+                        gender={this.state.gender}
+                        dob={this.state.dob}
+                        /> }
+                { formPage === 4 && <ClientNotesForm 
+                        handleInputChange={this.handleInputChange}
+                        notes={this.state.notes}/> }
                 <div>
-                { formPage > 1 && <button onClick={this.backForm}>back</button>}
-                <button onClick={this.nextForm}>next</button>
+                    { formPage > 1 && <button onClick={this.backForm}>back</button>}
+                    { formPage !== 4 && <button onClick={this.nextForm}>next</button>}
+                    { formPage === 4 && <button onClick={this.submitForm}>Submit</button>}
                 </div>
             </>
         )
