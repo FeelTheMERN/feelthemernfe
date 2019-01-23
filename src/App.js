@@ -10,6 +10,7 @@ import ListUsers from './ListUsers';
 import UserProfile from './UserProfile';
 import NewUser from './NewUser'
 import AdminHome from './AdminHome'
+import AdminLogin from './AdminLogin'
 
 class App extends Component {
   render() {
@@ -19,12 +20,11 @@ class App extends Component {
           <Navbar />
           <Switch>
              <Route path="/" component={Welcome} exact/>
-             <Route path="/admin" component={Login} exact/>
-             <Route path="/admin/home" component={AdminHome} exact/>
-             <Route path="/admin/new-user" component={NewUser} exact/>
              <Route path="/admin" component={AdminLogin} exact/>
+             <Route path="/admin/home" component={AdminHome} exact/>
              <Route path="/admin/users" component={ListUsers} exact/>
              <Route path="/admin/users/:id" component={UserProfile} exact/>
+             <Route path="/admin/new-user" component={NewUser} exact/>
              <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
           </Switch>
         </div>
