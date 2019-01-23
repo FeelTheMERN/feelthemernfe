@@ -9,7 +9,7 @@ import Error from './Error';
 import ListUsers from './ListUsers';
 import UserProfile from './UserProfile';
 import NewUser from './NewUser'
-import AdminLogin from './AdminLogin';
+import AdminHome from './AdminHome'
 
 class App extends Component {
   render() {
@@ -19,6 +19,8 @@ class App extends Component {
           <Navbar />
           <Switch>
              <Route path="/" component={Welcome} exact/>
+             <Route path="/admin" component={Login} exact/>
+             <Route path="/admin/home" component={AdminHome} exact/>
              <Route path="/admin/new-user" component={NewUser} exact/>
              <Route path="/admin" component={AdminLogin} exact/>
              <Route path="/admin/users" component={ListUsers} exact/>
