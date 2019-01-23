@@ -9,8 +9,9 @@ import Error from './Error';
 import ListUsers from './ListUsers';
 import UserProfile from './UserProfile';
 import NewUser from './NewUser'
+import AdminLogin from './AdminLogin';
+import UserHome from './UserHome'
 import AdminHome from './AdminHome'
-import AdminLogin from './AdminLogin'
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
              <Route path="/admin/home" component={AdminHome} exact/>
              <Route path="/admin/users" component={ListUsers} exact/>
              <Route path="/admin/users/:id" component={UserProfile} exact/>
+             <Route path="/user/:id" component={UserHome} exact/>
              <Route path="/admin/new-user" component={NewUser} exact/>
              <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
           </Switch>
