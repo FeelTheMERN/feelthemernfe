@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import './css/navbar.scss';
+import './css/navbar.scss'
+import MenuDropdown from './MenuDropdown'
 
 class Navbar extends Component {
     //Were keeping track of state so that we can render the appropriate navbar based on the user
@@ -16,8 +17,7 @@ class Navbar extends Component {
     if(!token) return null;
     return (
       <div className="Navbar">
-          <p>Home</p>
-          <p>Calendar</p>
+          <MenuDropdown />
       </div>
     )
   }

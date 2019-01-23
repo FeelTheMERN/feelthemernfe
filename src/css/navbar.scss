@@ -1,5 +1,25 @@
+$black: #282828;
+$yellow: #fefe8a;
+$orange: #FF6138;
+
 .Navbar {
   p {
     margin: 0;
+    color: $black;
+    font-weight: bold;
   }
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: $yellow;
+}
+
+.menu-item:hover {
+  color: $orange;
+}
+
+#menu-icon {
+  width: 40px;
+  padding: 20px;
+  padding-bottom: 50px;
 }
