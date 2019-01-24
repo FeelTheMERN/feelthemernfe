@@ -61,7 +61,7 @@ class MenuDropdown extends Component {
               null
             )
         }
-        {/* <div id="menu-icon" onClick={this.showMenu} alt="SkyeFIT Logo"></div> */}
+        {/* <div id="nav-icon" onClick={this.showMenu} alt="SkyeFIT Logo"></div> */}
         <img id="menu-icon" src={menuIcon} onClick={this.showMenu} alt="SkyeFIT Logo"></img>
       </div>
     );
