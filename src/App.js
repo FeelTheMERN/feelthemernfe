@@ -14,11 +14,17 @@ import UserHome from './UserHome'
 import AdminHome from './AdminHome'
 
 class App extends Component {
+  renderNavBar = () => {
+    let nav = <Navbar />
+    if (window.location.pathname === '/') nav = null
+    if (window.location.pathname === '/admin') nav = null
+    return nav
+  }
   render() {
     return (
       <BrowserRouter>{/* Using react-router-dom */}
         <div className="App">
-          <Navbar />
+          {this.renderNavBar()}
           <Switch>
              <Route path="/" component={Welcome} exact/>
              <Route path="/admin" component={AdminLogin} exact/>

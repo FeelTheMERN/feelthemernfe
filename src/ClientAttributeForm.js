@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import PincherFormMale from './PincherFormMale'
-import PincherFormFemale from './PincherFormFemale'
+import PinchesFormMale from './PinchesFormMale'
+import PinchesFormFemale from './PinchesFormFemale'
 
 export default class ClientAttributeForm extends Component {
   state = {
     bodyFat: ''
   };
 
-  //this function is passed to PincherFormMale so that we can set state of bodyfat on this component. It then invokes the set body fat function which is passed through props from NewUser component
+  //this function is passed to PinchesFormMale so that we can set state of bodyfat on this component. It then invokes the set body fat function which is passed through props from NewUser component
   setBodyFat = (value1, value2, value3) => {
     this.setState({bodyFat: value1, fatMass: value2, leanMass: value3}, () => {
       const { bodyFat, fatMass, leanMass } = this.state
@@ -16,8 +16,8 @@ export default class ClientAttributeForm extends Component {
   }
 
   render() {
-    const {handleInputChange, dob, gender} = this.props
-    const {bodyFat, weight} = this.state
+    const {handleInputChange, dob, gender, weight} = this.props
+    const {bodyFat} = this.state
     console.log(gender)
     return (
       <div>
@@ -27,10 +27,10 @@ export default class ClientAttributeForm extends Component {
              <label htmlFor="weight">Client Weight:</label>
              <input type="text" id="weight" onChange={handleInputChange} value={this.props.weight}/>
              
-             <label>Pincher Form:</label>
+             <label>Pinches Form:</label>
              {!gender && <p>You need to define gender to use the calculator</p>}
-             {gender === "male" && <PincherFormMale setBodyFat={this.setBodyFat} dob={dob} weight={weight}/>}
-             {gender === "female" && <PincherFormFemale setBodyFat={this.setBodyFat} dob={dob} weight={weight}/>}
+             {gender === "male" && <PinchesFormMale setBodyFat={this.setBodyFat} dob={dob} weight={weight}/>}
+             {gender === "female" && <PinchesFormFemale setBodyFat={this.setBodyFat} dob={dob} weight={weight}/>}
 
              <label htmlFor="bodyFat">Client Body Fat Percentage:</label>
              <input type="text" id="bodyFat" value={bodyFat} onChange={handleInputChange} value={this.props.bodyFat}/>
