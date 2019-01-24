@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import logo from "./assets/logo/logo.png"
+import logo from "./assets/icons/skyefit_logo.svg"
 import Login from './Login'
 import LoginSlider from './LoginSlider'
 
@@ -36,7 +36,7 @@ class Welcome extends Component {
       <div className="spread">
         { !printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
         { printLogin && printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
-        { !printLogin && !printSlider && <div><p>Welcome to</p><h1>SkyeFIT</h1></div> }
+        { !printLogin && !printSlider && <div><p>Welcome to</p><h1 className="yellow">SkyeFIT</h1></div> }
         { printSlider && !printLogin && <>{printSlider}</>}
         { !printLogin && <button className="small" onClick={this.showLoginSlider}>{btnText}</button> }
         { !printLogin && <button onClick={this.showLogInForm}>Log In</button> }

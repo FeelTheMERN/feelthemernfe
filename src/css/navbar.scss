@@ -1,24 +1,26 @@
-$black: #282828;
-$yellow: #fefe8a;
+$white: #ffffff;
+$blue: #0072BC;
 $orange: #FF6138;
+$yellow: #fefe8a;
 
 .Navbar {
   p {
     margin: 0;
-    color: $black;
+    color: $white;
     font-weight: bold;
   }
   width: 100%;
   position: fixed;
-  top: 0;
-  background-color: $yellow;
+  bottom: 0;
+  background-color: $blue;
 }
 
 .menu-item:hover {
-  color: $orange;
+  color: $yellow;
 }
 
 #menu-icon {
+  // background-image: url("/assets/icons/MenuIcon.svg");
   width: 40px;
   padding: 20px;
   padding-bottom: 50px;

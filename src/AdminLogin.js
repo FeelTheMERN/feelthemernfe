@@ -1,6 +1,6 @@
 import React from 'react';
 import Login from './Login';
-import logo from "./assets/logo/logo.png"
+import logo from "./assets/icons/skyefit_logo.svg"
 
 const AdminLogin = (props) => {
   return (
