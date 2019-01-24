@@ -13,6 +13,7 @@ import AdminLogin from './AdminLogin';
 import UserHome from './UserHome'
 import AdminHome from './AdminHome'
 class App extends Component {
+
   renderNavBar = () => {
     let nav = <Navbar />
     if (window.location.pathname === '/') nav = null
@@ -30,8 +31,8 @@ class App extends Component {
              <Route path="/admin/home" component={AdminHome} exact/>
              <Route path="/admin/users" component={ListUsers} exact/>
              <Route path="/admin/users/:id" component={UserProfile} exact/>
-             <Route path="/user/users/:id" component={UserHome} exact/>
              <Route path="/admin/new-user" component={NewUser} exact/>
+             <Route path="/user/users/:id/home" component={UserHome} exact/>
              <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
           </Switch>
         </div>

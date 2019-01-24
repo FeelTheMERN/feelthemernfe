@@ -18,6 +18,7 @@ class UserHome extends Component {
     if(!users) return <h1>Loading...</h1>
     return (
       <>
+        <h1>Welcome</h1>
         <p>{users.username}</p>
       </>
     )

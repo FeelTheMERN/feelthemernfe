@@ -12,7 +12,7 @@ class Welcome extends Component {
   // showLogInForm() runs when the button is clicked
   showLogInForm = (e) => {
     e.preventDefault(); // this prevents the default reload
-    const printLogin = <Login /> // the button sets state to the Login component
+    const printLogin = <Login history={this.props.history}/> // the button sets state to the Login component
     this.setState({ printLogin }) 
   }
 
@@ -40,7 +40,7 @@ class Welcome extends Component {
         { printSlider && !printLogin && <>{printSlider}</>}
         { !printLogin && <button className="small" onClick={this.showLoginSlider}>{btnText}</button> }
         { !printLogin && <button onClick={this.showLogInForm}>Log In</button> }
-        { printLogin && <p>{printLogin}</p> }
+        { printLogin && <>{printLogin}</> }
       </div>
     )
   }
