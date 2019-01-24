@@ -17,6 +17,15 @@ $yellow: #fefe8a;
   background-color: $blue;
 }
 
+.menu-item {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  color: $white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 .menu-item:hover {
   color: $yellow;
 }

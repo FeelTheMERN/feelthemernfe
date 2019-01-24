@@ -1,25 +1,27 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom'
-import UserCard from './UserCard'
+// import { Link } from 'react-router-dom'
+// import UserCard from './UserCard'
 class UserHome extends Component {
   state = {}
     
-  //when component mounts we send a request for the users and send through the token in the headers. with the response we set state of users to the response.
   componentDidMount() {
-        const config = { headers: {token: localStorage.getItem('token')}}
-        axios.get('http://localhost:5000/admin/users', config)
-            .then(resp => this.setState({users: resp.data}))
-            .catch(err => console.log(err));
+    const config = { headers: {token: localStorage.getItem('token')}}
+    const { id } = this.props.match.params
+    axios.get(`http://localhost:5000/user/users/${id}`, config)
+      .then(resp => this.setState({user: resp.data}))
+      .catch(err => console.log(err));
   }
-  //with each user in the users array, we will render a UserCard component passing id, firstname and lastname as props. if there is no users it will render loading...
+
   render() {
-    const {users} = this.state;
-    if(!users) return <h1>Loading...</h1>
+    const {user} = this.state;
+    if(!user) return <h1>Loading...</h1>
+    // console.log(user)
     return (
       <>
         <h1>Welcome</h1>
-        <p>{users.username}</p>
+        <h3>{user.username}</h3>
+        <p>Your next session is: </p>
       </>
     )
   }
