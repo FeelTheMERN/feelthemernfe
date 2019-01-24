@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import menuIcon from "./assets/icons/MenuIcon.svg"
+// import yellowMenuIcon from "./assets/icons/MenuIcon_yellow.svg"
 import mealIcon from "./assets/icons/good-diet-svgrepo-com.svg"
 import exerciseIcon from "./assets/icons/exercise-svgrepo-com.svg"
 import progressIcon from "./assets/icons/graphic-progression-svgrepo-com.svg"
-
-
+import './css/navbar.scss';
 class MenuDropdown extends Component {
   constructor() {
     super();
@@ -31,16 +31,13 @@ class MenuDropdown extends Component {
       
       this.setState({ showMenu: false }, () => {
         document.removeEventListener('click', this.closeMenu);
-      });  
-      
+      });   
     }
   }
 
   render() {
     return (
       <div>
-        <img id="menu-icon" src={menuIcon} onClick={this.showMenu} alt="SkyeFIT Logo"></img>
-        
         {
           this.state.showMenu
             ? (
@@ -64,6 +61,8 @@ class MenuDropdown extends Component {
               null
             )
         }
+        {/* <div id="menu-icon" onClick={this.showMenu} alt="SkyeFIT Logo"></div> */}
+        <img id="menu-icon" src={menuIcon} onClick={this.showMenu} alt="SkyeFIT Logo"></img>
       </div>
     );
   }

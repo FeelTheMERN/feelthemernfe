@@ -1,12 +1,10 @@
-$bg-color: #fefe8a;
-$black: #282828;
-$orange: #FF6138;
-$lightorange: #FF613875;
+$blue: #0072BC;
+$yellow: #fefe8a;
 
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700');
 
 ::selection { 
-  background: $lightorange;
+  background: $yellow;
 }
 
 .App {
@@ -15,22 +13,27 @@ $lightorange: #FF613875;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: $bg-color;
-  h1 {
-    color: $black;
-    font-size: 2.5em;
-  }
+  background-color: $blue;
   height: 100vh;
   width: 100vw;
   margin: 0;
   font-family: 'Roboto Mono', monospace;
+  h1 {
+    font-size: 2.5em;
+  }
+  p, h1, h2, h3, h4 {
+    color: white;
+  }
+  .yellow {
+    color: $yellow;
+  }
 }
 
 .btn, button {
-  color: blue;
+  color: white;
   background-color: transparent;
   text-decoration: none;
-  border: 1px solid blue;
+  border: 1px solid white;
   border-radius: 4px;
   padding: 10px;
   min-width: 30px;
@@ -38,19 +41,19 @@ $lightorange: #FF613875;
 }
 
 .btn:hover, button:hover { 
-  color: $orange;
-  border: 1px solid $orange;
+  color: $yellow;
+  border: 1px solid $yellow;
 }
 
 .small {
-  color: blue;
+  color: white;
   border: none;
   text-decoration: none;
   min-width: 30px;
 }
 
 .small:hover {
-  color: $orange;
+  color: $yellow;
   border: none;
 }
 
@@ -86,11 +89,12 @@ input {
   padding: 5px;
   font-family: 'Roboto Mono', monospace;
   background-color: transparent;
-  border: 1px solid blue;
+  border: 1px solid white;
+  color: $yellow;
 }
 
 input:focus { 
-  border: 1px solid $orange;
+  border: 1px solid $yellow;
   text-decoration: none;  
   box-shadow: none;
   outline: none;
