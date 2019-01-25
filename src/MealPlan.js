@@ -23,10 +23,12 @@ export default class MealPlan extends Component {
         this.setState({})
     }
 
-    deleteFood = () => {
-        this.setState({lol: "lol"}, () => {
-            console.log(this.state.lol)
-        })
+    deleteFood = (day, mealIndex, foodIndex) => {
+        //day: [[{}],[{},{}]] got to find the meal array the food is in day[x] => get array back
+        //then find the food item in the meal array mealPlan[day][mealIndex].splice[foodIndex, 1]
+        const {mealPlan} = this.state
+        mealPlan[day][mealIndex].splice(foodIndex, 1)
+        if(mealPlan[day][mealIndex].length === 0) mealPlan[day].splice(mealIndex, 1)
     }
 
     addMealtoDay = (meal) => {
@@ -98,7 +100,6 @@ export default class MealPlan extends Component {
 
     mealSavedTrue = () => {
         this.setState({mealSaved: true, message: null})
-        
     }
 
     mealSavedFalse = () => {

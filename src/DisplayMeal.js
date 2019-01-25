@@ -17,7 +17,7 @@ export default class DisplayMeal extends Component {
                 return (
                     <>
                     <p key={Math.random()}>Meal {i + 1} <button key={Math.random()} onClick={() => this.remove(i, dayIndex)}>-</button><button key={Math.random()}>+ food</button></p>
-                    <OneMeal meal={meal} key={Math.random()} deleteFood={this.props.deleteFood}/>
+                    <OneMeal meal={meal} key={Math.random()} deleteFood={this.props.deleteFood} day={`day${dayIndex}`} mealIndex={i}/>
                     </>
                 )
             })
