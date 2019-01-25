@@ -5,6 +5,7 @@ import mealIcon from "./assets/icons/good-diet-svgrepo-com.svg"
 import exerciseIcon from "./assets/icons/exercise-svgrepo-com.svg"
 import progressIcon from "./assets/icons/graphic-progression-svgrepo-com.svg"
 import './css/navbar.scss';
+import {Link} from "react-router-dom"
 class MenuDropdown extends Component {
   constructor() {
     super();
@@ -47,9 +48,9 @@ class MenuDropdown extends Component {
                   this.dropdownMenu = element;
                 }}
               >
-                <p className="menu-item">Home</p>
+                <Link to="/" className="menu-item">Home</Link>
                 <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
-                <p className="menu-item">Meal Plan</p>
+                <Link to="/user/user/:id/mealplan" className="menu-item">Meal Plan</Link>
                 <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
                 <p className="menu-item">Sessions</p>
                 <img id="menu-icon" src={exerciseIcon} alt="Sessions Icon"></img>
@@ -61,7 +62,7 @@ class MenuDropdown extends Component {
               null
             )
         }
-        {/* <div id="menu-icon" onClick={this.showMenu} alt="SkyeFIT Logo"></div> */}
+        {/* <div id="nav-icon" onClick={this.showMenu} alt="SkyeFIT Logo"></div> */}
         <img id="menu-icon" src={menuIcon} onClick={this.showMenu} alt="SkyeFIT Logo"></img>
       </div>
     );

@@ -8,10 +8,12 @@ import ListUsers from './ListUsers';
 import UserProfile from './UserProfile';
 import NewUser from './NewUser';
 import AdminLogin from './AdminLogin';
+
 import UserHome from './UserHome';
 import AdminHome from './AdminHome';
 import MealPlan from './MealPlan';
 import ProtectedRoute from './ProtectedRoute';
+import UserSessions from './UserSessions'
 
 
 class App extends Component {
@@ -36,6 +38,7 @@ class App extends Component {
              <ProtectedRoute path="/admin/users/:id/mealplan" component={MealPlan} exact/>
              <ProtectedRoute path="/admin/new-user" component={NewUser} exact/>
              <ProtectedRoute path="/user/users/:id/home" component={UserHome} exact/>
+             <ProtectedRoute path="/user/users/:id/sessions" component={UserSessions} exact/>
              <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
           </Switch>
         </div>

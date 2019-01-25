@@ -4,6 +4,8 @@ $orange: #FF6138;
 $yellow: #fefe8a;
 
 .Navbar {
+  // display: flex;
+  // justify-content: center;
   p {
     margin: 0;
     color: $white;
@@ -15,12 +17,32 @@ $yellow: #fefe8a;
   background-color: $blue;
 }
 
+.menu-item {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  color: $white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
 .menu-item:hover {
   color: $yellow;
 }
 
+#nav-icon {
+  background-image: url("../assets/icons/MenuIcon.svg");
+  background-repeat: no-repeat;
+  // background-size: 20%;
+  padding: 20px;
+  padding-bottom: 50px;
+}
+
+#nav-icon:hover {
+  background-image: url("../assets/icons/MenuIcon_yellow.svg");
+}
+
 #menu-icon {
-  // background-image: url("/assets/icons/MenuIcon.svg");
   width: 40px;
   padding: 20px;
   padding-bottom: 50px;
