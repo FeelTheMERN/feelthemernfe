@@ -166,8 +166,9 @@ export default class MealPlan extends Component {
                     <h4 className={f}>Day 6</h4> 
                     <h4 className={g}>Day 7</h4> 
                 </div>
+                <h1>Day {formPage}</h1>
                 { displayMeal && <>{displayMeal}</> }
-                <Meal addMealtoDay={this.addMealtoDay} mealSavedFalse={this.mealSavedFalse}/> 
+                <Meal addMealtoDay={this.addMealtoDay} mealSavedFalse={this.mealSavedFalse} mealSavedTrue={this.mealSavedTrue}/> 
                 <div>
                     { formPage > 1 && <button onClick={this.backForm}>back</button>}
                     { formPage === 1 && <button onClick={this.redirectUser}>back</button>}

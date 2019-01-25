@@ -24,6 +24,13 @@ export default class Meal extends Component {
     this.props.mealSavedFalse()
   }
 
+  cancelMeal = () => {
+    this.setState({addFood: null, addMealBtn: true})
+    this.props.mealSavedTrue()
+  }
+
+  
+
   render() {
     const {addFood, meal, addMealBtn, message} = this.state
     return (
@@ -31,7 +38,10 @@ export default class Meal extends Component {
         { meal.map(food => <p key={food}>{food}</p>) }
         { addFood && <>{addFood}</> }
         { message && <p>{message}</p>}
-        { !addMealBtn && <button onClick={this.saveMeal}>Save Meal</button>}
+        <div>
+          { !addMealBtn && <button onClick={this.saveMeal}>Save Meal</button>}
+          { !addMealBtn && <button onClick={this.cancelMeal}>Cancel</button>}
+        </div>
         { addMealBtn && <button onClick={this.addMeal}>+ Meal</button>}
       </div>
     )
