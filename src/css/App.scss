@@ -14,7 +14,8 @@ $yellow: #fefe8a;
   justify-content: center;
   text-align: center;
   background-color: $blue;
-  height: 100vh;
+  min-height: 100vh;
+  overflow: scroll;
   width: 100vw;
   margin: 0;
   font-family: 'Roboto Mono', monospace;
@@ -106,4 +107,25 @@ input:focus {
   // align-items: center;
   justify-content: space-around;
   width: 100vw;
+}
+
+.mealPlanDays {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.mealPlanDays h4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background: white;
+  color: $blue;
+  width: 70px;
+  height: 70px;
+}
+
+.mealPlanDays .currentPage {
+  background: $yellow;
 }

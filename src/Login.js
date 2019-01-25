@@ -19,11 +19,12 @@ class Login extends Component {
     submitForm = (e) => {
         e.preventDefault();
         let url
-        if(window.location.pathname === "/admin") url = "http://localhost:5000/admin/";
+        if(window.location.pathname === "/admin") url = "http://localhost:5000/admin";
         if(window.location.pathname === "/") url = "http://localhost:5000/user/login";
 
         const { username, password } = this.state        
         const data = { username, password }
+        console.log(data)
         axios.post(url, data)
             .then(resp => { // save token to local storage
                 const { token, isAdmin, id } = resp.data
@@ -31,7 +32,7 @@ class Login extends Component {
                 this.setState({message: 'You are logged in', error: null})
                 this.redirect(isAdmin, id)
                 })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err.response))
     }
 
     render() {
