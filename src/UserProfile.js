@@ -28,6 +28,11 @@ class UserProfile extends Component {
     this.setState({printTransaction: null, transactionBtn: false})//the second click will give a truthy value for transactionbtn so this will run and set printTransaction to null and again toggles the transaction Btn. This will hide the rendered component.
   }
 
+  redirectMealPlan = () => {
+    const {id} = this.props.match.params
+    this.props.history.push(`/admin/users/${id}/mealplan`)
+  }
+
   render() {
     const { user, printTransaction } = this.state;
     
@@ -42,8 +47,10 @@ class UserProfile extends Component {
         <p>{user.notes}</p>
         <h1>Remaining Sessions</h1>
         <p>{user.remainingSessions}</p>
-        <button onClick={this.showTransactions}>Sessions</button>
+        <button onClick={this.showTransactions}>Transaction History</button>
         { printTransaction && <p>{printTransaction}</p>}
+        <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
+        <button>Add New Booking</button>
       </>
     )
   }
