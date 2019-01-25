@@ -1,21 +1,28 @@
-import React from 'react'
+import React, { Component } from 'react'
 import OneMeal from './OneMeal'
 
-export default function DisplayMeal(props) {
-  const { day } = props
-  console.log(day)
-  return (
-    <div>
+export default class DisplayMeal extends Component {
+  state = {}
+
+  remove = (i, dayIndex) => {
+    this.props.deleteMeal(`day${dayIndex}`, i)
+  }
+
+  render() {
+    const { day, dayIndex } = this.props
+    return (
+      <div key={Math.random()}>
         {
             day.map((meal, i)=> {
                 return (
                     <>
-                    <p>Meal {i + 1} <button>Edit</button></p>
-                    <OneMeal meal={meal}/>
+                    <p key={Math.random()}>Meal {i + 1} <button key={Math.random()} onClick={() => this.remove(i, dayIndex)}>-</button><button key={Math.random()}>+ food</button></p>
+                    <OneMeal meal={meal} key={Math.random()} deleteFood={this.props.deleteFood}/>
                     </>
                 )
             })
         }
-    </div>
-  )
+      </div>
+    )
+  }
 }

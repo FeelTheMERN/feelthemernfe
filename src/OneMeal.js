@@ -1,13 +1,12 @@
 import React from 'react'
 
 export default function OneMeal(props) {
-    const {meal} = props
-    console.log(meal)
+  const {meal} = props
   return (
     <div>
       {
           meal.map(foodItem => {
-            return <p>{foodItem}</p>
+            return <p key={Math.random()}>{foodItem}<button onClick={() => props.deleteFood()}>-</button></p>
           })
       }
     </div>
