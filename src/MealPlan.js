@@ -13,7 +13,8 @@ export default class MealPlan extends Component {
             day5:[],
             day6:[],
             day7:[]
-        }
+        },
+        mealSaved: true
     };
 
     addMealtoDay = (meal) => {
@@ -53,6 +54,8 @@ export default class MealPlan extends Component {
             day7.push(meal)
             this.setState({day7, displayMeal: <DisplayMeal day={day7}/>})
         }
+        this.mealSavedTrue()
+        this.setState({message: null})
     }
 
     componentDidMount() {
@@ -63,8 +66,9 @@ export default class MealPlan extends Component {
 
     nextForm = (e) => {
         e.preventDefault();
-        const { formPage } = this.state;
+        const { formPage, mealSaved } = this.state;
         
+        if(!mealSaved) return this.setState({message: "You need to save meal first"})
         if(formPage === 1) {
             const newformPage = formPage + 1
             const { day2 } = this.state.mealPlan
@@ -100,8 +104,9 @@ export default class MealPlan extends Component {
     //this funtion runs when the back button is clicked. it will check what page the form is currently on and will render the previous component and update the page number acordingly  .
     backForm = (e) => {
         e.preventDefault();
-        const { formPage } = this.state;
+        const { formPage, mealSaved } = this.state;
 
+        if(!mealSaved) return this.setState({message: "You need to save meal first"})
         if(formPage === 2){
             const newformPage = formPage - 1
             const { day1 } = this.state.mealPlan
@@ -134,8 +139,22 @@ export default class MealPlan extends Component {
         }
     }
 
+    redirectUser = () => {
+        this.props.history.goBack()
+    }
+
+    mealSavedTrue = () => {
+        this.setState({mealSaved: true})
+        
+    }
+
+    mealSavedFalse = () => {
+        this.setState({mealSaved: false, message: null})
+    }
+
     render() {
-        const { formPage, displayMeal, a, b, c, d, e, f, g } = this.state
+        const { formPage, displayMeal, message, a, b, c, d, e, f, g } = this.state
+        console.log(this.state.mealSaved)
         return (
             <>
                 <div className="mealPlanDays">
@@ -148,11 +167,13 @@ export default class MealPlan extends Component {
                     <h4 className={g}>Day 7</h4> 
                 </div>
                 { displayMeal && <>{displayMeal}</> }
-                <Meal addMealtoDay={this.addMealtoDay}/> 
+                <Meal addMealtoDay={this.addMealtoDay} mealSavedFalse={this.mealSavedFalse}/> 
                 <div>
                     { formPage > 1 && <button onClick={this.backForm}>back</button>}
+                    { formPage === 1 && <button onClick={this.redirectUser}>back</button>}
                     { formPage !== 7 && <button onClick={this.nextForm}>next</button>}
                     { formPage === 7 && <button onClick={this.submitForm}>Submit</button>}
+                    { message && <>{message}</>}
                 </div>
             </>
         )

@@ -16,11 +16,12 @@ export default class Meal extends Component {
   saveMeal = () => {
       if(!this.state.meal[0]) return this.setState({message: "You need to add a food item first"})
       this.props.addMealtoDay(this.state.meal)
-      this.setState({meal: [], addMealBtn: true, addFood: null})
+      this.setState({meal: [], addMealBtn: true, addFood: null, message: null})
   }
 
   addMeal = () => {
     this.setState({addFood: <AddFoodItem addFoodToMeal={this.addFoodToMeal}/>, addMealBtn: false})
+    this.props.mealSavedFalse()
   }
 
   render() {
