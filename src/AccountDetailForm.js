@@ -1,7 +1,7 @@
 import React from 'react'
 
 const AccountDetailForm = (props) => {
-  console.log(props)
+  // console.log(props)
   return (
     <div>
       <form>

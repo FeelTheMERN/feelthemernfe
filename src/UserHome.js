@@ -3,7 +3,7 @@ import axios from 'axios';
 // import { Link } from 'react-router-dom'
 // import UserCard from './UserCard'
 class UserHome extends Component {
-  state = {}
+  state = {};
     
   componentDidMount() {
     const config = { headers: {token: localStorage.getItem('token')}}

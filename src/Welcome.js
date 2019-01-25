@@ -29,9 +29,8 @@ class Welcome extends Component {
   }
 
   render() {
-    const { printLogin, btnText } = this.state // we need to access printLogin from state so it can be rendered
-    const { printSlider } = this.state
-    console.log(btnText);
+    const { printLogin, btnText, printSlider } = this.state // we need to access printLogin from state so it can be rendered
+    const fromRoute = window.location.search
     return (
       <div className="spread">
         { !printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
@@ -39,6 +38,7 @@ class Welcome extends Component {
         { !printLogin && !printSlider && <div><p>Welcome to</p><h1 className="yellow">SkyeFIT</h1></div> }
         { printSlider && !printLogin && <>{printSlider}</>}
         { !printLogin && <button className="small" onClick={this.showLoginSlider}>{btnText}</button> }
+        { fromRoute === "?login" && <h4>Please Login</h4>}
         { !printLogin && <button onClick={this.showLogInForm}>Log In</button> }
         { printLogin && <>{printLogin}</> }
       </div>
