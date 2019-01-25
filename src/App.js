@@ -12,6 +12,8 @@ import NewUser from './NewUser'
 import AdminLogin from './AdminLogin';
 import UserHome from './UserHome'
 import AdminHome from './AdminHome'
+import UserSessions from './UserSessions'
+
 class App extends Component {
 
   renderNavBar = () => {
@@ -33,6 +35,7 @@ class App extends Component {
              <Route path="/admin/users/:id" component={UserProfile} exact/>
              <Route path="/admin/new-user" component={NewUser} exact/>
              <Route path="/user/users/:id/home" component={UserHome} exact/>
+             <Route path="/user/users/:d/sessions" component={UserSessions} exact/>
              <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
           </Switch>
         </div>

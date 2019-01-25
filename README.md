@@ -69,3 +69,8 @@ Sass
 ```
 npm i node-sass
 ```
+
+React-Calendar
+```
+npm i react-calendar
+```

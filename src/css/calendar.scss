@@ -1,0 +1,34 @@
+$yellow: #fefe8a;
+$blue: #0072BC;
+
+.react-calendar {
+  border: none;
+  background-color: transparent;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.react-calendar__month-view__weekdays {
+  color: $yellow;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: white;
+}
+
+.react-calendar__tile:hover {
+  color: $blue;
+  background-color: $yellow;
+}
+
+.react-calendar__navigation__label:hover {
+  color: $blue;
+  background-color: $yellow;
+}
+
+.react-calendar__navigation__arrow:hover {
+  color: $blue;
+}
+
+// button:hover {
+//   color: red;
+// }
