@@ -12,12 +12,12 @@ class Navbar extends Component {
     }
 
     render() { 
-      // if no token is available, navbar won't render. I.e if no user is logged in, don't display navbar yet
+    // if no token is available, navbar won't render. I.e if no user is logged in, don't display navbar yet
       
     const {token} = this.state
-    // if(!token) return null;
-    // if (window.location.pathname === '/') return null
-    // if (window.location.pathname === '/admin') return null
+    if(!token) return null;
+    if (window.location.pathname === '/') return null
+    if (window.location.pathname === '/admin') return null
     return (
       <div className="Navbar">
         <MenuDropdown />
