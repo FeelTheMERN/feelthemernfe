@@ -3,7 +3,9 @@ import axios from 'axios';
 import PrintKeyValue from './PrintKeyValue';
 import PrintPersonalDetails from './PrintPersonalDetails'
 import PersonalDetailForm from './PersonalDetailForm';
-import ClientNotesForm from './ClientNotesForm'
+import ClientNotesForm from './ClientNotesForm';
+import PrintContactDetails from './PrintContactDetails';
+import AccountDetailForm from './AccountDetailForm'
 
 class UserProfile extends Component {
   state = {};
@@ -21,7 +23,9 @@ class UserProfile extends Component {
             personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>,
             personalDetailsBtnMsg: 'Edit',
             notes: <p>{user.notes}</p>,
-            editNotesBtnMsg: 'Edit Notes'
+            editNotesBtnMsg: 'Edit Notes',
+            contactDetails: <PrintContactDetails obj={user.contact}/>,
+            contactDetailsBtnMsg: 'Edit'
             })
         })
       })
@@ -50,9 +54,8 @@ class UserProfile extends Component {
   }
 
   editPersonalDetails = () => {
-    const { user, editPersonalDetailsBtn, personalDetails, personalDetailsBtnMsg } = this.state
+    const { user, editPersonalDetailsBtn } = this.state
     console.log("in edit personal details btn")
-    console.log(editPersonalDetailsBtn)
 
     if(!editPersonalDetailsBtn){
       this.setState({
@@ -75,7 +78,7 @@ class UserProfile extends Component {
   }
 
   editNotes = () => {
-    const { user, editNotesBtn, editNotesBtnMsg, notes } = this.state
+    const { user, editNotesBtn } = this.state
     if(!editNotesBtn){
       this.setState({
         editNotesBtn: true,
@@ -92,10 +95,30 @@ class UserProfile extends Component {
     }
   }
 
-  render() {
-    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, notes, editNotesBtnMsg } = this.state;
-    if(!user) return <h1>Loading...</h1>
+  editContactDetails = () => {
+    const { editContactDetailsBtn, user} = this.state
+    if(!editContactDetailsBtn){
+      this.setState({
+        editContactDetailsBtn: true,
+        contactDetailsBtnMsg: 'Cancel',
+        contactDetails: <AccountDetailForm 
+          email={user.contact.email}
+          contactNumber={user.contact.contactNumber}/>
+      })
+    }
+    if(editContactDetailsBtn) {
+      this.setState({
+        editContactDetailsBtn: false,
+        contactDetailsBtnMsg: 'Edit',
+        contactDetails: <PrintContactDetails obj={user.contact}/>
+      })
+    }
+  }
 
+  render() {
+    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, notes, editNotesBtnMsg, editContactDetailsBtn, contactDetails, contactDetailsBtnMsg } = this.state;
+    if(!user) return <h1>Loading...</h1>
+console.log(contactDetails)
     return (
       <>
         <h1>Personal Info</h1>
@@ -106,8 +129,10 @@ class UserProfile extends Component {
 
 
         <h1>Contact Details</h1>
-        <button>Edit</button>
-        <PrintKeyValue obj={user.contact} key={user._id}/>
+        <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
+        { !editContactDetailsBtn && <>{contactDetails}</>}
+        { editContactDetailsBtn && <>{contactDetails}</>}
+        { editContactDetailsBtn && <button>Save</button>}
 
         <h1>Notes</h1>
         <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
