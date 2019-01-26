@@ -5,7 +5,9 @@ import PrintPersonalDetails from './PrintPersonalDetails'
 import PersonalDetailForm from './PersonalDetailForm';
 import ClientNotesForm from './ClientNotesForm';
 import PrintContactDetails from './PrintContactDetails';
-import AccountDetailForm from './AccountDetailForm'
+import AccountDetailForm from './AccountDetailForm';
+import PrintPersonalAttributes from './PrintPersonalAttributes';
+import ClientAttributeForm from './ClientAttributeForm'
 
 class UserProfile extends Component {
   state = {};
@@ -25,7 +27,9 @@ class UserProfile extends Component {
             notes: <p>{user.notes}</p>,
             editNotesBtnMsg: 'Edit Notes',
             contactDetails: <PrintContactDetails obj={user.contact}/>,
-            contactDetailsBtnMsg: 'Edit'
+            contactDetailsBtnMsg: 'Edit',
+            personalAttributesBtnMsg: 'Edit',
+            personalAttributes: <PrintPersonalAttributes obj={user.personalAttribute}/>
             })
         })
       })
@@ -115,8 +119,36 @@ class UserProfile extends Component {
     }
   }
 
+  editPersonalAttributes = () => {
+    const { personalAttributeBtn, user} = this.state
+    const { personalAttribute} = this.state.user
+    console.log(personalAttribute.weightLog[personalAttribute.weightLog.length - 1])
+    if(!personalAttributeBtn){
+      this.setState({
+        personalAttributeBtn: true,
+        personalAttributesBtnMsg: 'Cancel',
+        personalAttributes: <ClientAttributeForm 
+          height={personalAttribute.height}
+          weight={personalAttribute.weightLog[personalAttribute.weightLog.length - 1]}
+          bodyFat={personalAttribute.bodyFatLog[personalAttribute.bodyFatLog.length - 1]}
+          // fatMass={}
+          // leanMass={}
+          goalWeight={personalAttribute.goalWeight}
+          goalBodyFat={personalAttribute.goalBodyFat}
+          />
+      })
+    }
+    if(personalAttributeBtn){
+      this.setState({
+        personalAttributeBtn: false,
+        personalAttributesBtnMsg: 'Edit',
+        personalAttributes: <PrintPersonalAttributes obj={this.user.personalAttribute}/>
+      })
+    }
+  }
+
   render() {
-    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, notes, editNotesBtnMsg, editContactDetailsBtn, contactDetails, contactDetailsBtnMsg } = this.state;
+    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, notes, editNotesBtnMsg, editContactDetailsBtn, contactDetails, contactDetailsBtnMsg, personalAttributesBtnMsg, personalAttributeBtn, personalAttributes } = this.state;
     if(!user) return <h1>Loading...</h1>
 console.log(contactDetails)
     return (
@@ -127,6 +159,11 @@ console.log(contactDetails)
         { editPersonalDetailsBtn && <>{personalDetails}</>}
         { editPersonalDetailsBtn && <button>Save</button>}
 
+        <h1>Personal Attributes</h1>
+        <button onClick={this.editPersonalAttributes}>{personalAttributesBtnMsg}</button>
+        { !personalAttributeBtn && <>{personalAttributes}</>}
+        { personalAttributeBtn && <>{personalAttributes}</>}
+        { personalAttributeBtn && <button>Save</button>}
 
         <h1>Contact Details</h1>
         <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
