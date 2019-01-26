@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import PrintKeyValue from './PrintKeyValue';
+import PrintPersonalDetails from './PrintPersonalDetails'
+import PersonalDetailForm from './PersonalDetailForm'
 
 class UserProfile extends Component {
   state = {};
@@ -11,8 +13,19 @@ class UserProfile extends Component {
     const config = { headers: {token: localStorage.getItem('token')}}
 
     axios.get(url, config)
-      .then(resp => this.setState({user: resp.data}))
-      .catch(err => console.log(err));
+      .then(resp => {
+        this.setState({user: resp.data}, () => {
+          const { user } = this.state
+          this.setState({ 
+            personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>,
+            personalDetailsBtnMsg: 'Edit'
+            })
+        })
+      })
+      .catch(err => {
+        if(err.status === 500) return console.error("Token expired")
+        console.error(err)
+      });
   }
 
   //showTransactions() runs when the button is clicked
@@ -33,17 +46,50 @@ class UserProfile extends Component {
     this.props.history.push(`/admin/users/${id}/mealplan`)
   }
 
+  editPersonalDetails = () => {
+    const { user, editPersonalDetailsBtn, personalDetails, personalDetailsBtnMsg } = this.state
+    console.log("in edit personal details btn")
+    console.log(editPersonalDetailsBtn)
+
+    if(!editPersonalDetailsBtn){
+      this.setState({
+        editPersonalDetailsBtn: true, 
+        personalDetailsBtnMsg: 'Cancel',
+        personalDetails: <PersonalDetailForm 
+          firstName={user.personalAttribute.firstName}
+          lastName={user.personalAttribute.lastName}
+          dob={user.personalAttribute.dob}
+          gender={user.personalAttribute.gender}/>
+      })
+    } 
+    if(editPersonalDetailsBtn){
+      console.log("in the second bit")
+      this.setState({ 
+        editPersonalDetailsBtn: false, 
+        personalDetailsBtnMsg: 'Edit', 
+        personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>
+      })
+    }
+  }
+
   render() {
-    const { user, printTransaction } = this.state;
-    
+    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg } = this.state;
     if(!user) return <h1>Loading...</h1>
+
     return (
       <>
         <h1>Personal Info</h1>
-        <PrintKeyValue obj={user.personalAttribute} key={user._id}/>
+        <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
+        { !editPersonalDetailsBtn && <>{personalDetails}</>}
+        { editPersonalDetailsBtn && <>{personalDetails}</>}
+        { editPersonalDetailsBtn && <button>Save</button>}
+
+
         <h1>Contact Details</h1>
+        <button>Edit</button>
         <PrintKeyValue obj={user.contact} key={user._id}/>
         <h1>Notes</h1>
+        <button>Add to Notes</button>
         <p>{user.notes}</p>
         <h1>Remaining Sessions</h1>
         <p>{user.remainingSessions}</p>
