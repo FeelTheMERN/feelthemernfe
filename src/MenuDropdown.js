@@ -50,9 +50,9 @@ class MenuDropdown extends Component {
               >
                 <Link to="/" className="menu-item">Home</Link>
                 <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
-                <Link to="/user/user/:id/mealplan" className="menu-item">Meal Plan</Link>
+                <Link to="/user/users/:id/mealplan" className="menu-item">Meal Plan</Link>
                 <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
-                <p className="menu-item">Sessions</p>
+                <Link to="/user/users/:id/sessions" className="menu-item">Sessions</Link>
                 <img id="menu-icon" src={exerciseIcon} alt="Sessions Icon"></img>
                 <p className="menu-item">Progress</p>
                 <img id="menu-icon" src={progressIcon} alt="Progress Icon"></img>
