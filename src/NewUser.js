@@ -16,7 +16,6 @@ class NewUser extends Component {
         lastName: '',
         dob: '',
         gender: '',
-        handleInputChange: '', 
         setBodyFat: '',
         height: '',
         weight: '',
@@ -28,10 +27,6 @@ class NewUser extends Component {
         notes: ''
     };
 
-    componentWillUnmount = () => {
-        console.log('unmounted')
-      }
-
     //componentDidMount() renders the first form when the page loads. It passes the component handle input change so that state is set on this page.
     componentDidMount() {
         const title = "Client Account Details"
@@ -41,12 +36,8 @@ class NewUser extends Component {
     
     //handleInputChange keeps track of the imput fields by setting state of username and password
     handleInputChange = (e) => {
-        console.log(e.currentTarget.id)
         const {value, id} = e.currentTarget;
-        this.setState({[id]: value}, () => {
-            console.log('UPDATED')
-            console.log(this.state)
-        })
+        this.setState({[id]: value})
     }
 
     //redirect() redirects the user to their home page based on the user role

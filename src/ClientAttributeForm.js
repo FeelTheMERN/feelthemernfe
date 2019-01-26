@@ -17,7 +17,7 @@ export default class ClientAttributeForm extends Component {
 
   render() {
     const {handleInputChange, dob, gender, weight} = this.props
-    const {bodyFat} = this.state
+    // const {bodyFat} = this.state
     console.log(gender)
     return (
       <div>
@@ -33,7 +33,7 @@ export default class ClientAttributeForm extends Component {
              {gender === "female" && <PinchesFormFemale setBodyFat={this.setBodyFat} dob={dob} weight={weight}/>}
 
              <label htmlFor="bodyFat">Client Body Fat Percentage:</label>
-             <input type="text" id="bodyFat" value={bodyFat} onChange={handleInputChange} value={this.props.bodyFat}/>
+             <input type="text" id="bodyFat" onChange={handleInputChange} value={this.props.bodyFat}/>
              <label htmlFor="fatMass">Fat Mass:</label>
              <input type="text" id="fatMass" onChange={handleInputChange} value={this.props.fatMass}/>
              <label htmlFor="leanMass">Lean Mass:</label>

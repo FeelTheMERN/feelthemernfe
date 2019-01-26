@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import axios from 'axios';
 import PrintKeyValue from './PrintKeyValue';
+import PrintPersonalDetails from './PrintPersonalDetails'
+import PersonalDetailForm from './PersonalDetailForm';
+import ClientNotesForm from './ClientNotesForm';
+import PrintContactDetails from './PrintContactDetails';
+import AccountDetailForm from './AccountDetailForm'
 
 class UserProfile extends Component {
   state = {};
@@ -11,8 +16,23 @@ class UserProfile extends Component {
     const config = { headers: {token: localStorage.getItem('token')}}
 
     axios.get(url, config)
-      .then(resp => this.setState({user: resp.data}))
-      .catch(err => console.log(err));
+      .then(resp => {
+        this.setState({user: resp.data}, () => {
+          const { user } = this.state
+          this.setState({ 
+            personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>,
+            personalDetailsBtnMsg: 'Edit',
+            notes: <p>{user.notes}</p>,
+            editNotesBtnMsg: 'Edit Notes',
+            contactDetails: <PrintContactDetails obj={user.contact}/>,
+            contactDetailsBtnMsg: 'Edit'
+            })
+        })
+      })
+      .catch(err => {
+        if(err.status === 500) return console.error("Token expired")
+        console.error(err)
+      });
   }
 
   //showTransactions() runs when the button is clicked
@@ -28,22 +48,104 @@ class UserProfile extends Component {
     this.setState({printTransaction: null, transactionBtn: false})//the second click will give a truthy value for transactionbtn so this will run and set printTransaction to null and again toggles the transaction Btn. This will hide the rendered component.
   }
 
+  redirectMealPlan = () => {
+    const {id} = this.props.match.params
+    this.props.history.push(`/admin/users/${id}/mealplan`)
+  }
+
+  editPersonalDetails = () => {
+    const { user, editPersonalDetailsBtn } = this.state
+    console.log("in edit personal details btn")
+
+    if(!editPersonalDetailsBtn){
+      this.setState({
+        editPersonalDetailsBtn: true, 
+        personalDetailsBtnMsg: 'Cancel',
+        personalDetails: <PersonalDetailForm 
+          firstName={user.personalAttribute.firstName}
+          lastName={user.personalAttribute.lastName}
+          dob={user.personalAttribute.dob}
+          gender={user.personalAttribute.gender}/>
+      })
+    } 
+    if(editPersonalDetailsBtn){
+      this.setState({ 
+        editPersonalDetailsBtn: false, 
+        personalDetailsBtnMsg: 'Edit', 
+        personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>
+      })
+    }
+  }
+
+  editNotes = () => {
+    const { user, editNotesBtn } = this.state
+    if(!editNotesBtn){
+      this.setState({
+        editNotesBtn: true,
+        editNotesBtnMsg: 'Cancel',
+        notes: <ClientNotesForm notes={user.notes} />
+      })
+    }
+    if(editNotesBtn) {
+      this.setState({
+        editNotesBtn: false,
+        editNotesBtnMsg: 'Edit Notes',
+        notes: <p>{user.notes}</p>
+      })
+    }
+  }
+
+  editContactDetails = () => {
+    const { editContactDetailsBtn, user} = this.state
+    if(!editContactDetailsBtn){
+      this.setState({
+        editContactDetailsBtn: true,
+        contactDetailsBtnMsg: 'Cancel',
+        contactDetails: <AccountDetailForm 
+          email={user.contact.email}
+          contactNumber={user.contact.contactNumber}/>
+      })
+    }
+    if(editContactDetailsBtn) {
+      this.setState({
+        editContactDetailsBtn: false,
+        contactDetailsBtnMsg: 'Edit',
+        contactDetails: <PrintContactDetails obj={user.contact}/>
+      })
+    }
+  }
+
   render() {
-    const { user, printTransaction } = this.state;
-    
+    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, notes, editNotesBtnMsg, editContactDetailsBtn, contactDetails, contactDetailsBtnMsg } = this.state;
     if(!user) return <h1>Loading...</h1>
+console.log(contactDetails)
     return (
       <>
         <h1>Personal Info</h1>
-        <PrintKeyValue obj={user.personalAttribute} key={user._id}/>
+        <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
+        { !editPersonalDetailsBtn && <>{personalDetails}</>}
+        { editPersonalDetailsBtn && <>{personalDetails}</>}
+        { editPersonalDetailsBtn && <button>Save</button>}
+
+
         <h1>Contact Details</h1>
-        <PrintKeyValue obj={user.contact} key={user._id}/>
+        <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
+        { !editContactDetailsBtn && <>{contactDetails}</>}
+        { editContactDetailsBtn && <>{contactDetails}</>}
+        { editContactDetailsBtn && <button>Save</button>}
+
         <h1>Notes</h1>
-        <p>{user.notes}</p>
+        <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
+        { !editNotesBtn && <>{notes}</>}
+        { editNotesBtn && <>{notes}</>}
+        { editNotesBtn && <button>Save</button>}
+
         <h1>Remaining Sessions</h1>
         <p>{user.remainingSessions}</p>
-        <button onClick={this.showTransactions}>Sessions</button>
+        <button onClick={this.showTransactions}>Transaction History</button>
         { printTransaction && <p>{printTransaction}</p>}
+        <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
+        <button>Add New Booking</button>
       </>
     )
   }
