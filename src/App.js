@@ -35,7 +35,7 @@ class App extends Component {
              <Route path="/admin/users/:id" component={UserProfile} exact/>
              <Route path="/admin/new-user" component={NewUser} exact/>
              <Route path="/user/users/:id/home" component={UserHome} exact/>
-             <Route path="/user/users/:d/sessions" component={UserSessions} exact/>
+             <Route path="/user/users/:id/sessions" component={UserSessions} exact/>
              <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
           </Switch>
         </div>
