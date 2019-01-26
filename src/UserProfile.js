@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import PrintKeyValue from './PrintKeyValue';
 import PrintPersonalDetails from './PrintPersonalDetails'
-import PersonalDetailForm from './PersonalDetailForm'
+import PersonalDetailForm from './PersonalDetailForm';
+import ClientNotesForm from './ClientNotesForm'
 
 class UserProfile extends Component {
   state = {};
@@ -18,7 +19,9 @@ class UserProfile extends Component {
           const { user } = this.state
           this.setState({ 
             personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>,
-            personalDetailsBtnMsg: 'Edit'
+            personalDetailsBtnMsg: 'Edit',
+            notes: <p>{user.notes}</p>,
+            editNotesBtnMsg: 'Edit Notes'
             })
         })
       })
@@ -63,7 +66,6 @@ class UserProfile extends Component {
       })
     } 
     if(editPersonalDetailsBtn){
-      console.log("in the second bit")
       this.setState({ 
         editPersonalDetailsBtn: false, 
         personalDetailsBtnMsg: 'Edit', 
@@ -72,8 +74,26 @@ class UserProfile extends Component {
     }
   }
 
+  editNotes = () => {
+    const { user, editNotesBtn, editNotesBtnMsg, notes } = this.state
+    if(!editNotesBtn){
+      this.setState({
+        editNotesBtn: true,
+        editNotesBtnMsg: 'Cancel',
+        notes: <ClientNotesForm notes={user.notes} />
+      })
+    }
+    if(editNotesBtn) {
+      this.setState({
+        editNotesBtn: false,
+        editNotesBtnMsg: 'Edit Notes',
+        notes: <p>{user.notes}</p>
+      })
+    }
+  }
+
   render() {
-    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg } = this.state;
+    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, notes, editNotesBtnMsg } = this.state;
     if(!user) return <h1>Loading...</h1>
 
     return (
@@ -88,9 +108,13 @@ class UserProfile extends Component {
         <h1>Contact Details</h1>
         <button>Edit</button>
         <PrintKeyValue obj={user.contact} key={user._id}/>
+
         <h1>Notes</h1>
-        <button>Add to Notes</button>
-        <p>{user.notes}</p>
+        <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
+        { !editNotesBtn && <>{notes}</>}
+        { editNotesBtn && <>{notes}</>}
+        { editNotesBtn && <button>Save</button>}
+
         <h1>Remaining Sessions</h1>
         <p>{user.remainingSessions}</p>
         <button onClick={this.showTransactions}>Transaction History</button>
