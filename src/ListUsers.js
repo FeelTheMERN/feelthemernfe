@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import UserCard from './UserCard'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar'
 // import PrintUserCards from './PrintUserCards';
 
 class ListUsers extends Component {
@@ -22,7 +23,7 @@ class ListUsers extends Component {
     console.log(users)
     return (
         <>
-        {/* search bar */}
+        <SearchBar/>
             {users.map(user => {
                 return (
                     <>
