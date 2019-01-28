@@ -56,7 +56,7 @@ export default class MealPlan extends Component {
 
         const newformPage = formPage + 1
         const day = `day${formPage + 1}`
-        this.setState({ formPage: newformPage, displayMeal: <DisplayMeal day={mealPlan[day]} deleteMeal={this.deleteMeal} deleteFood={this.deleteFood} dayIndex={formPage} key={Math.random()}/> }, () => {
+        this.setState({ formPage: newformPage, displayMeal: <DisplayMeal day={mealPlan[day]} deleteMeal={this.deleteMeal} deleteFood={this.deleteFood} dayIndex={formPage + 1} key={Math.random()}/> }, () => {
             this.changeClassNext()
         }) 
     }
@@ -69,7 +69,7 @@ export default class MealPlan extends Component {
 
         const newformPage = formPage - 1
         const day = `day${formPage - 1}`
-        this.setState({ formPage: newformPage, displayMeal: <DisplayMeal day={mealPlan[day]} deleteMeal={this.deleteMeal} deleteFood={this.deleteFood} dayIndex={formPage} key={Math.random()}/> }, () => {
+        this.setState({ formPage: newformPage, displayMeal: <DisplayMeal day={mealPlan[day]} deleteMeal={this.deleteMeal} deleteFood={this.deleteFood} dayIndex={formPage - 1} key={Math.random()}/> }, () => {
             this.changeClassBack()
         }) 
     }
