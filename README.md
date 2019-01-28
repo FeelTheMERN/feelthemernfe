@@ -74,3 +74,8 @@ React-Calendar
 ```
 npm i react-calendar
 ```
+
+Moment
+```
+npm install --save moment react-moment
+```
