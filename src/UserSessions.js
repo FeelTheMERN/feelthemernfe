@@ -22,6 +22,7 @@ class UserSessions extends Component {
   render() {
     const {user} = this.state;
     if(!user) return <h1>Loading...</h1>
+    console.log(user)
     return (
       <div className="spread">
         <h1>Sessions</h1>
@@ -32,7 +33,7 @@ class UserSessions extends Component {
         <p>Next session: </p>
       </div>
     )
-  }
+  }  
 }
 
 export default UserSessions;
