@@ -37,6 +37,7 @@ class MenuDropdown extends Component {
   }
 
   render() {
+    console.log(this.state)
     const { id } = this.props.match.params
     const sessionsLink = `/user/users/${id}/sessions`
     return (
