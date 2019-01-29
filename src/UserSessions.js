@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import Calendar from 'react-calendar'
 import './css/calendar.scss'
+import Calendar from './Calendar'
 
 class UserSessions extends Component {
-  state = {
-    date: null,
+  state = {}
+
+  onDayClick = (e, day) => {
+    // check if there is a session scheduled, otherwise
+    alert("no sessions on this day");
   }
     
   componentDidMount() {
@@ -16,15 +19,6 @@ class UserSessions extends Component {
       .catch(err => console.log(err));
   }
 
-  // onChange = date => this.setState({ date })
-
-  cal = (e) => {
-    // this.setState({date: value})
-    // console.log(e)
-    console.log(e.target)
-    // alert('New date is: ', value)
-  }
-
   render() {
     const {user} = this.state;
     console.log(user)
@@ -32,12 +26,13 @@ class UserSessions extends Component {
     const nextSession = user.sessions[user.sessions.length - 1]
 
     // console.log(this.date)
+
     return (
       <div className="spread">
         <h1>Sessions</h1>
-        <div onClick={this.cal} >
-          <Calendar />
-        </div>
+        <Calendar width="302px"
+          onDayClick={(e, day)=> 
+          this.onDayClick(e, day)}/>  
         <small>no sessions on this day</small>
         <p>Next session: </p>
         <p>{nextSession.date}</p>
