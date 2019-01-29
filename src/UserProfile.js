@@ -34,10 +34,10 @@ class UserProfile extends Component {
         })
       })
       .catch(err => {
-        if(err.status === 500) return console.error("Token expired")
-        console.error(err)
+        if(err.response.status === 403) this.props.history.replace('/admin')
       });
   }
+
 
   //showTransactions() runs when the button is clicked
   showTransactions = (e) => {

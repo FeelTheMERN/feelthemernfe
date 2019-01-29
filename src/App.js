@@ -12,14 +12,21 @@ import UserHome from './UserHome';
 import AdminHome from './AdminHome';
 import MealPlan from './MealPlan';
 import ProtectedRoute from './ProtectedRoute';
-import UserSessions from './UserSessions'
+import UserSessions from './UserSessions';
+
 class App extends Component {
+
   renderNavBar = () => {
+    console.log(this.props)
+    return (window.location.pathname === '/' || window.location.pathname === '/admin')
+      ? <></>
+      // : <h1>WORKING!</h1>
+      : <Route path="/:user/:database/:id" component={Navbar} />;
     // let nav = <Navbar />
-    let nav = <Route path="/:user/:database/:id" component={Navbar} />
-    if (window.location.pathname === '/') nav = null
-    if (window.location.pathname === '/admin') nav = null
-    return nav
+    // // let nav = <Route path="/:user/:database/:id" component={Navbar} />
+    // if (window.location.pathname === '/') nav = null
+    // if (window.location.pathname === '/admin') nav = null
+    // return nav
   }
 
   render() {
