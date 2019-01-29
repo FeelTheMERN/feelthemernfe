@@ -5,9 +5,9 @@ export default function OneMeal(props) {
   return (
     <div>
       {
-          meal.map((foodItem, i) => {
-            return <p key={Math.random()}>{foodItem}<button onClick={() => props.deleteFood(day, mealIndex, i)}>-</button></p>
-          })
+        meal.map((foodItem, i) => {
+          return <p key={i}>{foodItem}<button onClick={() => props.deleteFood(day, mealIndex, i)}>-</button></p>
+        })
       }
     </div>
   )

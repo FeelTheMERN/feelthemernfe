@@ -12,16 +12,16 @@ export default class DisplayMeal extends Component {
     const { day, dayIndex } = this.props
     console.log(dayIndex)
     return (
-      <div key={Math.random()}>
+      <div>
         {
-            day.map((meal, i)=> {
-                return (
-                    <>
-                    <p key={Math.random()}>Meal {i + 1} <button key={Math.random()} onClick={() => this.remove(i, dayIndex)}>-</button><button key={Math.random()}>+ food</button></p>
-                    <OneMeal meal={meal} key={Math.random()} deleteFood={this.props.deleteFood} day={`day${dayIndex}`} mealIndex={i}/>
-                    </>
-                )
-            })
+          day.map((meal, i)=> {
+              return (
+                  <div key={i}>
+                  <p>Meal {i + 1} <button onClick={() => this.remove(i, dayIndex)}>-</button><button>+ food</button></p>
+                  <OneMeal meal={meal} deleteFood={this.props.deleteFood} day={`day${dayIndex}`} mealIndex={i}/>
+                  </div>
+              )
+          })
         }
       </div>
     )
