@@ -13,7 +13,6 @@ import AdminHome from './AdminHome';
 import MealPlan from './MealPlan';
 import ProtectedRoute from './ProtectedRoute';
 import UserSessions from './UserSessions'
-
 class App extends Component {
   renderNavBar = () => {
     // let nav = <Navbar />
@@ -24,6 +23,7 @@ class App extends Component {
   }
 
   render() {
+    // console.log(user)
     return (
       <BrowserRouter>{/* Using react-router-dom */}
         <div className="App">

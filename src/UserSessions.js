@@ -24,9 +24,7 @@ class UserSessions extends Component {
     console.log(user)
     if(!user) return <h1>Loading...</h1>
     const nextSession = user.sessions[user.sessions.length - 1]
-
     // console.log(this.date)
-
     return (
       <div className="spread">
         <h1>Sessions</h1>
@@ -40,7 +38,7 @@ class UserSessions extends Component {
         <p>{nextSession.location}</p>
       </div>
     )
-  }
+  }  
 }
 
 export default UserSessions;
