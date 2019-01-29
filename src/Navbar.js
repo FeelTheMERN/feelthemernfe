@@ -20,7 +20,7 @@ class Navbar extends Component {
     if (window.location.pathname === '/admin') return null
     return (
       <div className="Navbar">
-        <MenuDropdown />
+        <MenuDropdown match={this.props.match}/>
       </div>
     )
   }
