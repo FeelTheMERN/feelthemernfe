@@ -15,7 +15,8 @@ import ProtectedRoute from './ProtectedRoute';
 import UserSessions from './UserSessions'
 class App extends Component {
   renderNavBar = () => {
-    let nav = <Navbar />
+    // let nav = <Navbar />
+    let nav = <Route path="/:user/:database/:id" component={Navbar} />
     if (window.location.pathname === '/') nav = null
     if (window.location.pathname === '/admin') nav = null
     return nav

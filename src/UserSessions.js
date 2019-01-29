@@ -21,8 +21,10 @@ class UserSessions extends Component {
 
   render() {
     const {user} = this.state;
-    if(!user) return <h1>Loading...</h1>
     console.log(user)
+    if(!user) return <h1>Loading...</h1>
+    const nextSession = user.sessions[user.sessions.length - 1]
+    // console.log(this.date)
     return (
       <div className="spread">
         <h1>Sessions</h1>
@@ -31,6 +33,9 @@ class UserSessions extends Component {
           this.onDayClick(e, day)}/>  
         <small>no sessions on this day</small>
         <p>Next session: </p>
+        <p>{nextSession.date}</p>
+        <p>{nextSession.time}</p>
+        <p>{nextSession.location}</p>
       </div>
     )
   }  
