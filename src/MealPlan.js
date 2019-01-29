@@ -25,7 +25,7 @@ export default class MealPlan extends Component {
         // Hello, this is Lili!
         // If I mutate state or anything similar
         // I WILL copy the value, mutate that
-        // AND THEN setState...I promise!!
+        // AND THEN setState...I promise
     }
 
     deleteFood = (day, mealIndex, foodIndex) => {
