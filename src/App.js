@@ -13,6 +13,7 @@ import AdminHome from './AdminHome';
 import MealPlan from './MealPlan';
 import ProtectedRoute from './ProtectedRoute';
 import UserSessions from './UserSessions'
+import UserMealPlan from './UserMealPlan'
 class App extends Component {
   renderNavBar = () => {
     // let nav = <Navbar />
@@ -27,19 +28,24 @@ class App extends Component {
     return (
       <BrowserRouter>{/* Using react-router-dom */}
         <div className="App">
-          {this.renderNavBar()}
-          <Switch>
-             <Route path="/" component={Welcome} exact/>
-             <Route path="/admin" component={AdminLogin} exact/>
-             <ProtectedRoute path="/admin/home" component={AdminHome} exact/>
-             <ProtectedRoute path="/admin/users" component={ListUsers} exact/>
-             <ProtectedRoute path="/admin/users/:id" component={UserProfile} exact/>
-             <ProtectedRoute path="/admin/users/:id/mealplan" component={MealPlan} exact/>
-             <ProtectedRoute path="/admin/new-user" component={NewUser} exact/>
-             <ProtectedRoute path="/user/users/:id/home" component={UserHome} exact/>
-             <ProtectedRoute path="/user/users/:id/sessions" component={UserSessions} exact/>
-             <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
-          </Switch>
+          <div className="content-container">
+            <p id="logo-type">SkyeFIT</p>
+            <hr></hr>
+            {this.renderNavBar()}
+            <Switch>
+              <Route path="/" component={Welcome} exact/>
+              <Route path="/admin" component={AdminLogin} exact/>
+              <ProtectedRoute path="/admin/home" component={AdminHome} exact/>
+              <ProtectedRoute path="/admin/users" component={ListUsers} exact/>
+              <ProtectedRoute path="/admin/users/:id" component={UserProfile} exact/>
+              <ProtectedRoute path="/admin/users/:id/mealplan" component={MealPlan} exact/>
+              <ProtectedRoute path="/admin/new-user" component={NewUser} exact/>
+              <ProtectedRoute path="/user/users/:id/home" component={UserHome} exact/>
+              <ProtectedRoute path="/user/users/:id/sessions" component={UserSessions} exact/>
+              <ProtectedRoute path="/user/users/:id/mealplan" component={UserMealPlan} exact/>
+              <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
+            </Switch>
+          </div>
         </div>
       </BrowserRouter>
     );

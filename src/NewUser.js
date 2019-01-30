@@ -107,7 +107,8 @@ class NewUser extends Component {
     render() {
         const { title, formPage } = this.state
         return (
-            <>
+            <div className="main-container">
+            <div className="content-container">
                 { title && <h1>{title}</h1> }
                 { formPage === 1 && <AccountDetailForm 
                         handleInputChange={this.handleInputChange} 
@@ -142,7 +143,8 @@ class NewUser extends Component {
                     { formPage !== 4 && <button onClick={this.nextForm}>next</button>}
                     { formPage === 4 && <button onClick={this.submitForm}>Submit</button>}
                 </div>
-            </>
+            </div>
+            </div>
         )
     }
 }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-// import { Link } from 'react-router-dom'
-// import UserCard from './UserCard'
+import './css/userhome.scss';
 class UserHome extends Component {
   state = {};
     
@@ -18,11 +17,13 @@ class UserHome extends Component {
     if(!user) return <h1>Loading...</h1>
     // console.log(user)
     return (
-      <>
-        <h1>Welcome</h1>
-        <h3>{user.username}</h3>
-        <p>Your next session is: </p>
-      </>
+      <div className="main-container">
+        <div className="content-container">
+          <h1>Welcome</h1>
+          <h3>{user.username}</h3>
+          <p>Your next session is: </p>
+        </div>
+      </div>
     )
   }
 }

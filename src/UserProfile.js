@@ -152,38 +152,40 @@ class UserProfile extends Component {
     if(!user) return <h1>Loading...</h1>
 console.log(contactDetails)
     return (
-      <>
-        <h1>Personal Info</h1>
-        <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
-        { !editPersonalDetailsBtn && <>{personalDetails}</>}
-        { editPersonalDetailsBtn && <>{personalDetails}</>}
-        { editPersonalDetailsBtn && <button>Save</button>}
+      <div className="main-container">
+        <div className="content-container">
+          <h1>Personal Info</h1>
+          <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
+          { !editPersonalDetailsBtn && <>{personalDetails}</>}
+          { editPersonalDetailsBtn && <>{personalDetails}</>}
+          { editPersonalDetailsBtn && <button>Save</button>}
 
-        <h1>Personal Attributes</h1>
-        <button onClick={this.editPersonalAttributes}>{personalAttributesBtnMsg}</button>
-        { !personalAttributeBtn && <>{personalAttributes}</>}
-        { personalAttributeBtn && <>{personalAttributes}</>}
-        { personalAttributeBtn && <button>Save</button>}
+          <h1>Personal Attributes</h1>
+          <button onClick={this.editPersonalAttributes}>{personalAttributesBtnMsg}</button>
+          { !personalAttributeBtn && <>{personalAttributes}</>}
+          { personalAttributeBtn && <>{personalAttributes}</>}
+          { personalAttributeBtn && <button>Save</button>}
 
-        <h1>Contact Details</h1>
-        <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
-        { !editContactDetailsBtn && <>{contactDetails}</>}
-        { editContactDetailsBtn && <>{contactDetails}</>}
-        { editContactDetailsBtn && <button>Save</button>}
+          <h1>Contact Details</h1>
+          <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
+          { !editContactDetailsBtn && <>{contactDetails}</>}
+          { editContactDetailsBtn && <>{contactDetails}</>}
+          { editContactDetailsBtn && <button>Save</button>}
 
-        <h1>Notes</h1>
-        <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
-        { !editNotesBtn && <>{notes}</>}
-        { editNotesBtn && <>{notes}</>}
-        { editNotesBtn && <button>Save</button>}
+          <h1>Notes</h1>
+          <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
+          { !editNotesBtn && <>{notes}</>}
+          { editNotesBtn && <>{notes}</>}
+          { editNotesBtn && <button>Save</button>}
 
-        <h1>Remaining Sessions</h1>
-        <p>{user.remainingSessions}</p>
-        <button onClick={this.showTransactions}>Transaction History</button>
-        { printTransaction && <p>{printTransaction}</p>}
-        <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
-        <button>Add New Booking</button>
-      </>
+          <h1>Remaining Sessions</h1>
+          <p>{user.remainingSessions}</p>
+          <button onClick={this.showTransactions}>Transaction History</button>
+          { printTransaction && <p>{printTransaction}</p>}
+          <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
+          <button>Add New Booking</button>
+        </div>
+      </div>
     )
   }
 }

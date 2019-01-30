@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import menuIcon from "./assets/icons/MenuIcon.svg"
-// import yellowMenuIcon from "./assets/icons/MenuIcon_yellow.svg"
-import mealIcon from "./assets/icons/good-diet-svgrepo-com.svg"
-import exerciseIcon from "./assets/icons/exercise-svgrepo-com.svg"
-import progressIcon from "./assets/icons/graphic-progression-svgrepo-com.svg"
+import homeIcon from "./assets/icons/home.svg"
+import mealIcon from "./assets/icons/mealplan.svg"
+import exerciseIcon from "./assets/icons/sessions.svg"
+import progressIcon from "./assets/icons/progress.svg"
 import './css/navbar.scss';
 import {Link} from "react-router-dom"
 class MenuDropdown extends Component {
@@ -39,25 +38,28 @@ class MenuDropdown extends Component {
   render() {
     const { id } = this.props.match.params
     const sessionsLink = `/user/users/${id}/sessions`
+    const mealPlanLink = `/user/users/${id}/mealplan`
     return (
       <div>
         {
           this.state.showMenu
             ? (
               <div
-                className="menu"
+                className="menu-window"
                 ref={(element) => {
                   this.dropdownMenu = element;
                 }}
               >
-                <Link to="/" className="menu-item">Home</Link>
-                <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
-                <Link to="/user/users/:id/mealplan" className="menu-item">Meal Plan</Link>
-                <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
-                <Link to={sessionsLink} className="menu-item">Sessions</Link>
-                <img id="menu-icon" src={exerciseIcon} alt="Sessions Icon"></img>
-                <p className="menu-item">Progress</p>
-                <img id="menu-icon" src={progressIcon} alt="Progress Icon"></img>
+                <div className="menu-content">
+                  <Link to="/" className="menu-item">Home</Link>
+                  <img id="menu-icon" src={homeIcon} alt="Meal Plan Icon"></img>
+                  <Link to={mealPlanLink} className="menu-item">Meal Plan</Link>
+                  <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
+                  <Link to={sessionsLink} className="menu-item">Sessions</Link>
+                  <img id="menu-icon" src={exerciseIcon} alt="Sessions Icon"></img>
+                  <Link to={sessionsLink} className="menu-item">Progress</Link>
+                  <img id="menu-icon" src={progressIcon} alt="Progress Icon"></img>
+                </div>
               </div>
             )
             : (
@@ -65,7 +67,7 @@ class MenuDropdown extends Component {
             )
         }
         {/* <div id="nav-icon" onClick={this.showMenu} alt="SkyeFIT Logo"></div> */}
-        <img id="menu-icon" src={menuIcon} onClick={this.showMenu} alt="SkyeFIT Logo"></img>
+        <p id="nav-text" onClick={this.showMenu} alt="Menu">MENU</p>
       </div>
     );
   }

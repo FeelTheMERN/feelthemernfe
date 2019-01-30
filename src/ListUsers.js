@@ -22,22 +22,24 @@ class ListUsers extends Component {
     if(!users) return <h1>Loading...</h1>
     console.log(users)
     return (
-        <>
-        <SearchBar/>
-            {users.map(user => {
-                return (
-                    <>
-                        <UserCard
-                        key={user._id}
-                        id={user._id}
-                        firstName={user.personalAttribute.firstName}
-                        lastName={user.personalAttribute.lastName}
-                        />
-                    </>
-                )
-            })}
-            <Link to="/admin/new-user">Add User</Link>
-        </>
+        <div className="main-container">
+            <div className="content-container">
+            <SearchBar/>
+                {users.map(user => {
+                    return (
+                        <>
+                            <UserCard
+                            key={user._id}
+                            id={user._id}
+                            firstName={user.personalAttribute.firstName}
+                            lastName={user.personalAttribute.lastName}
+                            />
+                        </>
+                    )
+                })}
+                <Link to="/admin/new-user">Add User</Link>
+            </div>
+        </div>
     )
   }
 }
