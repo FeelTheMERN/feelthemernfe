@@ -5,7 +5,7 @@ export default class SearchBar extends Component {
 
   search = (e) => {
       const {value, id} = e.currentTarget;
-      axios.findOne({value})
+      this.props.search(value)
   }
 
   render() {

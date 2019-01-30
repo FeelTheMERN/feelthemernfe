@@ -12,21 +12,39 @@ class ListUsers extends Component {
   componentDidMount() {
         const config = { headers: {token: localStorage.getItem('token')}}
         axios.get('http://localhost:5000/admin/users', config)
-            .then(resp => this.setState({users: resp.data}))
+            .then(resp => this.setState({users: resp.data, filteredUsers: resp.data}))
             .catch(err => console.log(err));
+  }
+
+  handleSearch = (search) => {
+    const { users } = this.state
+    const string = search.toLowerCase()
+
+    let filteredUsers = users.filter(user => {
+        if(user.personalAttribute.firstName.toLowerCase().includes(string) || user.personalAttribute.lastName.toLowerCase().includes(string)) {
+            return user
+        }
+    })
+
+    if(filteredUsers.length === 0) {
+        this.setState({filteredUsers: null})
+    } else {
+        this.setState({ filteredUsers })
+    }
   }
     
   //with each user in the users array, we will render a UserCard component passing id, firstname and lastname as props. if there is no users it will render loading...
   render() {
 
-    const {users} = this.state;
+    const {users, filteredUsers} = this.state;
     if(!users) return <h1>Loading...</h1>
     console.log(users)
     return (
         <div className="main-container">
             <div className="content-container">
-            <SearchBar/>
-                {users.map(user => {
+            <SearchBar search={this.handleSearch}/>
+                {filteredUsers &&
+                filteredUsers.map(user => {
                     return (
                         <>
                             <UserCard
@@ -36,8 +54,7 @@ class ListUsers extends Component {
                             lastName={user.personalAttribute.lastName}
                             />
                         </>
-                    )
-                })}
+                )})}
                 <Link to="/admin/new-user">Add User</Link>
             </div>
         </div>
