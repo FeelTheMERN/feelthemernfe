@@ -10,8 +10,6 @@ import PrintPersonalAttributes from './PrintPersonalAttributes';
 
 class UserProfile extends Component {
   state = {
-    firstName: '',
-    lastName: ''
   };
 
   //when component mounts a get request for a single user is triggered and the user state is set to the data that comes back.
@@ -31,6 +29,7 @@ class UserProfile extends Component {
         })
       })
       .catch(err => {
+        if(!err.response) return console.log(err)
         if(err.response.status === 403) this.props.history.replace('/admin')
       });
   }
