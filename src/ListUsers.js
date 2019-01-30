@@ -18,6 +18,7 @@ class ListUsers extends Component {
     
   //with each user in the users array, we will render a UserCard component passing id, firstname and lastname as props. if there is no users it will render loading...
   render() {
+
     const {users} = this.state;
     if(!users) return <h1>Loading...</h1>
     console.log(users)

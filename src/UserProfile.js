@@ -7,6 +7,7 @@ import ClientNotesForm from './ClientNotesForm';
 import PrintContactDetails from './PrintContactDetails';
 import AccountDetailForm from './AccountDetailForm';
 import PrintPersonalAttributes from './PrintPersonalAttributes';
+import DeleteConfirmation from './DeleteConfirmation'
 
 class UserProfile extends Component {
   state = {};
@@ -125,15 +126,18 @@ class UserProfile extends Component {
     }
     console.log(data)
     axios.delete(url, {headers: {token: localStorage.getItem('token')}, data})
-      .then(resp => console.log(resp.data))
+      .then(resp => {
+        if(resp.data.message === 'User successfully deleted') this.setState({deleteConfirm: true})
+      })
       .catch(err => {
-        if(err.response.status === 401) console.log("Unauthorized")
-        if(err.response.status === 403) this.props.history.replace('/admin')
+        if(!err.response) return console.log(err)
+        if(err.response.status === 401) return console.log("Unauthorized")
+        if(err.response.status === 403) return this.props.history.replace('/admin')
         console.log(err.response)})
   }
 
   render() {
-    const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn } = this.state;
+    const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm } = this.state;
 
     if(!user) return <h1>Loading...</h1>
     return (
@@ -181,6 +185,7 @@ class UserProfile extends Component {
         <button>Add New Booking</button>
 
         <button onClick={this.deleteUser}>Delete User</button>
+        {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
      
       </div>
       </div>
