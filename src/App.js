@@ -19,10 +19,9 @@ class App extends Component {
 
   renderNavBar = () => {
     console.log(this.props)
-    return (window.location.pathname === '/' || window.location.pathname === '/admin')
-      ? <></>
-      // : <Route path="/:user/:action" component={Navbar} />
-      : <Route path="/:user/:database/:id" component={Navbar} />;
+    if(window.location.pathname === '/' || window.location.pathname === '/admin') return <></>
+    if(window.location.pathname.split('/')[1] === 'user') return <Route path="/:user/:database/:id" component={Navbar} />;
+    if(window.location.pathname.split('/')[1] === 'admin') return <Route path="/:admin/:action" component={Navbar}/>
     // let nav = <Navbar />
     // // let nav = <Route path="/:user/:database/:id" component={Navbar} />
     // if (window.location.pathname === '/') nav = null
