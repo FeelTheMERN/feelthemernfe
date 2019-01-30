@@ -17,6 +17,7 @@ export default class PinchesFormMale extends Component {
         const { chest, abdomen, thigh } = this.state
         const { dob, weight } = this.props
         const config = { headers: {token: localStorage.getItem('token')}}
+        console.log(config)
         const url = "http://localhost:5000/admin/pinches/male";
         const data = { chest, abdomen, thigh, dob, weight }
         console.log(data)
@@ -28,7 +29,7 @@ export default class PinchesFormMale extends Component {
                     this.props.setBodyFat(bodyFat, fatMass, leanMass )
                 })
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(err.response))
     }
 
     render() {

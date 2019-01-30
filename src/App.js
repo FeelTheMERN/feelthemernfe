@@ -20,7 +20,7 @@ class App extends Component {
     console.log(this.props)
     return (window.location.pathname === '/' || window.location.pathname === '/admin')
       ? <></>
-      // : <h1>WORKING!</h1>
+      // : <Route path="/:user/:action" component={Navbar} />
       : <Route path="/:user/:database/:id" component={Navbar} />;
     // let nav = <Navbar />
     // // let nav = <Route path="/:user/:database/:id" component={Navbar} />

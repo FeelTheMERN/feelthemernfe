@@ -5,7 +5,8 @@ import mealIcon from "./assets/icons/good-diet-svgrepo-com.svg"
 import exerciseIcon from "./assets/icons/exercise-svgrepo-com.svg"
 import progressIcon from "./assets/icons/graphic-progression-svgrepo-com.svg"
 import './css/navbar.scss';
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+
 class MenuDropdown extends Component {
   constructor() {
     super();
@@ -37,7 +38,8 @@ class MenuDropdown extends Component {
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.state.showMenu)
+    // console.log(this.state)
     const { id } = this.props.match.params
     const sessionsLink = `/user/users/${id}/sessions`
     return (
