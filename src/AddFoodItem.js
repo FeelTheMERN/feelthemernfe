@@ -28,16 +28,20 @@ export default class AddFoodItem extends Component {
     this.setState({ inputValue: food.food_name})
   }
 
-  getFood = () => {
-    //send a request to the back end for matching food items from the external api
-    // should get back object with qty and name
-    return "110g"
-  }
-
   submitFood = (e) => {
     e.preventDefault()
-    this.props.addFoodToMeal(this.state.foodItem)
+    this.props.addFoodToMeal(this.state.inputValue)
+
+    const payload = {
+      query: this.state.inputValue
+    }
+
+    axios.post('http://localhost:5000/admin/macros', payload)
+      .then(resp => console.log(resp))
+      .catch(err => console.log(err.response))
+
     e.target.previousSibling.value = ''//empties the input field when submitted
+    this.setState({ foods: null})
   }
 
   render() {
@@ -52,8 +56,8 @@ export default class AddFoodItem extends Component {
                 <button onClick={this.submitFood}>+</button>
                 {foods && foods.map((food, i) => {
                   return(
-                    <p key={i} onClick={(food)=>this.setItem} >{food.food_name}</p>
-                  ) 
+                    <p key={i} onClick={() => this.setItem(food)}>{food.food_name}</p>
+                  )
                 })}
             </div>
         </form>
