@@ -19,16 +19,23 @@ export default class MealPlan extends Component {
 
     deleteMeal = (day, i) => {
         // const dayIndex = day.split('').pop()
-        this.state.mealPlan[day].splice(i, 1)
-        this.setState({})
+        const { mealPlan } = this.state
+        mealPlan[day].splice(i, 1)
+        this.setState({ mealPlan })
+        // Hello, this is Lili!
+        // If I mutate state or anything similar
+        // I WILL copy the value, mutate that
+        // AND THEN setState...I promise
     }
 
     deleteFood = (day, mealIndex, foodIndex) => {
         //day: [[{}],[{},{}]] got to find the meal array the food is in day[x] => get array back
         //then find the food item in the meal array mealPlan[day][mealIndex].splice[foodIndex, 1]
+        console.log("in delete food")
         const {mealPlan} = this.state
         mealPlan[day][mealIndex].splice(foodIndex, 1)
         if(mealPlan[day][mealIndex].length === 0) mealPlan[day].splice(mealIndex, 1)
+        this.setState({mealPlan})
     }
 
     addMealtoDay = (meal) => {
@@ -36,7 +43,6 @@ export default class MealPlan extends Component {
         const day = `day${formPage}`
 
         mealPlan[day].push(meal)
-        this.setState({ displayMeal: <DisplayMeal key={Math.random()} day={mealPlan[day]} dayIndex={formPage} deleteMeal={this.deleteMeal} deleteFood={this.deleteFood}/>})
         
         this.mealSavedTrue()
         this.setState({message: null})
@@ -50,26 +56,25 @@ export default class MealPlan extends Component {
 
     nextForm = (e) => {
         e.preventDefault();
-        const { formPage, mealSaved, mealPlan } = this.state;
+        const { formPage, mealSaved } = this.state;
         
         if(!mealSaved) return this.setState({message: "You need to save meal first"})
 
         const newformPage = formPage + 1
-        const day = `day${formPage + 1}`
-        this.setState({ formPage: newformPage, displayMeal: <DisplayMeal day={mealPlan[day]} deleteMeal={this.deleteMeal} deleteFood={this.deleteFood} dayIndex={formPage + 1} key={Math.random()}/> }, () => {
+  
+        this.setState({ formPage: newformPage}, () => {
             this.changeClassNext()
         }) 
     }
 
     backForm = (e) => {
         e.preventDefault();
-        const { formPage, mealSaved, mealPlan } = this.state;
+        const { formPage, mealSaved } = this.state;
         
         if(!mealSaved) return this.setState({message: "You need to save meal first"})
 
         const newformPage = formPage - 1
-        const day = `day${formPage - 1}`
-        this.setState({ formPage: newformPage, displayMeal: <DisplayMeal day={mealPlan[day]} deleteMeal={this.deleteMeal} deleteFood={this.deleteFood} dayIndex={formPage - 1} key={Math.random()}/> }, () => {
+        this.setState({ formPage: newformPage }, () => {
             this.changeClassBack()
         }) 
     }
@@ -107,7 +112,7 @@ export default class MealPlan extends Component {
     }
 
     render() {
-        const { formPage, displayMeal, message, a, b, c, d, e, f, g } = this.state
+        const { formPage, mealPlan, message, a, b, c, d, e, f, g } = this.state
         console.log(this.state.mealPlan)
         return (
             <div className="main-container">
@@ -120,9 +125,43 @@ export default class MealPlan extends Component {
                     <h4 className={e}>Day 5</h4> 
                     <h4 className={f}>Day 6</h4> 
                     <h4 className={g}>Day 7</h4> 
-                </div>
+                </div> 
                 <h1>Day {formPage}</h1>
-                { displayMeal && <>{displayMeal}</> }
+                {formPage === 1 && <DisplayMeal 
+                        day={mealPlan.day1} 
+                        deleteMeal={this.deleteMeal} 
+                        deleteFood={this.deleteFood} 
+                        dayIndex={formPage} />}
+                {formPage === 2 && <DisplayMeal 
+                        day={mealPlan.day2} 
+                        deleteMeal={this.deleteMeal} 
+                        deleteFood={this.deleteFood} 
+                        dayIndex={formPage} />}
+                {formPage === 3 && <DisplayMeal 
+                        day={mealPlan.day3} 
+                        deleteMeal={this.deleteMeal} 
+                        deleteFood={this.deleteFood} 
+                        dayIndex={formPage} />}
+                {formPage === 4 && <DisplayMeal 
+                        day={mealPlan.day4} 
+                        deleteMeal={this.deleteMeal} 
+                        deleteFood={this.deleteFood} 
+                        dayIndex={formPage} />}
+                {formPage === 5 && <DisplayMeal 
+                        day={mealPlan.day5} 
+                        deleteMeal={this.deleteMeal} 
+                        deleteFood={this.deleteFood} 
+                        dayIndex={formPage} />}
+                {formPage === 6 && <DisplayMeal 
+                        day={mealPlan.day6} 
+                        deleteMeal={this.deleteMeal} 
+                        deleteFood={this.deleteFood} 
+                        dayIndex={formPage} />}
+                {formPage === 7 && <DisplayMeal 
+                        day={mealPlan.day7} 
+                        deleteMeal={this.deleteMeal} 
+                        deleteFood={this.deleteFood} 
+                        dayIndex={formPage} />}
                 <Meal addMealtoDay={this.addMealtoDay} mealSavedFalse={this.mealSavedFalse} mealSavedTrue={this.mealSavedTrue}/> 
                 <div>
                     { formPage > 1 && <button onClick={this.backForm}>back</button>}

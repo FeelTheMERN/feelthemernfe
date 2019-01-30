@@ -16,7 +16,7 @@ class NewUser extends Component {
         lastName: '',
         dob: '',
         gender: '',
-        setBodyFat: '',
+        bodyFat: '',
         height: '',
         weight: '',
         bodyFat: '',
@@ -40,10 +40,9 @@ class NewUser extends Component {
         this.setState({[id]: value})
     }
 
-    //redirect() redirects the user to their home page based on the user role
-    redirect = (isAdmin) => {
-        if(isAdmin) this.props.history.push('/admin/home')
-        this.props.history.push('user/home')
+    //redirect() to the user page when the user has been submitted
+    redirect = (id) => {
+        this.props.history.replace(`/admin/users/${id}`)
     }
 
     //setBodyFat() is a function passed to ClientAttributeForm so that we can set state of bodyFat on this component
@@ -54,10 +53,24 @@ class NewUser extends Component {
     //submitForm() sends the username and password using axios. we should recieve a token which is then stored on local storage. once complete it runs the redirect funtion.
     submitForm = (e) => {
         e.preventDefault();
-        const { username, password } = this.state
-        const url = 'http://localhost:5000/url';
-        const data = { username, password }
-        axios.post(url, data)//structure the data correctly before sending
+        const { username, password, email, contactNumber, firstName, lastName, dob, gender, height, weight, bodyFat, fatMass, leanMass, goalWeight, goalBodyFat, notes  } = this.state
+        const url = 'http://localhost:5000/admin/users/new';
+        const config = { headers: {token: localStorage.getItem('token')}}
+        const data = { 
+            user: {
+                username, 
+                password,
+                contact: {email, contactNumber},
+                personalAttribute: { firstName, lastName, dob, gender, height, weightLog:[weight], bodyFatLog:[bodyFat], fatMass:[fatMass], leanMass:[leanMass], goalWeight, goalBodyFat},
+                notes
+            }
+         }
+        axios.post(url, data, config)//structure the data correctly before sending
+            .then(resp => {
+                const {_id} = resp.data
+                this.redirect(_id)
+            })
+            .catch(err => console.log(err.response))
     }
 
     //this funtion runs when the next button is clicked. it will check what page the form is currently on and will render the next component and update the page number.
@@ -105,6 +118,7 @@ class NewUser extends Component {
     }
 
     render() {
+        console.log(this.state.setBodyFat)
         const { title, formPage } = this.state
         return (
             <div className="main-container">

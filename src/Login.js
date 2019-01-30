@@ -11,6 +11,7 @@ class Login extends Component {
 
     //redirect() redirects the user to their home page based on the user role
     redirect = (isAdmin, id) => {
+        console.log(isAdmin)
         if(isAdmin) return this.props.history.push('/admin/home')
         this.props.history.push(`user/users/${id}/home`)
     }
@@ -19,8 +20,8 @@ class Login extends Component {
     submitForm = (e) => {
         e.preventDefault();
         let url
-        if(window.location.pathname === "/admin") url = "http://localhost:5000/admin";
-        if(window.location.pathname === "/") url = "http://localhost:5000/user/login";
+        if(window.location.pathname === "/admin") url = "http://localhost:5000/login/admin";
+        if(window.location.pathname === "/") url = "http://localhost:5000/login/user";
 
         const { username, password } = this.state        
         const data = { username, password }

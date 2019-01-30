@@ -7,37 +7,40 @@ import ClientNotesForm from './ClientNotesForm';
 import PrintContactDetails from './PrintContactDetails';
 import AccountDetailForm from './AccountDetailForm';
 import PrintPersonalAttributes from './PrintPersonalAttributes';
-import ClientAttributeForm from './ClientAttributeForm'
 
 class UserProfile extends Component {
-  state = {};
+  state = {
+  };
 
   //when component mounts a get request for a single user is triggered and the user state is set to the data that comes back.
   componentDidMount(){
-    const url = `http://localhost:5000/admin/users/${this.props.match.params.id}`
-    const config = { headers: {token: localStorage.getItem('token')}}
+    // const url = `http://localhost:5000/admin/users/${this.props.match.params.id}`
+    // const config = { headers: {token: localStorage.getItem('token')}}
 
-    axios.get(url, config)
+    // axios.get(url, config)
+    this.getUser()
       .then(resp => {
         this.setState({user: resp.data}, () => {
-          const { user } = this.state
           this.setState({ 
-            personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>,
             personalDetailsBtnMsg: 'Edit',
-            notes: <p>{user.notes}</p>,
             editNotesBtnMsg: 'Edit Notes',
-            contactDetails: <PrintContactDetails obj={user.contact}/>,
-            contactDetailsBtnMsg: 'Edit',
-            personalAttributesBtnMsg: 'Edit',
-            personalAttributes: <PrintPersonalAttributes obj={user.personalAttribute}/>
-            })
+            contactDetailsBtnMsg: 'Edit'
+          })
         })
       })
       .catch(err => {
-        if(err.status === 500) return console.error("Token expired")
-        console.error(err)
+        if(!err.response) return console.log(err)
+        if(err.response.status === 403) this.props.history.replace('/admin')
       });
   }
+
+  getUser = () => {
+    const url = `http://localhost:5000/admin/users/${this.props.match.params.id}`
+    const config = { headers: {token: localStorage.getItem('token')}}
+
+    return axios.get(url, config)
+  }
+
 
   //showTransactions() runs when the button is clicked
   showTransactions = (e) => {
@@ -58,133 +61,111 @@ class UserProfile extends Component {
   }
 
   editPersonalDetails = () => {
-    const { user, editPersonalDetailsBtn } = this.state
-    console.log("in edit personal details btn")
-
-    if(!editPersonalDetailsBtn){
-      this.setState({
-        editPersonalDetailsBtn: true, 
-        personalDetailsBtnMsg: 'Cancel',
-        personalDetails: <PersonalDetailForm 
-          firstName={user.personalAttribute.firstName}
-          lastName={user.personalAttribute.lastName}
-          dob={user.personalAttribute.dob}
-          gender={user.personalAttribute.gender}/>
-      })
-    } 
-    if(editPersonalDetailsBtn){
-      this.setState({ 
-        editPersonalDetailsBtn: false, 
-        personalDetailsBtnMsg: 'Edit', 
-        personalDetails: <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>
-      })
+    const { editPersonalDetailsBtn } = this.state
+    if(!editPersonalDetailsBtn) this.setState({ editPersonalDetailsBtn: true, personalDetailsBtnMsg: 'Cancel'})
+    if(editPersonalDetailsBtn) {
+      this.getUser()
+        .then(resp => this.setState({ user: resp.data, editPersonalDetailsBtn: false, personalDetailsBtnMsg: 'Edit'}))
+        .catch(err => {
+          if(err.response.status === 403) this.props.history.replace('/admin')
+        });
     }
   }
 
   editNotes = () => {
-    const { user, editNotesBtn } = this.state
-    if(!editNotesBtn){
-      this.setState({
-        editNotesBtn: true,
-        editNotesBtnMsg: 'Cancel',
-        notes: <ClientNotesForm notes={user.notes} />
-      })
-    }
+    const { editNotesBtn } = this.state
+    if(!editNotesBtn) this.setState({ editNotesBtn: true, editNotesBtnMsg: 'Cancel'})
     if(editNotesBtn) {
-      this.setState({
-        editNotesBtn: false,
-        editNotesBtnMsg: 'Edit Notes',
-        notes: <p>{user.notes}</p>
-      })
+      this.getUser()
+      .then(resp => this.setState({ user: resp.data, editNotesBtn: false, editNotesBtnMsg: 'Edit Notes'}))
+      .catch(err => {
+        if(err.response.status === 403) this.props.history.replace('/admin')
+      });
     }
   }
 
   editContactDetails = () => {
-    const { editContactDetailsBtn, user} = this.state
-    if(!editContactDetailsBtn){
-      this.setState({
-        editContactDetailsBtn: true,
-        contactDetailsBtnMsg: 'Cancel',
-        contactDetails: <AccountDetailForm 
-          email={user.contact.email}
-          contactNumber={user.contact.contactNumber}/>
-      })
-    }
+    const { editContactDetailsBtn } = this.state
+    if(!editContactDetailsBtn) this.setState({ editContactDetailsBtn: true, contactDetailsBtnMsg: 'Cancel'})
     if(editContactDetailsBtn) {
-      this.setState({
-        editContactDetailsBtn: false,
-        contactDetailsBtnMsg: 'Edit',
-        contactDetails: <PrintContactDetails obj={user.contact}/>
-      })
+      this.getUser()
+      .then(resp => this.setState({ user: resp.data, editContactDetailsBtn: false, contactDetailsBtnMsg: 'Edit'}))
+      .catch(err => {
+        if(err.response.status === 403) this.props.history.replace('/admin')
+      });
     }
   }
 
-  editPersonalAttributes = () => {
-    const { personalAttributeBtn, user} = this.state
-    const { personalAttribute} = this.state.user
-    console.log(personalAttribute.weightLog[personalAttribute.weightLog.length - 1])
-    if(!personalAttributeBtn){
-      this.setState({
-        personalAttributeBtn: true,
-        personalAttributesBtnMsg: 'Cancel',
-        personalAttributes: <ClientAttributeForm 
-          height={personalAttribute.height}
-          weight={personalAttribute.weightLog[personalAttribute.weightLog.length - 1]}
-          bodyFat={personalAttribute.bodyFatLog[personalAttribute.bodyFatLog.length - 1]}
-          // fatMass={}
-          // leanMass={}
-          goalWeight={personalAttribute.goalWeight}
-          goalBodyFat={personalAttribute.goalBodyFat}
-          />
-      })
-    }
-    if(personalAttributeBtn){
-      this.setState({
-        personalAttributeBtn: false,
-        personalAttributesBtnMsg: 'Edit',
-        personalAttributes: <PrintPersonalAttributes obj={this.user.personalAttribute}/>
-      })
+  handleInputChange = (e) => {
+    const {value, id} = e.currentTarget;
+    // console.log(this.state.user.personalAttribute[id])
+    // this.setState({[id]: value})
+    const {personalAttribute} = this.state.user
+    personalAttribute[id] = value
+    this.setState({personalAttribute})
+  }
+
+  contactInputChange = (e) => {
+    const {value, id} = e.currentTarget
+    if(id === 'username' || id === 'notes') {
+      const {user} = this.state
+      user[id] = value
+      this.setState({user})
+    } else {
+      const {contact} = this.state.user
+      contact[id] = value
+      this.setState({contact})
     }
   }
 
   render() {
-    const { user, printTransaction, personalDetails, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, notes, editNotesBtnMsg, editContactDetailsBtn, contactDetails, contactDetailsBtnMsg, personalAttributesBtnMsg, personalAttributeBtn, personalAttributes } = this.state;
+    const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn } = this.state;
+
     if(!user) return <h1>Loading...</h1>
-console.log(contactDetails)
     return (
       <div className="main-container">
-        <div className="content-container">
-          <h1>Personal Info</h1>
-          <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
-          { !editPersonalDetailsBtn && <>{personalDetails}</>}
-          { editPersonalDetailsBtn && <>{personalDetails}</>}
-          { editPersonalDetailsBtn && <button>Save</button>}
+      <div className="content-container">
+        <h1>Personal Info</h1>
+        <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
+        { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
+        { editPersonalDetailsBtn && <PersonalDetailForm 
+              // firstName={user.personalAttribute.firstName}
+              firstName={user.personalAttribute.firstName}
+              lastName={user.personalAttribute.lastName}
+              dob={user.personalAttribute.dob}
+              gender={user.personalAttribute.gender}
+              handleInputChange={this.handleInputChange}/>}
+        { editPersonalDetailsBtn && <button>Save</button>}
 
-          <h1>Personal Attributes</h1>
-          <button onClick={this.editPersonalAttributes}>{personalAttributesBtnMsg}</button>
-          { !personalAttributeBtn && <>{personalAttributes}</>}
-          { personalAttributeBtn && <>{personalAttributes}</>}
-          { personalAttributeBtn && <button>Save</button>}
+        <h1>Personal Attributes</h1>
+        {/* <button onClick={this.editPersonalAttributes}>{personalAttributesBtnMsg}</button> */}
+        { !personalAttributeBtn && <PrintPersonalAttributes obj={user.personalAttribute}/>}
+        { personalAttributeBtn && <></>}
+        { personalAttributeBtn && <button>Save</button>}
 
-          <h1>Contact Details</h1>
-          <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
-          { !editContactDetailsBtn && <>{contactDetails}</>}
-          { editContactDetailsBtn && <>{contactDetails}</>}
-          { editContactDetailsBtn && <button>Save</button>}
+        <h1>Contact Details</h1>
+        <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
+        { !editContactDetailsBtn && <PrintContactDetails obj={user.contact}/>}
+        { editContactDetailsBtn && <AccountDetailForm 
+              handleInputChange={this.contactInputChange}
+              username={user.username}
+              email={user.contact.email}
+              contactNumber={user.contact.contactNumber}/>}
+        { editContactDetailsBtn && <button>Save</button>}
 
-          <h1>Notes</h1>
-          <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
-          { !editNotesBtn && <>{notes}</>}
-          { editNotesBtn && <>{notes}</>}
-          { editNotesBtn && <button>Save</button>}
+        <h1>Notes</h1>
+        <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
+        { !editNotesBtn && <p>{user.notes}</p>}
+        { editNotesBtn && <ClientNotesForm notes={user.notes} handleInputChange={this.contactInputChange}/>}
+        { editNotesBtn && <button>Save</button>}
 
-          <h1>Remaining Sessions</h1>
-          <p>{user.remainingSessions}</p>
-          <button onClick={this.showTransactions}>Transaction History</button>
-          { printTransaction && <p>{printTransaction}</p>}
-          <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
-          <button>Add New Booking</button>
-        </div>
+        <h1>Remaining Sessions</h1>
+        <p>{user.remainingSessions}</p>
+        <button onClick={this.showTransactions}>Transaction History</button>
+        { printTransaction && <p>{printTransaction}</p>}
+        <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
+        <button>Add New Booking</button>
+      </div>
       </div>
     )
   }

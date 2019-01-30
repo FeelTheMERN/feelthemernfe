@@ -4,7 +4,8 @@ import mealIcon from "./assets/icons/mealplan.svg"
 import exerciseIcon from "./assets/icons/sessions.svg"
 import progressIcon from "./assets/icons/progress.svg"
 import './css/navbar.scss';
-import {Link} from "react-router-dom"
+import {Link} from "react-router-dom";
+
 class MenuDropdown extends Component {
   constructor() {
     super();
@@ -36,6 +37,8 @@ class MenuDropdown extends Component {
   }
 
   render() {
+    console.log(this.state.showMenu)
+    // console.log(this.state)
     const { id } = this.props.match.params
     const sessionsLink = `/user/users/${id}/sessions`
     const mealPlanLink = `/user/users/${id}/mealplan`
