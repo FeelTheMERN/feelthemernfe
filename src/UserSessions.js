@@ -26,16 +26,18 @@ class UserSessions extends Component {
     const nextSession = user.sessions[user.sessions.length - 1]
     // console.log(this.date)
     return (
-      <div className="spread">
-        <h1>Sessions</h1>
-        <Calendar width="302px"
-          onDayClick={(e, day)=> 
-          this.onDayClick(e, day)}/>  
-        <small>no sessions on this day</small>
-        <p>Next session: </p>
-        <p>{nextSession.date}</p>
-        <p>{nextSession.time}</p>
-        <p>{nextSession.location}</p>
+      <div className="main-container">
+        <div className="content-container">
+          <h1>Sessions</h1>
+          <Calendar width="302px"
+            onDayClick={(e, day)=> 
+            this.onDayClick(e, day)}/>  
+          <small>no sessions on this day</small>
+          <p>Next session: </p>
+          <p>{nextSession.date}</p>
+          <p>{nextSession.time}</p>
+          <p>{nextSession.location}</p>
+        </div>
       </div>
     )
   }  

@@ -123,7 +123,8 @@ class UserProfile extends Component {
 
     if(!user) return <h1>Loading...</h1>
     return (
-      <>
+      <div className="main-container">
+      <div className="content-container">
         <h1>Personal Info</h1>
         <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
         { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
@@ -164,7 +165,8 @@ class UserProfile extends Component {
         { printTransaction && <p>{printTransaction}</p>}
         <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
         <button>Add New Booking</button>
-      </>
+      </div>
+      </div>
     )
   }
 }

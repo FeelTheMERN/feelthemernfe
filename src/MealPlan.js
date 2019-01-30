@@ -115,7 +115,8 @@ export default class MealPlan extends Component {
         const { formPage, mealPlan, message, a, b, c, d, e, f, g } = this.state
         console.log(this.state.mealPlan)
         return (
-            <>
+            <div className="main-container">
+            <div className="content-container">
                 <div className="mealPlanDays">
                     <h4 className={a}>Day 1</h4> 
                     <h4 className={b}>Day 2</h4> 
@@ -169,7 +170,8 @@ export default class MealPlan extends Component {
                     { formPage === 7 && <button onClick={this.submitForm}>Submit</button>}
                     { message && <>{message}</>}
                 </div>
-            </>
+            </div>
+            </div>
         )
     }
 }
