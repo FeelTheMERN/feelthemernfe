@@ -9,8 +9,7 @@ import AccountDetailForm from './AccountDetailForm';
 import PrintPersonalAttributes from './PrintPersonalAttributes';
 
 class UserProfile extends Component {
-  state = {
-  };
+  state = {};
 
   //when component mounts a get request for a single user is triggered and the user state is set to the data that comes back.
   componentDidMount(){
@@ -118,6 +117,21 @@ class UserProfile extends Component {
     }
   }
 
+  deleteUser = (e) => {
+    e.preventDefault()
+    const url = "http://localhost:5000/admin/users/delete"
+    const data = {
+      id: this.state.user._id
+    }
+    console.log(data)
+    axios.delete(url, {headers: {token: localStorage.getItem('token')}, data})
+      .then(resp => console.log(resp.data))
+      .catch(err => {
+        if(err.response.status === 401) console.log("Unauthorized")
+        if(err.response.status === 403) this.props.history.replace('/admin')
+        console.log(err.response)})
+  }
+
   render() {
     const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn } = this.state;
 
@@ -164,6 +178,7 @@ class UserProfile extends Component {
         { printTransaction && <p>{printTransaction}</p>}
         <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
         <button>Add New Booking</button>
+        <button onClick={this.deleteUser}>Delete User</button>
       </>
     )
   }
