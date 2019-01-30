@@ -79,19 +79,48 @@ class NewUser extends Component {
         const { formPage } = this.state;
         
         if(formPage === 1) {
-            const title = "Client Personal Details"
-            const newformPage = formPage + 1
-            this.setState({ title, formPage: newformPage }) 
+            const {username, email, contactNumber} = this.state
+            if(!username) this.setState({userNameError: '*This is a required field'})
+            if(username) this.setState({userNameError: null})
+
+            if(!email) this.setState({emailError: '*This is a required field'})
+            if(email) this.setState({emailError: null})
+
+            if(!contactNumber) this.setState({contactError: '*This is a required field'})
+            if(contactNumber) this.setState({contactError: null})
+
+            if(username && email && contactNumber) {
+                const title = "Client Personal Details"
+                const newformPage = formPage + 1
+                this.setState({ title, formPage: newformPage }) 
+            }
         }
         if(formPage === 2) {
-            const title = "Client Attributes"
-            const newformPage = formPage + 1
-            this.setState({ title, formPage: newformPage }) 
+            const {firstName, dob, gender} = this.state
+            if(!firstName) this.setState({firstNameError: '*This is a required field'})
+            if(firstName) this.setState({firstNameError: null})
+
+            if(!dob) this.setState({dobError: '*This is a required field'})
+            if(dob) this.setState({dobError: null})
+
+            if(!gender) this.setState({genderError: '*This is a required field'})
+            if(gender) this.setState({genderError: null})
+
+            if(firstName && dob && gender){
+                const title = "Client Attributes"
+                const newformPage = formPage + 1
+                this.setState({ title, formPage: newformPage }) 
+            }
         }
         if(formPage === 3) {
-            const title = "Client Notes"
-            const newformPage = formPage + 1
-            this.setState({ title, formPage: newformPage }) 
+            const {weight} = this.state
+            if(!weight) this.setState({weightError: '*This is a required field'})
+            if(weight) {
+                this.setState({weightError: null})
+                const title = "Client Notes"
+                const newformPage = formPage + 1
+                this.setState({ title, formPage: newformPage }) 
+            }
         }
     }
 
@@ -127,20 +156,29 @@ class NewUser extends Component {
                 { formPage === 1 && <AccountDetailForm 
                         handleInputChange={this.handleInputChange} 
                         username={this.state.username} 
+                        userNameError={this.state.userNameError}
                         email={this.state.email}
+                        emailError={this.state.emailError}                        
                         password={this.state.password}
-                        contactNumber={this.state.contactNumber}/> }
+                        contactNumber={this.state.contactNumber}
+                        contactError={this.state.contactError}
+                        /> } 
                 { formPage === 2 && <PersonalDetailForm 
                         handleInputChange={this.handleInputChange}
                         firstName={this.state.firstName}
+                        firstNameError={this.state.firstNameError}
                         lastName={this.state.lastName}
                         dob={this.state.dob}
-                        gender={this.state.gender}/>} 
+                        dobError={this.state.dobError}
+                        gender={this.state.gender}
+                        genderError={this.state.genderError}
+                        />} 
                 { formPage === 3 && <ClientAttributeForm 
                         handleInputChange={this.handleInputChange}  
                         setBodyFat={this.setBodyFat}
                         height={this.state.height}
                         weight={this.state.weight}
+                        weightError={this.state.weightError}
                         bodyFat={this.state.bodyFat}
                         fatMass={this.state.fatMass}
                         leanMass={this.state.leanMass}
