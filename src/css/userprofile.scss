@@ -1,0 +1,84 @@
+$blue: #0072BC;
+$yellow: #fefe8a;
+
+.user-profile {
+    .main-container {
+        height: 80vh;
+        .content-container {
+            // background: red;
+            width: 100%;
+            flex-flow: row wrap;
+            align-items: flex-start;
+            justify-content: center;
+            width: 90vw;
+            h1 {
+                font-size: 20px;
+                color: $blue;
+            }
+            .column {
+                display: flex;
+                flex-flow: column;
+                // background: blue;
+                width: 370px;
+                height: 100%;
+                overflow: scroll;
+                // border: 0.5px solid white;
+            }
+            .personal-info, .contact, .personal-att  {
+                display: flex;
+                flex-flow: column;
+            }
+            .personal-att {
+                input {
+                    width: 80px;
+                    font-size: 8px;
+                    border: 1px solid $blue;
+                    height: 20px;
+                }
+                button {
+                }
+                .title {
+                    height: 55.63px;
+                }
+            }
+            .directory {
+                // background: yellow;
+                overflow: scroll;
+                display: flex;
+                flex-flow: column;
+                button {
+                    width: 150px;
+                }
+            }
+            .notes {
+                overflow: scroll;
+                // text-align: left;
+                .note {
+                    height: 190px;
+                    align-items: flex-start;
+                    flex-flow: column;
+                    justify-content: flex-start;
+                }
+            }
+            
+            .title{
+                display: flex;
+                margin: 5px;
+                justify-content: space-between;
+            }
+            .box{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px;
+                // background: yellow;
+                border: 0.5px solid white;
+                margin: 5px;
+                height: 30px;
+                font-size: 12px;
+                background: $yellow;
+            }
+            
+        }
+    }
+}
