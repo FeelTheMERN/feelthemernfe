@@ -12,6 +12,7 @@ export default class AddFoodItem extends Component {
 
     this.setState({ inputValue: value })
 
+    // Headers that contain API key and Id
     const headers = {
       headers: {
         'x-app-id': process.env.REACT_APP_NUTRITIONIX_APP_ID,
@@ -19,6 +20,7 @@ export default class AddFoodItem extends Component {
       }
     }
 
+    // Querying the API with user input
     axios.get(`https://trackapi.nutritionix.com/v2/search/instant?query=${value}`, headers)
       .then(resp => this.setState({ foods: resp.data.common}))
       .catch(err => console.log(err.response))
