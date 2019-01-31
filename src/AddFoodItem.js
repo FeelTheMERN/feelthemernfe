@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 // import Axios from '../../feelthemernbe/node_modules/axios';
 import axios from 'axios'
-require('dotenv').config()
 
 export default class AddFoodItem extends Component {
   state = {
@@ -15,13 +14,10 @@ export default class AddFoodItem extends Component {
 
     const headers = {
       headers: {
-        'x-app-id': process.env.NUTRITIONIX_APP_ID,
-        'x-app-key': process.env.NUTRITIONIX_APP_KEY
+        'x-app-id': process.env.REACT_APP_NUTRITIONIX_APP_ID,
+        'x-app-key': process.env.REACT_APP_NUTRITIONIX_APP_KEY
       }
     }
-
-    // NUTRITIONIX_APP_ID=a9b61147
-    // NUTRITIONIX_APP_KEY=3f68e69f1b199c1304736e91b6a9d27c
 
     axios.get(`https://trackapi.nutritionix.com/v2/search/instant?query=${value}`, headers)
       .then(resp => this.setState({ foods: resp.data.common}))
