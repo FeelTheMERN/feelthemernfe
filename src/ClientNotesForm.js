@@ -7,6 +7,8 @@ const ClientNotesForm = (props) => {
       <form>
             <label htmlFor="notes">Client Notes:</label>
             <textarea rows="30" cols="90" id="notes" onChange={props.handleInputChange} value={props.notes}/>
+            <label htmlFor="dietaryRequirements">Dietary Requirements:</label>
+            <textarea rows="30" cols="90" id="dietaryRequirements" onChange={props.handleInputChange} value={props.dietaryRequirements}/>
         </form>
     </div>
   )
