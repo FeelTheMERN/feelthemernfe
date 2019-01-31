@@ -25,18 +25,16 @@ class AdminMenu extends Component {
     });
   }
   
-  closeMenu(event) {
-    if (this.dropdownMenu && !this.dropdownMenu.contains(event.target)) {
+  closeMenu() {
+    if (this.dropdownMenu) {
       this.setState({ showMenu: false }, () => {
-        document.removeEventListener('click', this.closeMenu);
-      });   
+        document.removeEventListener('click', this.closeMenu)
+      })   
     }
   }
 
   deleteToken = () => {
     localStorage.removeItem("token")
-    console.log(this.props.history)
-    this.props.history.replace('/admin')
   }
 
   render() {
@@ -52,13 +50,13 @@ class AdminMenu extends Component {
                 }}
               >
                 <div className="menu-content">
-                  <Link to="/admin/home" className="menu-item">Home</Link>
+                  <Link to="/admin/home" className="menu-item" onClick={this.closeMenu}>Home</Link>
                   <img id="menu-icon" src={homeIcon} alt="Home Icon"></img>
-                  <Link to="/admin/users" className="menu-item">Users</Link>
+                  <Link to="/admin/users" className="menu-item" onClick={this.closeMenu}>Users</Link>
                   <img id="menu-icon" src={userIcon} alt="Users Icon"></img>
-                  <Link to="admin/new-user" className="menu-item">Add New User</Link>
+                  <Link to="/admin/new-user" className="menu-item" onClick={this.closeMenu}>Add New User</Link>
                   <img id="menu-icon" src={addUser} alt="Add New User Icon"></img>
-                  <p className="menu-item" onClick={this.deleteToken} alt="Log Out">Log Out</p>
+                  <Link to="/admin" className="menu-item" onClick={this.deleteToken}>Log Out</Link>
                 </div>
               </div>
             )

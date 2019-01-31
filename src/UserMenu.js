@@ -26,8 +26,8 @@ class UserMenu extends Component {
     })
   }
   
-  closeMenu(event) { 
-    if (this.dropdownMenu && !this.dropdownMenu.contains(event.target)) {
+  closeMenu() {
+    if (this.dropdownMenu) {
       this.setState({ showMenu: false }, () => {
         document.removeEventListener('click', this.closeMenu)
       })   
@@ -38,14 +38,16 @@ class UserMenu extends Component {
     // when user clicks log-out, delete token
     localStorage.removeItem("token")
     // then redirect them back to log-in page
-    this.props.history.replace('/')
+    // this.props.history.replace('/')
   }
 
   render() {
     console.log(this.state.showMenu)
     const { id } = this.props.match.params
-    const sessionsLink = `/user/users/${id}/sessions`
+    const homePageLink = `/user/users/${id}/home`
     const mealPlanLink = `/user/users/${id}/mealplan`
+    const sessionsLink = `/user/users/${id}/sessions`
+
     return (
       <div>
         {
@@ -58,15 +60,16 @@ class UserMenu extends Component {
                 }}
               >
                 <div className="menu-content">
-                  <Link to="/" className="menu-item">Home</Link>
-                  <img id="menu-icon" src={homeIcon} alt="Meal Plan Icon"></img>
-                  <Link to={mealPlanLink} className="menu-item">Meal Plan</Link>
+                  <Link to={homePageLink} className="menu-item" onClick={this.closeMenu}>Home</Link>
+                  <img id="menu-icon" src={homeIcon} alt="Home Icon"></img>
+                  <Link to={mealPlanLink} className="menu-item" onClick={this.closeMenu}>Meal Plan</Link>
                   <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
-                  <Link to={sessionsLink} className="menu-item">Sessions</Link>
+                  <Link to={sessionsLink} className="menu-item" onClick={this.closeMenu}>Sessions</Link>
                   <img id="menu-icon" src={exerciseIcon} alt="Sessions Icon"></img>
-                  <Link to={sessionsLink} className="menu-item">Progress</Link>
+                  <Link to={sessionsLink} className="menu-item" onClick={this.closeMenu}>Progress</Link>
                   <img id="menu-icon" src={progressIcon} alt="Progress Icon"></img>
-                  <p className="menu-item" onClick={this.deleteToken} alt="Log Out">Log Out</p>
+                  <Link to="/" className="menu-item" onClick={this.deleteToken}>Log Out</Link>
+                  {/* <p className="menu-item" onClick={this.deleteToken} alt="Log Out">Log Out</p> */}
                 </div>
               </div>
             )
@@ -74,7 +77,6 @@ class UserMenu extends Component {
               null
             )
         }
-        {/* <div id="nav-icon" onClick={this.showMenu} alt="SkyeFIT Logo"></div> */}
         <p id="nav-text" onClick={this.showMenu} alt="Menu">MENU</p>
       </div>
     )
