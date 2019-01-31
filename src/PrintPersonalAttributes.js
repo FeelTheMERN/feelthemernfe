@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function PrintPersonalAttributes(props) {
   const {obj} = props
-  console.log(obj)
   return (
     <div>
         <p>Height: {obj.height}</p>

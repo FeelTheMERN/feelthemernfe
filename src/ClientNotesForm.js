@@ -1,7 +1,7 @@
 import React from 'react'
 
 const ClientNotesForm = (props) => {
-
+console.log(props)
   return (
     <div>
       <form>

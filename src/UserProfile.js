@@ -96,7 +96,7 @@ class UserProfile extends Component {
     }
   }
 
-  handleInputChange = (e) => {
+  persAttInputChange = (e) => {
     const {value, id} = e.currentTarget;
     // console.log(this.state.user.personalAttribute[id])
     // this.setState({[id]: value})
@@ -105,9 +105,9 @@ class UserProfile extends Component {
     this.setState({personalAttribute})
   }
 
-  contactInputChange = (e) => {
+  handleInputChange = (e) => {
     const {value, id} = e.currentTarget
-    if(id === 'username' || id === 'notes') {
+    if(id === 'username' || id === 'notes' || id === 'dietaryRequirements') {
       const {user} = this.state
       user[id] = value
       this.setState({user})
@@ -136,7 +136,23 @@ class UserProfile extends Component {
         console.log(err.response)})
   }
 
+  saveEdit = (btn, btnmsg) => {
+    const {user} = this.state
+    this.setState({[btn]: false, [btnmsg]: 'Edit'})
+    const config = { headers: {token: localStorage.getItem('token')}}
+    const url = 'http://localhost:5000/admin/users/edit'
+    const data = { user }
+    axios.put(url, data, config)
+      .then(resp => this.setState({user: resp.data}))
+      .catch(err => {
+        if(!err.response) return console.log(err)
+        if(err.response.status === 401) return console.log("Unauthorized")
+        if(err.response.status === 403) return this.props.history.replace('/admin')
+      })
+  }
+
   render() {
+    console.log(this.state.user)
     const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm } = this.state;
 
     if(!user) return <h1>Loading...</h1>
@@ -152,30 +168,31 @@ class UserProfile extends Component {
               lastName={user.personalAttribute.lastName}
               dob={user.personalAttribute.dob}
               gender={user.personalAttribute.gender}
-              handleInputChange={this.handleInputChange}/>}
-        { editPersonalDetailsBtn && <button>Save</button>}
+              handleInputChange={this.persAttInputChange}/>}
+        { editPersonalDetailsBtn && <button onClick={() => this.saveEdit('editPersonalDetailsBtn', 'personalDetailsBtnMsg')}>Save</button>}
 
         <h1>Personal Attributes</h1>
-        {/* <button onClick={this.editPersonalAttributes}>{personalAttributesBtnMsg}</button> */}
-        { !personalAttributeBtn && <PrintPersonalAttributes obj={user.personalAttribute}/>}
-        { personalAttributeBtn && <></>}
-        { personalAttributeBtn && <button>Save</button>}
+        <PrintPersonalAttributes obj={user.personalAttribute}/>
+        
 
         <h1>Contact Details</h1>
         <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
         { !editContactDetailsBtn && <PrintContactDetails obj={user.contact}/>}
         { editContactDetailsBtn && <AccountDetailForm 
-              handleInputChange={this.contactInputChange}
+              handleInputChange={this.handleInputChange}
               username={user.username}
               email={user.contact.email}
               contactNumber={user.contact.contactNumber}/>}
-        { editContactDetailsBtn && <button>Save</button>}
+        { editContactDetailsBtn && <button onClick={() => this.saveEdit('editContactDetailsBtn', 'contactDetailsBtnMsg')}>Save</button>}
 
         <h1>Notes</h1>
         <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
-        { !editNotesBtn && <p>{user.notes}</p>}
-        { editNotesBtn && <ClientNotesForm notes={user.notes} handleInputChange={this.contactInputChange}/>}
-        { editNotesBtn && <button>Save</button>}
+        { !editNotesBtn && <><p>{user.notes}</p><p>{user.dietaryRequirements}</p></>}
+        { editNotesBtn && <ClientNotesForm 
+              notes={user.notes} 
+              dietaryRequirements={user.dietaryRequirements}
+              handleInputChange={this.handleInputChange}/>}
+        { editNotesBtn && <button onClick={() => this.saveEdit('editNotesBtn', 'editNotesBtnMsg')}>Save</button>}
 
         <h1>Remaining Sessions</h1>
         <p>{user.remainingSessions}</p>
