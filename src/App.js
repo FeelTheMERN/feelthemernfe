@@ -14,6 +14,7 @@ import MealPlan from './MealPlan';
 import ProtectedRoute from './ProtectedRoute';
 import UserSessions from './UserSessions'
 import UserMealPlan from './UserMealPlan'
+require('dotenv').config()
 
 class App extends Component {
 
