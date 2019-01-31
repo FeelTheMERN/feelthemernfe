@@ -4,8 +4,12 @@ export default function PrintContactDetails(props) {
   const { obj } = props
   return (
     <div>
-      <p>Email: {obj.email}</p>
-      <p>Contact Number: {obj.contactNumber}</p>
+      <div className="box">
+        <p>Email:</p><p>{obj.email}</p>
+      </div>
+      <div className="box">
+        <p>Contact Number:</p><p>{obj.contactNumber}</p>
+      </div>
     </div>
   )
 }
