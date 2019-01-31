@@ -1,10 +1,13 @@
 import React from 'react'
+import ImageUpload from './ImageUpload'
 
 const AccountDetailForm = (props) => {
   console.log(props) 
   return (
     <div>
       <form>
+            <label>Profile picture:</label>
+            <ImageUpload image={props.image} addImage={props.addImage}/>
             <label htmlFor="username">Username:</label>
             { props.userNameError && <>{props.userNameError}</>}
             <input type="text" id="username" onChange={props.handleInputChange} value={props.username}/>
