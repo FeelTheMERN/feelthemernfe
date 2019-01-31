@@ -32,14 +32,19 @@ export default class AddFoodItem extends Component {
 
   submitFood = (e) => {
     e.preventDefault()
-    this.props.addFoodToMeal(this.state.inputValue)
+    // this.props.addFoodToMeal(this.state.inputValue)
 
     const payload = {
       query: this.state.inputValue
     }
 
-    axios.post('http://localhost:5000/admin/macros', payload)
-      .then(resp => console.log(resp))
+    const config = { headers: {token: localStorage.getItem('token')}}
+
+    axios.post('http://localhost:5000/admin/macros', payload, config)
+      .then(resp => {
+        this.props.addFoodToMeal(resp.data.foods[0])
+        console.log(resp.data.foods[0])
+      })
       .catch(err => console.log(err.response))
 
     e.target.previousSibling.value = ''//empties the input field when submitted
