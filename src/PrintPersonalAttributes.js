@@ -2,25 +2,42 @@ import React from 'react'
 
 export default function PrintPersonalAttributes(props) {
   const {obj} = props
-  console.log(obj)
   return (
     <div>
-        <p>Height: {obj.height}</p>
-        <p>
-          Weight: {obj.weightLog[obj.weightLog.length - 1]}
-        </p>
-        <input type="text" placeholder="New weight" id="weight"></input>
-        <button>Update</button>
-        <p>Body Fat Percentage: {obj.bodyFatLog[obj.bodyFatLog.length - 1]}</p>
-        <p>Fat Mass: {obj.fatMass[obj.fatMass.length - 1]}</p>
-        <p>Lean Mass: {obj.leanMass[obj.leanMass.length - 1]}</p>
+      <div className="box">
+        <p>Height:</p><p>{obj.height} cm</p>
+      </div>
+      <div className="box">
+        <p>Weight:</p><p>{obj.weightLog[obj.weightLog.length - 1]} kg</p>
+        <div>
+          <input type="text" placeholder="New weight" id="weight"></input>
+          <button>Update</button>
+        </div>
+      </div>
+      <div className="box">
+        <p>Body Fat:</p><p>{obj.bodyFatLog[obj.bodyFatLog.length - 1].toFixed(2)} %</p>
+      </div>
+      <div className="box">
+        <p>Fat Mass:</p><p>{obj.fatMass[obj.fatMass.length - 1].toFixed(2)} %</p>
+      </div>
+      <div className="box">
+        <p>Lean Mass:</p><p>{obj.leanMass[obj.leanMass.length - 1].toFixed(2)} %</p>
+      </div>
         <button>Calculate Body Fat</button>
-        <p>Goal Weight: {obj.goalWeight}</p>
-        <input type="text" placeholder="New goal weight" id="goalWeight"></input>
-        <button>Update</button>
-        <p>Goal Body Fat: {obj.goalBodyFat}</p>
-        <input type="text" placeholder="New body fat goal" id="goalBodyFat"></input>
-        <button>Update</button>
+      <div className="box">
+        <p>Goal Weight:</p><p>{obj.goalWeight} kg</p>
+        <div>
+          <input type="text" placeholder="New goal weight" id="goalWeight"></input>
+          <button>Update</button>
+        </div>
+      </div>
+      <div className="box">
+        <p>Goal Body Fat:</p><p>{obj.goalBodyFat} %</p>
+        <div>
+          <input type="text" placeholder="New goal body fat" id="goalBodyFat"></input>
+          <button>Update</button>
+        </div>
+      </div>
     </div>
   )
 }

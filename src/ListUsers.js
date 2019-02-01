@@ -18,9 +18,11 @@ class ListUsers extends Component {
 
   handleSearch = (search) => {
     const { users } = this.state
+    // Lower case the desired search
     const string = search.toLowerCase()
 
     let filteredUsers = users.filter(user => {
+        // Check the desired search with the first and last name of the user
         if(user.personalAttribute.firstName.toLowerCase().includes(string) || user.personalAttribute.lastName.toLowerCase().includes(string)) {
             return user
         }

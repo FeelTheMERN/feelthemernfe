@@ -29,14 +29,25 @@ export default class Meal extends Component {
     this.props.mealSavedTrue()
   }
 
-  
-
   render() {
     const {addFood, meal, addMealBtn, message} = this.state
     return (
       <div> 
-        { meal.map(food => <p key={food}>{food}</p>) }
         { addFood && <>{addFood}</> }
+        { meal.map(food => {
+          return (
+            <div>
+              <p key={food.food_name}>{food.food_name}</p>
+              {/* <img src={food.photo.thumb} alt=""/> */}
+              <p>{food.serving_qty} {food.serving_unit}</p>
+              <p>Serving weight: {food.serving_weight_grams}g</p>
+              <p>Calories: {food.nf_calories}g</p>
+              <p>Protein: {food.nf_protein}g</p>
+              <p>Carbohydrate: {food.nf_total_carbohydrate}g</p>
+              <p>Fat: {food.nf_total_fat}</p>
+            </div>
+          )
+        }) }
         { message && <p>{message}</p>}
         <div>
           { !addMealBtn && <button onClick={this.saveMeal}>Save Meal</button>}

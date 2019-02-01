@@ -24,7 +24,10 @@ class UserSessions extends Component {
     const { id } = this.props.match.params
     axios.get(`http://localhost:5000/user/users/${id}`, config)
       .then(resp => this.setState({user: resp.data}))
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err.response)
+        if(err.response.status === 404) this.props.history.replace('/')
+      });
   }
 
   showMeals = (dayNum) => {

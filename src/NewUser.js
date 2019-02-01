@@ -7,6 +7,7 @@ import ClientNotesForm from './ClientNotesForm'
 
 class NewUser extends Component {
     state = {
+        image: '',
         username: '',
         email: '',
         password: '',
@@ -24,6 +25,7 @@ class NewUser extends Component {
         leanMass: '',
         goalWeight: '',
         goalBodyFat: '',
+        dietaryRequirements: '',
         notes: ''
     };
 
@@ -53,15 +55,17 @@ class NewUser extends Component {
     //submitForm() sends the username and password using axios. we should recieve a token which is then stored on local storage. once complete it runs the redirect funtion.
     submitForm = (e) => {
         e.preventDefault();
-        const { username, password, email, contactNumber, firstName, lastName, dob, gender, height, weight, bodyFat, fatMass, leanMass, goalWeight, goalBodyFat, notes  } = this.state
+        const { username, password, email, contactNumber, firstName, lastName, dob, gender, height, weight, bodyFat, fatMass, leanMass, goalWeight, goalBodyFat, notes, dietaryRequirements, image  } = this.state
         const url = 'http://localhost:5000/admin/users/new';
         const config = { headers: {token: localStorage.getItem('token')}}
         const data = { 
             user: {
+                image,
                 username, 
                 password,
                 contact: {email, contactNumber},
                 personalAttribute: { firstName, lastName, dob, gender, height, weightLog:[weight], bodyFatLog:[bodyFat], fatMass:[fatMass], leanMass:[leanMass], goalWeight, goalBodyFat},
+                dietaryRequirements,
                 notes
             }
          }
@@ -146,8 +150,12 @@ class NewUser extends Component {
         }
     }
 
+    addImage = (url) => {
+        this.setState({image: url})
+    }
+
     render() {
-        console.log(this.state.setBodyFat)
+        console.log(this.state)
         const { title, formPage } = this.state
         return (
             <div className="main-container">
@@ -155,6 +163,8 @@ class NewUser extends Component {
                 { title && <h1>{title}</h1> }
                 { formPage === 1 && <AccountDetailForm 
                         handleInputChange={this.handleInputChange} 
+                        addImage={this.addImage}
+                        image={this.state.image}
                         username={this.state.username} 
                         userNameError={this.state.userNameError}
                         email={this.state.email}
@@ -189,6 +199,7 @@ class NewUser extends Component {
                         /> }
                 { formPage === 4 && <ClientNotesForm 
                         handleInputChange={this.handleInputChange}
+                        dietaryRequirements={this.state.dietaryRequirements}
                         notes={this.state.notes}/> }
                 <div>
                     { formPage > 1 && <button onClick={this.backForm}>back</button>}
