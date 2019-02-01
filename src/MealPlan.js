@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Meal from './Meal'
 import DisplayMeal from './DisplayMeal'
+import axios from 'axios'
 
 export default class MealPlan extends Component {
     state = {
@@ -16,6 +17,22 @@ export default class MealPlan extends Component {
         },
         mealSaved: true
     };
+
+    submitForm = (e) => {
+        e.preventDefault()
+        const config = { headers: {token: localStorage.getItem('token')}}
+        const url = 'http://localhost:5000/admin/users/editmealplan'
+        const { mealPlan } = this.state
+        console.log(mealPlan)
+        const {id} = this.props.match.params
+        const data = { mealPlan, id }
+        console.log(data)
+        console.log(url)
+        axios.put(url, data, config)
+            .then(resp => {
+                console.log(resp.data)})
+            .catch(err => console.log(err.response))
+    }
 
     deleteMeal = (day, i) => {
         // const dayIndex = day.split('').pop()
@@ -115,62 +132,70 @@ export default class MealPlan extends Component {
         const { formPage, mealPlan, message, a, b, c, d, e, f, g } = this.state
         console.log(this.state.mealPlan)
         return (
-            <div className="main-container">
-            <div className="content-container">
-                <div className="mealPlanDays">
-                    <h4 className={a}>Day 1</h4> 
-                    <h4 className={b}>Day 2</h4> 
-                    <h4 className={c}>Day 3</h4> 
-                    <h4 className={d}>Day 4</h4> 
-                    <h4 className={e}>Day 5</h4> 
-                    <h4 className={f}>Day 6</h4> 
-                    <h4 className={g}>Day 7</h4> 
-                </div> 
-                <h1>Day {formPage}</h1>
-                {formPage === 1 && <DisplayMeal 
-                        day={mealPlan.day1} 
-                        deleteMeal={this.deleteMeal} 
-                        deleteFood={this.deleteFood} 
-                        dayIndex={formPage} />}
-                {formPage === 2 && <DisplayMeal 
-                        day={mealPlan.day2} 
-                        deleteMeal={this.deleteMeal} 
-                        deleteFood={this.deleteFood} 
-                        dayIndex={formPage} />}
-                {formPage === 3 && <DisplayMeal 
-                        day={mealPlan.day3} 
-                        deleteMeal={this.deleteMeal} 
-                        deleteFood={this.deleteFood} 
-                        dayIndex={formPage} />}
-                {formPage === 4 && <DisplayMeal 
-                        day={mealPlan.day4} 
-                        deleteMeal={this.deleteMeal} 
-                        deleteFood={this.deleteFood} 
-                        dayIndex={formPage} />}
-                {formPage === 5 && <DisplayMeal 
-                        day={mealPlan.day5} 
-                        deleteMeal={this.deleteMeal} 
-                        deleteFood={this.deleteFood} 
-                        dayIndex={formPage} />}
-                {formPage === 6 && <DisplayMeal 
-                        day={mealPlan.day6} 
-                        deleteMeal={this.deleteMeal} 
-                        deleteFood={this.deleteFood} 
-                        dayIndex={formPage} />}
-                {formPage === 7 && <DisplayMeal 
-                        day={mealPlan.day7} 
-                        deleteMeal={this.deleteMeal} 
-                        deleteFood={this.deleteFood} 
-                        dayIndex={formPage} />}
-                <Meal addMealtoDay={this.addMealtoDay} mealSavedFalse={this.mealSavedFalse} mealSavedTrue={this.mealSavedTrue}/> 
-                <div>
-                    { formPage > 1 && <button onClick={this.backForm}>back</button>}
-                    { formPage === 1 && <button onClick={this.redirectUser}>back</button>}
-                    { formPage !== 7 && <button onClick={this.nextForm}>next</button>}
-                    { formPage === 7 && <button onClick={this.submitForm}>Submit</button>}
-                    { message && <>{message}</>}
+            <div className="meal-plan">
+                <div className="main-container">
+                    <div className="content-container">
+                        <div className="mealPlanDays">
+                            <button className={a}>Day 1</button> 
+                            <button className={b}>Day 2</button> 
+                            <button className={c}>Day 3</button> 
+                            <button className={d}>Day 4</button> 
+                            <button className={e}>Day 5</button> 
+                            <button className={f}>Day 6</button> 
+                            <button className={g}>Day 7</button> 
+                        </div> 
+                        <div className="display">
+                            <div className="display-meal">
+                                <h1>Day {formPage}</h1>
+                                {formPage === 1 && <DisplayMeal 
+                                        day={mealPlan.day1} 
+                                        deleteMeal={this.deleteMeal} 
+                                        deleteFood={this.deleteFood} 
+                                        dayIndex={formPage} />}
+                                {formPage === 2 && <DisplayMeal 
+                                        day={mealPlan.day2} 
+                                        deleteMeal={this.deleteMeal} 
+                                        deleteFood={this.deleteFood} 
+                                        dayIndex={formPage} />}
+                                {formPage === 3 && <DisplayMeal 
+                                        day={mealPlan.day3} 
+                                        deleteMeal={this.deleteMeal} 
+                                        deleteFood={this.deleteFood} 
+                                        dayIndex={formPage} />}
+                                {formPage === 4 && <DisplayMeal 
+                                        day={mealPlan.day4} 
+                                        deleteMeal={this.deleteMeal} 
+                                        deleteFood={this.deleteFood} 
+                                        dayIndex={formPage} />}
+                                {formPage === 5 && <DisplayMeal 
+                                        day={mealPlan.day5} 
+                                        deleteMeal={this.deleteMeal} 
+                                        deleteFood={this.deleteFood} 
+                                        dayIndex={formPage} />}
+                                {formPage === 6 && <DisplayMeal 
+                                        day={mealPlan.day6} 
+                                        deleteMeal={this.deleteMeal} 
+                                        deleteFood={this.deleteFood} 
+                                        dayIndex={formPage} />}
+                                {formPage === 7 && <DisplayMeal 
+                                        day={mealPlan.day7} 
+                                        deleteMeal={this.deleteMeal} 
+                                        deleteFood={this.deleteFood} 
+                                        dayIndex={formPage} />}
+                            </div>
+                            <div className="add-meal">
+                                <Meal addMealtoDay={this.addMealtoDay} mealSavedFalse={this.mealSavedFalse} mealSavedTrue={this.mealSavedTrue}/> 
+                            </div>
+                                <div className="buttons">
+                                    { formPage > 1 && <button onClick={this.backForm}>back</button>}
+                                    { formPage === 1 && <button onClick={this.redirectUser}>back</button>}
+                                    { formPage !== 7 && <button onClick={this.nextForm}>next</button>}
+                                    { formPage === 7 && <button onClick={this.submitForm}>Submit</button>}
+                                    { message && <>{message}</>}
+                                </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
             </div>
         )
     }

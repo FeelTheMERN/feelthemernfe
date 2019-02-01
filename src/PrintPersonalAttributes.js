@@ -14,15 +14,15 @@ export default function PrintPersonalAttributes(props) {
           <button>Update</button>
         </div>
       </div>
-      <div className="box">
+      { obj.bodyFatLog[obj.bodyFatLog.length - 1] && <div className="box">
         <p>Body Fat:</p><p>{obj.bodyFatLog[obj.bodyFatLog.length - 1].toFixed(2)} %</p>
-      </div>
-      <div className="box">
+      </div>}
+      {obj.fatMass[obj.fatMass.length - 1] && <div className="box">
         <p>Fat Mass:</p><p>{obj.fatMass[obj.fatMass.length - 1].toFixed(2)} %</p>
-      </div>
-      <div className="box">
+      </div>}
+      {obj.leanMass[obj.leanMass.length - 1] && <div className="box">
         <p>Lean Mass:</p><p>{obj.leanMass[obj.leanMass.length - 1].toFixed(2)} %</p>
-      </div>
+      </div>}
         <button>Calculate Body Fat</button>
       <div className="box">
         <p>Goal Weight:</p><p>{obj.goalWeight} kg</p>
