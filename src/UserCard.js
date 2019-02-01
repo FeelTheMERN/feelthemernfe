@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const UserCard = (props) => {
   const url = `/admin/users/${props.id}`
   return (
-    <div key={props.id}>
+    <div className="content-container" key={props.id}>
       {/* <img/> */}
       <Link to={url}>{props.firstName} {props.lastName}</Link>
     </div>

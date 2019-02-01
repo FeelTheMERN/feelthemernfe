@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import logo from "./assets/icons/skyefit_logo.svg"
 import Login from './Login'
 import LoginSlider from './LoginSlider'
+import './css/welcome.scss'
 
 // change to functional component because we don't need to change state on this page
 class Welcome extends Component {
@@ -33,7 +34,7 @@ class Welcome extends Component {
     const fromRoute = window.location.search
     return (
       <div className="main-container">
-        <div className="content-container">
+        <div className="welcome-container">
           { !printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
           { printLogin && printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
           { !printLogin && !printSlider && <div><p>Welcome to</p><h1>SkyeFIT</h1></div> }

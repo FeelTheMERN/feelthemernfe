@@ -17,8 +17,8 @@ $yellow: #fefe8a;
   background-size: cover;
   // background-color: $blue;
   min-height: 100vh;
-  overflow: scroll;
   width: 100vw;
+  overflow: scroll;
   margin: 0;
   font-family: 'Roboto Mono', monospace;
   h1 {
@@ -47,15 +47,15 @@ hr {
 .main-container {
   display: flex;
   justify-content: center;
-  height: 100vh;
+  height: 75vh;
   width: 85vw;
   background-color: rgba(255, 255, 255, 0.8);
 }
 
 .content-container {
   display: flex;
-  justify-content: center;
-  justify-content: space-around;
+  justify-content: flex-start;
+  // align-content: space-around;
   flex-flow: column;
   align-items: center;
   padding: 25px;
@@ -71,6 +71,7 @@ hr {
   padding: 10px;
   min-width: 30px;
   outline: none;
+  font-family: 'Roboto Mono', monospace;  
 }
 
 .btn:hover, button:hover {
@@ -122,11 +123,15 @@ input {
 }
 
 input:focus {
-  border: 1px solid rgba(0, 0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.5);
+  // border: 1px solid rgba(0, 0, 0, 0);
+  // background-color: rgba(0, 0, 0, 0.5);
   text-decoration: none;
   box-shadow: none;
   outline: none;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .horizontal-spread {

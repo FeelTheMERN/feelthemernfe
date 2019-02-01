@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './css/App.scss';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import './css/App.scss';
 import Navbar from './Navbar';
 import Welcome from './Welcome';
 import Error from './Error';
@@ -14,6 +14,8 @@ import MealPlan from './MealPlan';
 import ProtectedRoute from './ProtectedRoute';
 import UserSessions from './UserSessions'
 import UserMealPlan from './UserMealPlan'
+import AdminMealPlan from './AdminMealPlan'
+
 require('dotenv').config()
 
 class App extends Component {
@@ -45,7 +47,8 @@ class App extends Component {
               <ProtectedRoute path="/admin/home" component={AdminHome} exact/>
               <ProtectedRoute path="/admin/users" component={ListUsers} exact/>
               <ProtectedRoute path="/admin/users/:id" component={UserProfile} exact/>
-              <ProtectedRoute path="/admin/users/:id/mealplan" component={MealPlan} exact/>
+              <ProtectedRoute path="/admin/users/:id/mealplan" component={AdminMealPlan} exact/>
+              <ProtectedRoute path="/admin/users/:id/new-mealplan" component={MealPlan} exact/>
               <ProtectedRoute path="/admin/new-user" component={NewUser} exact/>
               <ProtectedRoute path="/user/users/:id/home" component={UserHome} exact/>
               <ProtectedRoute path="/user/users/:id/sessions" component={UserSessions} exact/>

@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import './css/login.scss'
 class Login extends Component {
     state = {};
 
     //handleInputChange keeps track of the imput fields by setting state of username and password
     handleInputChange = (e) => {
+        if (e.currentTarget.value) {
+            e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+        }
         const {value, id} = e.currentTarget;
         this.setState({[id]: value})
     }
