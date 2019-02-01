@@ -16,8 +16,8 @@ export default class DisplayMeal extends Component {
         {
           day.map((meal, i)=> {
               return (
-                  <div key={i}>
-                  <p>Meal {i + 1} <button onClick={() => this.remove(i, dayIndex)}>-</button><button>+ food</button></p>
+                  <div key={i} class="meal">
+                  <p><strong>Meal {i + 1} </strong><button onClick={() => this.remove(i, dayIndex)}>-</button></p>
                   <OneMeal meal={meal} deleteFood={this.props.deleteFood} day={`day${dayIndex}`} mealIndex={i}/>
                   </div>
               )
