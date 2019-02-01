@@ -4,6 +4,9 @@ import axios from 'axios'
 export default class SearchBar extends Component {
 
   search = (e) => {
+    if (e.currentTarget.value) {
+      e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+    }
       const {value, id} = e.currentTarget;
       this.props.search(value)
   }

@@ -8,7 +8,7 @@ import PrintContactDetails from './PrintContactDetails';
 import AccountDetailForm from './AccountDetailForm';
 import PrintPersonalAttributes from './PrintPersonalAttributes';
 import DeleteConfirmation from './DeleteConfirmation'
-import './css/userprofile.scss' 
+import './css/userprofile.scss';
 
 class UserProfile extends Component {
   state = {};
