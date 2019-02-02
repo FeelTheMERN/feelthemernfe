@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import UserCard from './UserCard'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import SearchBar from './SearchBar'
+import './css/listuser.scss'
 // import PrintUserCards from './PrintUserCards';
 
 class ListUsers extends Component {
@@ -13,17 +14,21 @@ class ListUsers extends Component {
         const config = { headers: {token: localStorage.getItem('token')}}
         axios.get('http://localhost:5000/admin/users', config)
             .then(resp => this.setState({users: resp.data, filteredUsers: resp.data}))
-            .catch(err => console.log(err));
+            .catch(err => {
+                if(err.response.status === 401) return console.log("Unauthorized")
+                if(err.response.status === 404) return this.props.history.replace('/admin')
+            });
   }
 
-  handleSearch = (search) => {
+  handleSearch = (input) => {
     const { users } = this.state
     // Lower case the desired search
-    const string = search.toLowerCase()
+    const search = input.toLowerCase()
 
+    if(!users) return null
     let filteredUsers = users.filter(user => {
         // Check the desired search with the first and last name of the user
-        if(user.personalAttribute.firstName.toLowerCase().includes(string) || user.personalAttribute.lastName.toLowerCase().includes(string)) {
+        if(user.personalAttribute.firstName.toLowerCase().includes(search) || user.personalAttribute.lastName.toLowerCase().includes(search)) {
             return user
         }
     })
@@ -40,11 +45,11 @@ class ListUsers extends Component {
 
     const {users, filteredUsers} = this.state;
     if(!users) return <h1>Loading...</h1>
-    console.log(users)
     return (
         <div className="main-container">
             <div className="content-container">
             <SearchBar search={this.handleSearch}/>
+                {!users[0] && <p>There are no users</p>}
                 {filteredUsers &&
                 filteredUsers.map(user => {
                     return (
@@ -52,12 +57,13 @@ class ListUsers extends Component {
                             <UserCard
                             key={user._id}
                             id={user._id}
+                            image={user.image}
                             firstName={user.personalAttribute.firstName}
                             lastName={user.personalAttribute.lastName}
                             />
                         </>
                 )})}
-                <Link to="/admin/new-user">Add User</Link>
+                <Link className="button" to="/admin/new-user">Add User</Link>
             </div>
         </div>
     )
