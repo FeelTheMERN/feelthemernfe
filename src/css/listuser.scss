@@ -1,0 +1,42 @@
+$yellow: #fefe8a;
+
+.user-card{
+    width: 300px;
+    border: 0.5px solid white;
+    background: $yellow;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 30px;
+    height: 50px;
+    .text {
+        text-decoration: none;
+        color: black;
+    }
+    .text:hover {
+        font-weight: bold;
+    }
+    img {
+        object-fit: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+    }
+}
+.button {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 10px;
+    min-width: 30px;
+    outline: none;
+    font-size: 12px;
+    // font-family: 'Roboto Mono', monospace;  
+}
+.button:hover {
+    background-color: $yellow;
+    border: 1px solid $yellow;
+    font-weight: bold;
+}

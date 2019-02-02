@@ -58,7 +58,7 @@ class UserProfile extends Component {
 
   redirectMealPlan = () => {
     const {id} = this.props.match.params
-    this.props.history.push(`/admin/users/${id}/mealplan`)
+    this.props.history.push(`/admin/users/${id}/new-mealplan`)
   }
 
   editPersonalDetails = () => {
