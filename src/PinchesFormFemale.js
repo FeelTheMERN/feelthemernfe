@@ -17,7 +17,7 @@ export default class PinchesFormFemale extends Component {
         const { tricep, suprailiac, thigh } = this.state
         const { dob, weight } = this.props
         const config = { headers: {token: localStorage.getItem('token')}}
-        const url = "http://localhost:5000/admin/pinches/female";
+        const url = `${process.env.REACT_APP_API_URL}/admin/pinches/female`;
         const data = { tricep, suprailiac, thigh, dob, weight }
         console.log(data)
         axios.post(url, data, config)

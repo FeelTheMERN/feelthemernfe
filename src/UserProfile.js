@@ -36,7 +36,7 @@ class UserProfile extends Component {
   }
 
   getUser = () => {
-    const url = `http://localhost:5000/admin/users/${this.props.match.params.id}`
+    const url = `${process.env.REACT_APP_API_URL}/admin/users/${this.props.match.params.id}`
     const config = { headers: {token: localStorage.getItem('token')}}
 
     return axios.get(url, config)
@@ -121,7 +121,7 @@ class UserProfile extends Component {
 
   deleteUser = (e) => {
     e.preventDefault()
-    const url = "http://localhost:5000/admin/users/delete"
+    const url = `${process.env.REACT_APP_API_URL}/admin/users/delete`
     const data = {
       id: this.state.user._id
     }
@@ -141,7 +141,7 @@ class UserProfile extends Component {
     const {user} = this.state
     this.setState({[btn]: false, [btnmsg]: 'Edit'})
     const config = { headers: {token: localStorage.getItem('token')}}
-    const url = 'http://localhost:5000/admin/users/edit'
+    const url = `${process.env.REACT_APP_API_URL}/admin/users/edit`
     const data = { user }
     axios.put(url, data, config)
       .then(resp => this.setState({user: resp.data}))

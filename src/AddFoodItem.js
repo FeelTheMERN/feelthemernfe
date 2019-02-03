@@ -40,7 +40,7 @@ export default class AddFoodItem extends Component {
 
     const config = { headers: {token: localStorage.getItem('token')}}
 
-    axios.post('http://localhost:5000/admin/macros', payload, config)
+    axios.post(`${process.env.REACT_APP_API_URL}/admin/macros`, payload, config)
       .then(resp => {
         this.props.addFoodToMeal(resp.data.foods[0])
         console.log(resp.data.foods[0])

@@ -20,8 +20,8 @@ class Login extends Component {
     submitForm = (e) => {
         e.preventDefault();
         let url
-        if(window.location.pathname === "/admin") url = "http://localhost:5000/login/admin";
-        if(window.location.pathname === "/") url = "http://localhost:5000/login/user";
+        if(window.location.pathname === "/admin") url = `${process.env.REACT_APP_API_URL}/login/admin`;
+        if(window.location.pathname === "/") url = `${process.env.REACT_APP_API_URL}/login/user`;
 
         const { username, password } = this.state        
         const data = { username, password }
