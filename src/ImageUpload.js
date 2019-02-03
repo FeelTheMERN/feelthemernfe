@@ -29,10 +29,8 @@ export default class ImageUpload extends Component {
     const {image} = this.state
     return (
       <>
-        { image && <img src={image} alt="user profile"/>}
-        {/* <form> */}
-            <input type="file" name="image-upload" id="image-upload" onChange={this.handleUpload}/>
-        {/* </form> */}
+        {/* { image && <img src={image} alt="user profile"/>} */}
+        <input type="file" name="image-upload" id="image-upload" onChange={this.handleUpload}/>
       </>
     )
   }

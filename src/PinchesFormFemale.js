@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './css/pinchesform.scss'
 
 export default class PinchesFormFemale extends Component {
     state = {};
@@ -34,12 +35,12 @@ export default class PinchesFormFemale extends Component {
 
     render() {
     return (
-        <div>
-            <label htmlFor="tricep">Tricep Pincher:</label>
+        <div className="pinches">
+            <label htmlFor="tricep">Tricep(mm):</label>
             <input type="text-field" id="tricep" onChange={this.handleInputChange}/>
-            <label htmlFor="thigh">Thigh Pincher:</label>
+            <label htmlFor="thigh">Thigh(mm):</label>
             <input type="text-field" id="thigh" onChange={this.handleInputChange}/>
-            <label htmlFor="suprailiac">Suprailiac Pincher:</label>
+            <label htmlFor="suprailiac">Suprailiac(mm):</label>
             <input type="text-field" id="suprailiac" onChange={this.handleInputChange}/>
             <button onClick={this.calcBodyFat}>Calculate</button>
         </div>

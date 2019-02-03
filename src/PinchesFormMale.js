@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './css/pinchesform.scss'
 
 export default class PinchesFormMale extends Component {
     state = {};
@@ -34,7 +35,7 @@ export default class PinchesFormMale extends Component {
 
     render() {
     return (
-        <div>
+        <div className="pinches">
             <label htmlFor="chest">Chest(mm):</label>
             <input type="text-field" id="chest" onChange={this.handleInputChange}/>
             <label htmlFor="abdomen">Abdoment(mm):</label>
