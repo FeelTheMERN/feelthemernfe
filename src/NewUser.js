@@ -57,7 +57,7 @@ class NewUser extends Component {
     submitForm = (e) => {
         e.preventDefault();
         const { username, password, email, contactNumber, firstName, lastName, dob, gender, height, weight, bodyFat, fatMass, leanMass, goalWeight, goalBodyFat, notes, dietaryRequirements, image  } = this.state
-        const url = 'http://localhost:5000/admin/users/new';
+        const url = `${process.env.REACT_APP_API_URL}/admin/users/new`;
         const config = { headers: {token: localStorage.getItem('token')}}
         const data = { 
             user: {

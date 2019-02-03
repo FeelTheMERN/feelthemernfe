@@ -12,7 +12,7 @@ class ListUsers extends Component {
   //when component mounts we send a request for the users and send through the token in the headers. with the response we set state of users to the response.
   componentDidMount() {
         const config = { headers: {token: localStorage.getItem('token')}}
-        axios.get('http://localhost:5000/admin/users', config)
+        axios.get(`${process.env.REACT_APP_API_URL}/admin/users`, config)
             .then(resp => this.setState({users: resp.data, filteredUsers: resp.data}))
             .catch(err => {
                 if(err.response.status === 401) return console.log("Unauthorized")
