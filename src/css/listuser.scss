@@ -3,7 +3,8 @@ $yellow: #fefe8a;
 .user-card{
     width: 300px;
     border: 0.5px solid white;
-    background: $yellow;
+    // background: $yellow;
+    background: rgba($color: #ffffff, $alpha: 0.6);
     display: flex;
     justify-content: space-between;
     align-items: center;

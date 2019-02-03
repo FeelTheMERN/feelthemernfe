@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import './css/mealplan.scss'
+import './css/displaymealplan.scss'
 import ShowMeals from './ShowMeals'
 
 class UserSessions extends Component {
@@ -12,19 +12,23 @@ class UserSessions extends Component {
     dayFiveBtn: true,
     daySixBtn: true,
     daySevenBtn: true,
-    mealPlan: {
-      day1:[[{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}]],
-      day2:[[{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}]],
-      day3:[[{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}]]
-    }
+    // mealPlan: {
+    //   day1:[[{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}]],
+    //   day2:[[{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}]],
+    //   day3:[[{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}]]
+    // }
   }
     
   componentDidMount() {
     const config = { headers: {token: localStorage.getItem('token')}}
     const { id } = this.props.match.params
-    axios.get(`http://localhost:5000/user/users/${id}`, config)
-      .then(resp => this.setState({user: resp.data}))
-      .catch(err => console.log(err));
+    axios.get(`http://localhost:5000/admin/users/${id}`, config)
+      .then(resp => {
+        console.log(resp.data.mealPlans)
+        this.setState({mealPlan: resp.data.mealPlans[resp.data.mealPlans.length - 1]})})
+      .catch(err => {
+        if(err.response.status === 404) this.props.history.replace('/admin')
+      });
   }
 
   showMeals = (dayNum) => {
@@ -35,9 +39,19 @@ class UserSessions extends Component {
   }
 
   render() {
-    const {user, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
-    console.log(user)
-    if(!user) return <h1>Loading...</h1>
+    const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
+    console.log(mealPlan)
+    if(!mealPlan) return (
+      <div className="main-container">
+        <div className="content-container">
+          <h1>There is no meal plans</h1>
+          <div className="btns">
+            <button onClick={() => this.props.history.goBack()}>back</button>
+            <button onClick={() => this.props.history.replace(`/admin/users/${this.props.match.params.id}/new-mealplan`)}>Add Meal Plan</button>
+          </div>
+        </div>
+      </div>
+    )
     return (
       <div className="main-container">
         <div className="content-container">

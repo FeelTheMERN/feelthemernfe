@@ -26,7 +26,8 @@ export default class PinchesFormFemale extends Component {
                 const {percBodyFat, fatMass, leanMass} = resp.data
                 this.setState({bodyFat: percBodyFat, fatMass, leanMass}, () => {
                     const { bodyFat, fatMass, leanMass } = this.state
-                    this.props.setBodyFat(bodyFat, fatMass, leanMass )
+                    this.props.setBodyFat(bodyFat, fatMass, leanMass)
+                    if(this.props.toggleBodyFatCalc) this.props.toggleBodyFatCalc('calculation complete')
                 })
             })
             .catch(err => console.log(err));
