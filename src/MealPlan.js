@@ -30,7 +30,7 @@ export default class MealPlan extends Component {
         console.log(url)
         axios.put(url, data, config)
             .then(resp => {
-                console.log(resp.data)})
+                this.props.history.replace(`/admin/users/${resp.data._id}/mealplan`)})
             .catch(err => console.log(err.response))
     }
 

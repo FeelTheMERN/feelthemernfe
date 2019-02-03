@@ -96,6 +96,7 @@ $yellow: #fefe8a;
           }
         }
         .buttons{
+          width: 100%;
           button{
             width:70px;
           }
@@ -111,10 +112,16 @@ $yellow: #fefe8a;
   }
 }
 
-.btn-container {
-  float: left;
-}
+// .btn-container {
+//   float: left;
+// }
 
-button {
-  margin: 10px;
-}
+// button {
+//   margin: 10px;
+// }
+
+// .btns {
+//   button {
+//     width: 150px;
+//   }
+// }
