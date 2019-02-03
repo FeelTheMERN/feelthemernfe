@@ -25,7 +25,7 @@ export default class ClientAttributeForm extends Component {
              <label htmlFor="height">Client Height:</label>
              <input type="text" id="height" onChange={handleInputChange} value={this.props.height}/>
              <label htmlFor="weight">Client Weight:</label>
-             {this.props.weightError && <>{this.props.weightError}</>}
+             {this.props.weightError && <p>{this.props.weightError}</p>}
              <input type="text" id="weight" onChange={handleInputChange} value={this.props.weight}/>
              
              <label>Pinches Form:</label>
