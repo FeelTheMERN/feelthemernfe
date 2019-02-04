@@ -7,8 +7,8 @@ class Navbar extends Component {
     //Were keeping track of state so that we can render the appropriate navbar based on the user
     state = {};
 
-
     render() {
+      console.log('rendering navbar')
     const user = window.location.pathname.split('/')[1]
     if(user === 'admin'){
       return (

@@ -4,7 +4,7 @@ import AccountDetailForm from './AccountDetailForm'
 import PersonalDetailForm from './PersonalDetailForm';
 import ClientAttributeForm from './ClientAttributeForm';
 import ClientNotesForm from './ClientNotesForm'
-import './css/newuser.scss'
+import './css/newuser.scss';
 
 class NewUser extends Component {
     state = {
@@ -39,6 +39,9 @@ class NewUser extends Component {
     
     //handleInputChange keeps track of the imput fields by setting state of username and password
     handleInputChange = (e) => {
+        if (e.currentTarget.value) {
+            e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+        }
         const {value, id} = e.currentTarget;
         this.setState({[id]: value})
     }
@@ -159,6 +162,8 @@ class NewUser extends Component {
         console.log(this.state)
         const { title, formPage } = this.state
         return (
+            <div className="background" id="new-user">
+            <p id="logo-type">SkyeFIT</p>
             <div className="newuser">
                 <div className="main-container">
                     <div className="content-container">
@@ -213,6 +218,7 @@ class NewUser extends Component {
                     </div>
                 </div>
             </div>
+          </div>
         )
     }
 }

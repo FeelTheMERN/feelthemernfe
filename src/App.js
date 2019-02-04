@@ -21,7 +21,7 @@ require('dotenv').config()
 class App extends Component {
 
   renderNavBar = () => {
-    console.log(this.props)
+    console.log(window.location.pathname.split('/'))
     if(window.location.pathname === '/' || window.location.pathname === '/admin') return <></>
     if(window.location.pathname.split('/')[1] === 'user') return <Route path="/:user/:database/:id" component={Navbar} />;
     if(window.location.pathname.split('/')[1] === 'admin') return <Route path="/:admin/:action" component={Navbar}/>
@@ -38,7 +38,6 @@ class App extends Component {
       <BrowserRouter>{/* Using react-router-dom */}
         <div className="App">
           <div className="content-container">
-            <p id="logo-type">SkyeFIT</p>
             <hr></hr>
             {this.renderNavBar()}
             <Switch>
