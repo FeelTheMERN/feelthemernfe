@@ -14,7 +14,7 @@ const AccountDetailForm = (props) => {
             <label htmlFor="email">Email:</label>
             { props.emailError && <>{props.emailError}</>}
             <input type="text" id="email" onChange={props.handleInputChange} value={props.email}/>
-            <label htmlFor="contactNumber">Contact:</label>
+            <label htmlFor="contactNumber">Contact Number:</label>
             { props.contactError && <>{props.contactError}</>}
             <input type="text" id="contactNumber" onChange={props.handleInputChange} value={props.contactNumber}/>
             <label htmlFor="password">Password:</label>

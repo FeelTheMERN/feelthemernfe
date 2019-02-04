@@ -20,7 +20,8 @@ export default class ClientAttributeForm extends Component {
     // const {bodyFat} = this.state
     console.log(gender)
     return (
-      <div>
+      // <div className="main-container">
+      <div className="content-container">
         <form>
              <label htmlFor="height">Client Height:</label>
              <input type="text" id="height" onChange={handleInputChange} value={this.props.height}/>
@@ -46,6 +47,7 @@ export default class ClientAttributeForm extends Component {
              <input type="text" id="goalBodyFat" onChange={handleInputChange} value={this.props.goalBodyFat}/>
          </form>
       </div>
+      // </div>
     )
   }
 }

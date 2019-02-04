@@ -42,20 +42,23 @@ class UserSessions extends Component {
     console.log(user)
     if(!user) return <h1>Loading...</h1>
     return (
-      <div className="main-container">
-        <div className="content-container">
-          <h1>Meal Plan</h1>
-          <div className="btn-container">
-            { dayOneBtn && <button onClick={() => this.showMeals(1)}>Day 1</button>}
-            { dayTwoBtn && <button onClick={() => this.showMeals(2)}>Day 2</button>}
-            { dayThreeBtn && <button onClick={() => this.showMeals(3)}>Day 3</button>}
-            { dayFourBtn && <button onClick={() => this.showMeals(4)}>Day 4</button>}
-            { dayFiveBtn && <button onClick={() => this.showMeals(5)}>Day 5</button>}
-            { daySixBtn && <button onClick={() => this.showMeals(6)}>Day 6</button>}
-            { daySevenBtn && <button onClick={() => this.showMeals(7)}>Day 7</button>}
-            { showMealPlan && <>{showMealPlan}</>}
+      <div className="background" id="meal-plan">
+        <p id="logo-type">SkyeFIT</p>
+          <div className="main-container">
+            <div className="content-container">
+              <h1>Meal Plan</h1>
+              <div className="btn-container">
+                { dayOneBtn && <button onClick={() => this.showMeals(1)}>Day 1</button>}
+                { dayTwoBtn && <button onClick={() => this.showMeals(2)}>Day 2</button>}
+                { dayThreeBtn && <button onClick={() => this.showMeals(3)}>Day 3</button>}
+                { dayFourBtn && <button onClick={() => this.showMeals(4)}>Day 4</button>}
+                { dayFiveBtn && <button onClick={() => this.showMeals(5)}>Day 5</button>}
+                { daySixBtn && <button onClick={() => this.showMeals(6)}>Day 6</button>}
+                { daySevenBtn && <button onClick={() => this.showMeals(7)}>Day 7</button>}
+                { showMealPlan && <>{showMealPlan}</>}
+              </div>
+            </div>
           </div>
-        </div>
       </div>
     )
   }  

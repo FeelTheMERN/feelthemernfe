@@ -3,6 +3,8 @@ import axios from 'axios'
 import UserCard from './UserCard'
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar'
+import './css/adminusers.scss'
+
 // import PrintUserCards from './PrintUserCards';
 
 class ListUsers extends Component {
@@ -42,22 +44,25 @@ class ListUsers extends Component {
     if(!users) return <h1>Loading...</h1>
     console.log(users)
     return (
-        <div className="main-container">
-            <div className="content-container">
-            <SearchBar search={this.handleSearch}/>
-                {filteredUsers &&
-                filteredUsers.map(user => {
-                    return (
-                        <>
-                            <UserCard
-                            key={user._id}
-                            id={user._id}
-                            firstName={user.personalAttribute.firstName}
-                            lastName={user.personalAttribute.lastName}
-                            />
-                        </>
-                )})}
-                <Link to="/admin/new-user">Add User</Link>
+        <div className="background" id="admin-users">
+            <p id="logo-type">SkyeFIT</p>
+            <div className="main-container">
+                <div className="content-container">
+                <SearchBar search={this.handleSearch}/>
+                    {filteredUsers &&
+                    filteredUsers.map(user => {
+                        return (
+                            <>
+                                <UserCard
+                                key={user._id}
+                                id={user._id}
+                                firstName={user.personalAttribute.firstName}
+                                lastName={user.personalAttribute.lastName}
+                                />
+                            </>
+                    )})}
+                    <Link to="/admin/new-user">Add User</Link>
+                </div>
             </div>
         </div>
     )

@@ -33,18 +33,21 @@ class Welcome extends Component {
     const { printLogin, btnText, printSlider } = this.state // we need to access printLogin from state so it can be rendered
     const fromRoute = window.location.search
     return (
-      <div className="main-container">
-        <div className="welcome-container">
-          { !printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
-          { printLogin && printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
-          { !printLogin && !printSlider && <div><p>Welcome to</p><h1>SkyeFIT</h1></div> }
-          { printSlider && !printLogin && <>{printSlider}</>}
-          { !printLogin && <button className="small" onClick={this.showLoginSlider}>{btnText}</button> }
-          { fromRoute === "?login" && <h4>Please Login</h4>}
-          { !printLogin && <button onClick={this.showLogInForm}>Log In</button> }
-          { printLogin && <>{printLogin}</> }
-        </div>
-      </div>
+      <div className="background" id="welcome">
+        <p id="logo-type">SkyeFIT</p>
+          <div className="main-container">
+            <div className="welcome-container">
+              { !printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
+              { printLogin && printSlider && <img id="logo" src={logo} alt="SkyeFIT Logo"></img>}
+              { !printLogin && !printSlider && <div><p>Welcome to</p><h1>SkyeFIT</h1></div> }
+              { printSlider && !printLogin && <>{printSlider}</>}
+              { !printLogin && <button className="small" onClick={this.showLoginSlider}>{btnText}</button> }
+              { fromRoute === "?login" && <h4>Please Login</h4>}
+              { !printLogin && <button onClick={this.showLogInForm}>Log In</button> }
+              { printLogin && <>{printLogin}</> }
+            </div>
+          </div>
+      </div>      
     )
   }
 }

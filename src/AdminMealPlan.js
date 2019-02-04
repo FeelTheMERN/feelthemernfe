@@ -3,7 +3,7 @@ import axios from 'axios';
 import './css/mealplan.scss'
 import ShowMeals from './ShowMeals'
 
-class UserSessions extends Component {
+class AdminMealPlan extends Component {
   state = {
     dayOneBtn: true,
     dayTwoBtn: true,
@@ -58,4 +58,4 @@ class UserSessions extends Component {
   }  
 }
 
-export default UserSessions;
+export default AdminMealPlan;
