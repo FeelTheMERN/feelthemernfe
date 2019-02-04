@@ -183,93 +183,95 @@ class UserProfile extends Component {
     console.log(user)
     if(!user) return <h1>Loading...</h1>
     return (
-      <div className="user-profile">
-        <div className="main-container">
-          <div className="content-container">
+      <div className="background" id="user-profile">
+        <div className="user-profile">
+          <div className="main-container">
+            <div className="content-container">
 
-            <div className="column">
-              <div className="top-row personal-info">
+              <div className="column">
+                <div className="top-row personal-info">
+                  <div className="title">
+                    <h1>Personal Info</h1>
+                    <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
+                  </div>
+                  { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
+                  { editPersonalDetailsBtn && <PersonalDetailForm 
+                        // firstName={user.personalAttribute.firstName}
+                        firstName={user.personalAttribute.firstName}
+                        lastName={user.personalAttribute.lastName}
+                        dob={user.personalAttribute.dob}
+                        gender={user.personalAttribute.gender}
+                        handleInputChange={this.persAttInputChange}/>}
+                  { editPersonalDetailsBtn && <button onClick={() => this.saveEdit('editPersonalDetailsBtn', 'personalDetailsBtnMsg')}>Save</button>}
+                  { user.remainingSessions && <div className="box">
+                    <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
+                  </div>}
+                </div>
+
+                <div className="top-row contact">
+                  <div className="title">
+                    <h1>Contact Details</h1>
+                    <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
+                  </div>
+                  { !editContactDetailsBtn && <PrintContactDetails obj={user.contact}/>}
+                  { editContactDetailsBtn && <AccountDetailForm 
+                        handleInputChange={this.handleInputChange}
+                        username={user.username}
+                        email={user.contact.email}
+                        contactNumber={user.contact.contactNumber}/>}
+                  { editContactDetailsBtn && <button onClick={() => this.saveEdit('editContactDetailsBtn', 'contactDetailsBtnMsg')}>Save</button>}
+                </div>
+
+                <div className="directory">
+                  <div>
+                    <button onClick={this.showTransactions}>Transaction History</button>
+                    { printTransaction && <p>{printTransaction}</p>}
+                  </div>
+                  <div>
+                    <button onClick={this.redirectCurrentPlan}>Current Meal Plan</button>
+                    <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
+                  </div>
+                  <div>
+                    <button>Add New Booking</button>
+                    <button onClick={this.deleteUser}>Delete User</button>
+                    {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
+                  </div>
+                </div>
+              </div>
+
+              <div className="column notes">
                 <div className="title">
-                  <h1>Personal Info</h1>
-                  <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
+                  <h1>Notes</h1>
+                  <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
                 </div>
-                { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
-                { editPersonalDetailsBtn && <PersonalDetailForm 
-                      // firstName={user.personalAttribute.firstName}
-                      firstName={user.personalAttribute.firstName}
-                      lastName={user.personalAttribute.lastName}
-                      dob={user.personalAttribute.dob}
-                      gender={user.personalAttribute.gender}
-                      handleInputChange={this.persAttInputChange}/>}
-                { editPersonalDetailsBtn && <button onClick={() => this.saveEdit('editPersonalDetailsBtn', 'personalDetailsBtnMsg')}>Save</button>}
-                { user.remainingSessions && <div className="box">
-                  <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
-                </div>}
+                { !editNotesBtn && <>
+                  <div className="box note">
+                    <p>Notes:</p>
+                    <p>{user.notes}</p>
+                  </div>
+                  <div className="box note">
+                    <p>Dietary Requirements:</p>
+                    <p>{user.dietaryRequirements}</p>
+                  </div>
+                </>}
+                { editNotesBtn && <ClientNotesForm 
+                      notes={user.notes} 
+                      dietaryRequirements={user.dietaryRequirements}
+                      handleInputChange={this.handleInputChange}/>}
+                { editNotesBtn && <button onClick={() => this.saveEdit('editNotesBtn', 'editNotesBtnMsg')}>Save</button>}
               </div>
 
-              <div className="top-row contact">
-                <div className="title">
-                  <h1>Contact Details</h1>
-                  <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
-                </div>
-                { !editContactDetailsBtn && <PrintContactDetails obj={user.contact}/>}
-                { editContactDetailsBtn && <AccountDetailForm 
-                      handleInputChange={this.handleInputChange}
-                      username={user.username}
-                      email={user.contact.email}
-                      contactNumber={user.contact.contactNumber}/>}
-                { editContactDetailsBtn && <button onClick={() => this.saveEdit('editContactDetailsBtn', 'contactDetailsBtnMsg')}>Save</button>}
-              </div>
-
-              <div className="directory">
-                <div>
-                  <button onClick={this.showTransactions}>Transaction History</button>
-                  { printTransaction && <p>{printTransaction}</p>}
-                </div>
-                <div>
-                  <button onClick={this.redirectCurrentPlan}>Current Meal Plan</button>
-                  <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
-                </div>
-                <div>
-                  <button>Add New Booking</button>
-                  <button onClick={this.deleteUser}>Delete User</button>
-                  {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
-                </div>
-              </div>
-            </div>
-
-            <div className="column notes">
+              <div className="column personal-att">
               <div className="title">
-                <h1>Notes</h1>
-                <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
-              </div>
-              { !editNotesBtn && <>
-                <div className="box note">
-                  <p>Notes:</p>
-                  <p>{user.notes}</p>
+                  <h1>Personal Attributes</h1>
                 </div>
-                <div className="box note">
-                  <p>Dietary Requirements:</p>
-                  <p>{user.dietaryRequirements}</p>
-                </div>
-              </>}
-              { editNotesBtn && <ClientNotesForm 
-                    notes={user.notes} 
-                    dietaryRequirements={user.dietaryRequirements}
-                    handleInputChange={this.handleInputChange}/>}
-              { editNotesBtn && <button onClick={() => this.saveEdit('editNotesBtn', 'editNotesBtnMsg')}>Save</button>}
-            </div>
-
-             <div className="column personal-att">
-             <div className="title">
-                <h1>Personal Attributes</h1>
+                <PrintPersonalAttributes 
+                      obj={user.personalAttribute} 
+                      updateAttr={this.updateAttr}
+                      setBodyFat={this.setBodyFat}/>
               </div>
-              <PrintPersonalAttributes 
-                    obj={user.personalAttribute} 
-                    updateAttr={this.updateAttr}
-                    setBodyFat={this.setBodyFat}/>
+          
             </div>
-        
           </div>
         </div>
       </div>
