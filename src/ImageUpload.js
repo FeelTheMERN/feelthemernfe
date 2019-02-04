@@ -14,7 +14,7 @@ export default class ImageUpload extends Component {
               'token': localStorage.getItem('token')
           }
       }
-      const url = 'http://localhost:5000/admin/uploadprofilepicture'
+      const url = `${process.env.REACT_APP_API_URL}/admin/uploadprofilepicture`
       axios.post(url, formData, config )
         .then(res => {
             const image = res.data.secure_url

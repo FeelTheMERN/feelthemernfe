@@ -20,17 +20,17 @@ require('dotenv').config()
 
 class App extends Component {
 
-  renderNavBar = () => {
-    console.log(this.props)
-    if(window.location.pathname === '/' || window.location.pathname === '/admin') return <></>
-    if(window.location.pathname.split('/')[1] === 'user') return <Route path="/:user/:database/:id" component={Navbar} />;
-    if(window.location.pathname.split('/')[1] === 'admin') return <Route path="/:admin/:action" component={Navbar}/>
-    // let nav = <Navbar />
-    // // let nav = <Route path="/:user/:database/:id" component={Navbar} />
-    // if (window.location.pathname === '/') nav = null
-    // if (window.location.pathname === '/admin') nav = null
-    // return nav
-  }
+  // renderNavBar = () => {
+  //   console.log(window.location.pathname.split('/'))
+  //   if(window.location.pathname === '/' || window.location.pathname === '/admin') return <></>
+  //   if(window.location.pathname.split('/')[1] === 'user') return <Route path="/:user/:database/:id" component={Navbar} />;
+  //   if(window.location.pathname.split('/')[1] === 'admin') return <Route path="/:admin/:action" component={Navbar}/>
+  //   // let nav = <Navbar />
+  //   // // let nav = <Route path="/:user/:database/:id" component={Navbar} />
+  //   // if (window.location.pathname === '/') nav = null
+  //   // if (window.location.pathname === '/admin') nav = null
+  //   // return nav
+  // }
 
   render() {
     // console.log(user)
@@ -38,9 +38,12 @@ class App extends Component {
       <BrowserRouter>{/* Using react-router-dom */}
         <div className="App">
           <div className="content-container">
-            <p id="logo-type">SkyeFIT</p>
             <hr></hr>
-            {this.renderNavBar()}
+            {/* {this.renderNavBar()} */}
+            {window.location.pathname.split('/')[1] === 'user' && <Route path="/:user/:database/:id" component={Navbar} />}
+                      
+            {window.location.pathname.split('/')[1] === 'admin' && <Route path="/:admin/:action" component={Navbar}/>}
+
             <Switch>
               <Route path="/" component={Welcome} exact/>
               <Route path="/admin" component={AdminLogin} exact/>

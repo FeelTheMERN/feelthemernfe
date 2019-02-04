@@ -1,0 +1,14 @@
+.adminhome-container {
+  display: flex;
+  justify-content: space-around;
+  flex-flow: column;
+  align-items: center;
+}
+
+.top-container {
+  padding-top: 70px;
+}
+
+#admin-home { 
+  background-image: url("../assets/img/r-h-lee-609997-unsplash.jpg");
+}

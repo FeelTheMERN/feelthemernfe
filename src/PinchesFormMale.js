@@ -19,7 +19,7 @@ export default class PinchesFormMale extends Component {
         const { dob, weight } = this.props
         const config = { headers: {token: localStorage.getItem('token')}}
         console.log(config)
-        const url = "http://localhost:5000/admin/pinches/male";
+        const url = `${process.env.REACT_APP_API_URL}/admin/pinches/male`;
         const data = { chest, abdomen, thigh, dob, weight }
         console.log(data)
         axios.post(url, data, config)

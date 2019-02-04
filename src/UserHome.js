@@ -7,7 +7,7 @@ class UserHome extends Component {
   componentDidMount() {
     const config = { headers: {token: localStorage.getItem('token')}}
     const { id } = this.props.match.params
-    axios.get(`http://localhost:5000/user/users/${id}`, config)
+    axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
       .then(resp => this.setState({user: resp.data}))
       .catch(err => console.log(err));
   }
@@ -17,12 +17,15 @@ class UserHome extends Component {
     if(!user) return <h1>Loading...</h1>
     // console.log(user)
     return (
-      <div className="main-container">
-        <div className="content-container">
-          <h1>Welcome</h1>
-          <h3>{user.username}</h3>
-          <p>Your next session is: </p>
-        </div>
+      <div className="background" id="user-home">
+        <p id="logo-type">SkyeFIT</p>
+          <div className="main-container">
+            <div className="content-container">
+              <h1>Welcome</h1>
+              <h3>{user.username}</h3>
+              <p>Your next session is: </p>
+            </div>
+          </div>
       </div>
     )
   }
