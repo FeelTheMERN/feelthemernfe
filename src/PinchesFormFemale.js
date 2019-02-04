@@ -37,12 +37,18 @@ export default class PinchesFormFemale extends Component {
     render() {
     return (
         <div className="pinches">
-            <label htmlFor="tricep">Tricep(mm):</label>
-            <input type="text-field" id="tricep" onChange={this.handleInputChange}/>
-            <label htmlFor="thigh">Thigh(mm):</label>
-            <input type="text-field" id="thigh" onChange={this.handleInputChange}/>
-            <label htmlFor="suprailiac">Suprailiac(mm):</label>
-            <input type="text-field" id="suprailiac" onChange={this.handleInputChange}/>
+            <div className="field">
+                <label htmlFor="tricep">Tricep(mm):</label>
+                <input type="text-field" id="tricep" onChange={this.handleInputChange}/>
+            </div>
+            <div className="field">            
+                <label htmlFor="thigh">Thigh(mm):</label>
+                <input type="text-field" id="thigh" onChange={this.handleInputChange}/>
+            </div>
+            <div className="field">
+                <label htmlFor="suprailiac">Suprailiac(mm):</label>
+                <input type="text-field" id="suprailiac" onChange={this.handleInputChange}/>
+            </div>
             <button onClick={this.calcBodyFat}>Calculate</button>
         </div>
     )
