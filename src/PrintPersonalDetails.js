@@ -4,9 +4,10 @@ export default function PrintPersonalDetails(props) {
     const {obj} = props
 
     console.log(obj.dob.split('T')[0].split('-').reverse().join('/'))
-    
+     
     return (
-      <div className="persDetails">
+      <>
+      {/* <div className="persDetails"> */}
         <div className="box">
           <p>Client Name:</p> <p> {obj.firstName} {obj.lastName}</p>
         </div>
@@ -16,7 +17,8 @@ export default function PrintPersonalDetails(props) {
         <div className="box">
           <p>Gender:</p> <p>{obj.gender}</p>
         </div>
-      </div>
+       {/* </div> */}
+       </>
     )
 }
 

@@ -46,24 +46,26 @@ class ListUsers extends Component {
     const {users, filteredUsers} = this.state;
     if(!users) return <h1>Loading...</h1>
     return (
-        <div className="main-container">
-            <div className="content-container">
-            <SearchBar search={this.handleSearch}/>
-                {!users[0] && <p>There are no users</p>}
-                {filteredUsers &&
-                filteredUsers.map(user => {
-                    return (
-                        <>
-                            <UserCard
-                            key={user._id}
-                            id={user._id}
-                            image={user.image}
-                            firstName={user.personalAttribute.firstName}
-                            lastName={user.personalAttribute.lastName}
-                            />
-                        </>
-                )})}
-                <Link className="button" to="/admin/new-user">Add User</Link>
+        <div className="list-user">
+            <div className="main-container"> 
+                <div className="content-container">
+                <SearchBar search={this.handleSearch}/>
+                    {!users[0] && <p>There are no users</p>}
+                    {filteredUsers &&
+                    filteredUsers.map(user => {
+                        return (
+                            <div>
+                                <UserCard
+                                key={user._id}
+                                id={user._id}
+                                image={user.image}
+                                firstName={user.personalAttribute.firstName}
+                                lastName={user.personalAttribute.lastName}
+                                />
+                            </div>
+                    )})}
+                    <Link className="button" to="/admin/new-user">Add User</Link>
+                </div>
             </div>
         </div>
     )

@@ -160,6 +160,7 @@ class UserProfile extends Component {
     const config = { headers: {token: localStorage.getItem('token')}}
     const url = 'http://localhost:5000/admin/users/edit'
     const data = { user }
+    console.log(data)
     axios.put(url, data, config)
       .then(resp => this.setState({user: resp.data}))
       .catch(err => {
@@ -188,20 +189,21 @@ class UserProfile extends Component {
           <div className="content-container">
 
             <div className="column">
+
               <div className="top-row personal-info">
                 <div className="title">
                   <h1>Personal Info</h1>
                   <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
                 </div>
-                { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
-                { editPersonalDetailsBtn && <PersonalDetailForm 
-                      // firstName={user.personalAttribute.firstName}
-                      firstName={user.personalAttribute.firstName}
-                      lastName={user.personalAttribute.lastName}
-                      dob={user.personalAttribute.dob}
-                      gender={user.personalAttribute.gender}
-                      handleInputChange={this.persAttInputChange}/>}
-                { editPersonalDetailsBtn && <button onClick={() => this.saveEdit('editPersonalDetailsBtn', 'personalDetailsBtnMsg')}>Save</button>}
+                  { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
+                  { editPersonalDetailsBtn && <PersonalDetailForm 
+                        // firstName={user.personalAttribute.firstName}
+                        firstName={user.personalAttribute.firstName}
+                        lastName={user.personalAttribute.lastName}
+                        dob={user.personalAttribute.dob}
+                        gender={user.personalAttribute.gender}
+                        handleInputChange={this.persAttInputChange}/>}
+                  { editPersonalDetailsBtn && <button onClick={() => this.saveEdit('editPersonalDetailsBtn', 'personalDetailsBtnMsg')}>Save</button>}
                 { user.remainingSessions && <div className="box">
                   <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
                 </div>}
@@ -222,17 +224,17 @@ class UserProfile extends Component {
               </div>
 
               <div className="directory">
-                <div>
+                {/* <div>
                   <button onClick={this.showTransactions}>Transaction History</button>
                   { printTransaction && <p>{printTransaction}</p>}
-                </div>
+                </div> */}
                 <div>
                   <button onClick={this.redirectCurrentPlan}>Current Meal Plan</button>
                   <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
                 </div>
                 <div>
                   <button>Add New Booking</button>
-                  <button onClick={this.deleteUser}>Delete User</button>
+                  <button className="delete" onClick={this.deleteUser}>Delete User</button>
                   {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
                 </div>
               </div>
