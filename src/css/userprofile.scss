@@ -4,6 +4,7 @@ $yellow: #fefe8a;
 .user-profile {
     .main-container {
         height: 80vh;
+        margin-bottom: 20px;
         .content-container {
             // background: red;
             width: 100%;
@@ -34,6 +35,7 @@ $yellow: #fefe8a;
                     font-size: 8px;
                     border: 1px solid $blue;
                     height: 20px;
+                    color: $blue;
                 }
                 button {
                 }
@@ -71,7 +73,6 @@ $yellow: #fefe8a;
                 justify-content: space-between;
                 align-items: center;
                 padding: 5px;
-                // background: yellow;
                 border: 0.5px solid white;
                 margin: 5px;
                 height: 30px;

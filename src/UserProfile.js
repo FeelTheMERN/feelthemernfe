@@ -36,7 +36,7 @@ class UserProfile extends Component {
   }
 
   getUser = () => {
-    const url = `http://localhost:5000/admin/users/${this.props.match.params.id}`
+    const url = `${process.env.REACT_APP_API_URL}/admin/users/${this.props.match.params.id}`
     const config = { headers: {token: localStorage.getItem('token')}}
 
     return axios.get(url, config)
@@ -57,6 +57,10 @@ class UserProfile extends Component {
   }
 
   redirectMealPlan = () => {
+    const {id} = this.props.match.params
+    this.props.history.push(`/admin/users/${id}/new-mealplan`)
+  }
+  redirectCurrentPlan = () => {
     const {id} = this.props.match.params
     this.props.history.push(`/admin/users/${id}/mealplan`)
   }
@@ -119,9 +123,22 @@ class UserProfile extends Component {
     }
   }
 
+  updateAttr = (id, value) => {
+    if(id === 'weightLog'){
+      const {personalAttribute} = this.state.user
+      personalAttribute[id].push(value)
+      this.setState({personalAttribute})
+      this.saveEdit()
+    }
+    const {personalAttribute} = this.state.user
+    personalAttribute[id] = value 
+    this.setState({personalAttribute})
+    this.saveEdit()
+  }
+
   deleteUser = (e) => {
     e.preventDefault()
-    const url = "http://localhost:5000/admin/users/delete"
+    const url = `${process.env.REACT_APP_API_URL}/admin/users/delete`
     const data = {
       id: this.state.user._id
     }
@@ -141,7 +158,7 @@ class UserProfile extends Component {
     const {user} = this.state
     this.setState({[btn]: false, [btnmsg]: 'Edit'})
     const config = { headers: {token: localStorage.getItem('token')}}
-    const url = 'http://localhost:5000/admin/users/edit'
+    const url = `${process.env.REACT_APP_API_URL}/admin/users/edit`
     const data = { user }
     axios.put(url, data, config)
       .then(resp => this.setState({user: resp.data}))
@@ -152,10 +169,18 @@ class UserProfile extends Component {
       })
   }
 
+  setBodyFat = (bodyFat, fatMass, leanMass) => {
+    const {personalAttribute} = this.state.user
+    personalAttribute.bodyFatLog.push(bodyFat)
+    personalAttribute.fatMass.push(fatMass)
+    personalAttribute.leanMass.push(leanMass)
+    this.setState({personalAttribute}, () => this.saveEdit())
+  }
+
   render() {
     console.log(this.state.user)
     const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm } = this.state;
-
+    console.log(user)
     if(!user) return <h1>Loading...</h1>
     return (
       <div className="user-profile">
@@ -183,29 +208,32 @@ class UserProfile extends Component {
               </div>
 
               <div className="top-row contact">
-              <div className="title">
-                <h1>Contact Details</h1>
-                <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
-              </div>
-              { !editContactDetailsBtn && <PrintContactDetails obj={user.contact}/>}
-              { editContactDetailsBtn && <AccountDetailForm 
-                    handleInputChange={this.handleInputChange}
-                    username={user.username}
-                    email={user.contact.email}
-                    contactNumber={user.contact.contactNumber}/>}
-              { editContactDetailsBtn && <button onClick={() => this.saveEdit('editContactDetailsBtn', 'contactDetailsBtnMsg')}>Save</button>}
+                <div className="title">
+                  <h1>Contact Details</h1>
+                  <button onClick={this.editContactDetails}>{contactDetailsBtnMsg}</button>
+                </div>
+                { !editContactDetailsBtn && <PrintContactDetails obj={user.contact}/>}
+                { editContactDetailsBtn && <AccountDetailForm 
+                      handleInputChange={this.handleInputChange}
+                      username={user.username}
+                      email={user.contact.email}
+                      contactNumber={user.contact.contactNumber}/>}
+                { editContactDetailsBtn && <button onClick={() => this.saveEdit('editContactDetailsBtn', 'contactDetailsBtnMsg')}>Save</button>}
               </div>
 
               <div className="directory">
                 <div>
-                <button onClick={this.showTransactions}>Transaction History</button>
-                { printTransaction && <p>{printTransaction}</p>}
-                <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
+                  <button onClick={this.showTransactions}>Transaction History</button>
+                  { printTransaction && <p>{printTransaction}</p>}
                 </div>
                 <div>
-                <button>Add New Booking</button>
-                <button onClick={this.deleteUser}>Delete User</button>
-                {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
+                  <button onClick={this.redirectCurrentPlan}>Current Meal Plan</button>
+                  <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
+                </div>
+                <div>
+                  <button>Add New Booking</button>
+                  <button onClick={this.deleteUser}>Delete User</button>
+                  {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
                 </div>
               </div>
             </div>
@@ -236,7 +264,10 @@ class UserProfile extends Component {
              <div className="title">
                 <h1>Personal Attributes</h1>
               </div>
-              <PrintPersonalAttributes obj={user.personalAttribute}/>
+              <PrintPersonalAttributes 
+                    obj={user.personalAttribute} 
+                    updateAttr={this.updateAttr}
+                    setBodyFat={this.setBodyFat}/>
             </div>
         
           </div>

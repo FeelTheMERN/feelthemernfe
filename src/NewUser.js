@@ -60,7 +60,7 @@ class NewUser extends Component {
     submitForm = (e) => {
         e.preventDefault();
         const { username, password, email, contactNumber, firstName, lastName, dob, gender, height, weight, bodyFat, fatMass, leanMass, goalWeight, goalBodyFat, notes, dietaryRequirements, image  } = this.state
-        const url = 'http://localhost:5000/admin/users/new';
+        const url = `${process.env.REACT_APP_API_URL}/admin/users/new`;
         const config = { headers: {token: localStorage.getItem('token')}}
         const data = { 
             user: {
@@ -163,58 +163,62 @@ class NewUser extends Component {
         const { title, formPage } = this.state
         return (
             <div className="background" id="new-user">
-                <p id="logo-type">SkyeFIT</p>
+            <p id="logo-type">SkyeFIT</p>
+            <div className="newuser">
                 <div className="main-container">
-                <div className="content-container">
-                    { title && <h1>{title}</h1> }
-                    { formPage === 1 && <AccountDetailForm 
-                            handleInputChange={this.handleInputChange} 
-                            addImage={this.addImage}
-                            image={this.state.image}
-                            username={this.state.username} 
-                            userNameError={this.state.userNameError}
-                            email={this.state.email}
-                            emailError={this.state.emailError}                        
-                            password={this.state.password}
-                            contactNumber={this.state.contactNumber}
-                            contactError={this.state.contactError}
-                            /> } 
-                    { formPage === 2 && <PersonalDetailForm 
-                            handleInputChange={this.handleInputChange}
-                            firstName={this.state.firstName}
-                            firstNameError={this.state.firstNameError}
-                            lastName={this.state.lastName}
-                            dob={this.state.dob}
-                            dobError={this.state.dobError}
-                            gender={this.state.gender}
-                            genderError={this.state.genderError}
-                            />} 
-                    { formPage === 3 && <ClientAttributeForm 
-                            handleInputChange={this.handleInputChange}  
-                            setBodyFat={this.setBodyFat}
-                            height={this.state.height}
-                            weight={this.state.weight}
-                            weightError={this.state.weightError}
-                            bodyFat={this.state.bodyFat}
-                            fatMass={this.state.fatMass}
-                            leanMass={this.state.leanMass}
-                            goalWeight={this.state.goalWeight}
-                            goalBodyFat={this.state.goalBodyFat}
-                            gender={this.state.gender}
-                            dob={this.state.dob}
-                            /> }
-                    { formPage === 4 && <ClientNotesForm 
-                            handleInputChange={this.handleInputChange}
-                            dietaryRequirements={this.state.dietaryRequirements}
-                            notes={this.state.notes}/> }
-                    <div>
-                        { formPage > 1 && <button onClick={this.backForm}>back</button>}
-                        { formPage !== 4 && <button onClick={this.nextForm}>next</button>}
-                        { formPage === 4 && <button onClick={this.submitForm}>Submit</button>}
+                    <div className="content-container">
+                        { title && <h1>{title}</h1> }
+                        <div className="forms">
+                            { formPage === 1 && <AccountDetailForm 
+                                    handleInputChange={this.handleInputChange} 
+                                    addImage={this.addImage}
+                                    image={this.state.image}
+                                    username={this.state.username} 
+                                    userNameError={this.state.userNameError}
+                                    email={this.state.email}
+                                    emailError={this.state.emailError}                        
+                                    password={this.state.password}
+                                    contactNumber={this.state.contactNumber}
+                                    contactError={this.state.contactError}
+                                    /> } 
+                            { formPage === 2 && <PersonalDetailForm 
+                                    handleInputChange={this.handleInputChange}
+                                    firstName={this.state.firstName}
+                                    firstNameError={this.state.firstNameError}
+                                    lastName={this.state.lastName}
+                                    dob={this.state.dob}
+                                    dobError={this.state.dobError}
+                                    gender={this.state.gender}
+                                    genderError={this.state.genderError}
+                                    />} 
+                            { formPage === 3 && <ClientAttributeForm 
+                                    handleInputChange={this.handleInputChange}  
+                                    setBodyFat={this.setBodyFat}
+                                    height={this.state.height}
+                                    weight={this.state.weight}
+                                    weightError={this.state.weightError}
+                                    bodyFat={this.state.bodyFat}
+                                    fatMass={this.state.fatMass}
+                                    leanMass={this.state.leanMass}
+                                    goalWeight={this.state.goalWeight}
+                                    goalBodyFat={this.state.goalBodyFat}
+                                    gender={this.state.gender}
+                                    dob={this.state.dob}
+                                    /> }
+                            { formPage === 4 && <ClientNotesForm 
+                                    handleInputChange={this.handleInputChange}
+                                    dietaryRequirements={this.state.dietaryRequirements}
+                                    notes={this.state.notes}/> }
+                            <div className="buttons">
+                                { formPage > 1 && <button onClick={this.backForm}>back</button>}
+                                { formPage !== 4 && <button onClick={this.nextForm}>next</button>}
+                                { formPage === 4 && <button onClick={this.submitForm}>Submit</button>}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
             </div>
+          </div>
         )
     }
 }

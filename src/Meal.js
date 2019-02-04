@@ -32,19 +32,15 @@ export default class Meal extends Component {
   render() {
     const {addFood, meal, addMealBtn, message} = this.state
     return (
-      <div> 
+      <div className="showfood"> 
         { addFood && <>{addFood}</> }
-        { meal.map(food => {
+        { meal.reverse().map(food => {
           return (
-            <div>
-              <p key={food.food_name}>{food.food_name}</p>
+            <div key={food.food_name} className="linetop">
+              {/* <p key={food.food_name}>{food.food_name}</p> */}
               {/* <img src={food.photo.thumb} alt=""/> */}
-              <p>{food.serving_qty} {food.serving_unit}</p>
-              <p>Serving weight: {food.serving_weight_grams}g</p>
-              <p>Calories: {food.nf_calories}g</p>
-              <p>Protein: {food.nf_protein}g</p>
-              <p>Carbohydrate: {food.nf_total_carbohydrate}g</p>
-              <p>Fat: {food.nf_total_fat}</p>
+              <p><strong>{food.serving_qty} {food.serving_unit} {food.food_name}</strong></p>
+              <p>Serving weight: {food.serving_weight_grams}g, Cal: {food.nf_calories}, Prot: {food.nf_protein}g, Carb: {food.nf_total_carbohydrate}g, Fat: {food.nf_total_fat}</p>
             </div>
           )
         }) }

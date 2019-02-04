@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './css/pinchesform.scss'
 
 export default class PinchesFormFemale extends Component {
     state = {};
@@ -17,7 +18,7 @@ export default class PinchesFormFemale extends Component {
         const { tricep, suprailiac, thigh } = this.state
         const { dob, weight } = this.props
         const config = { headers: {token: localStorage.getItem('token')}}
-        const url = "http://localhost:5000/admin/pinches/female";
+        const url = `${process.env.REACT_APP_API_URL}/admin/pinches/female`;
         const data = { tricep, suprailiac, thigh, dob, weight }
         console.log(data)
         axios.post(url, data, config)
@@ -25,7 +26,8 @@ export default class PinchesFormFemale extends Component {
                 const {percBodyFat, fatMass, leanMass} = resp.data
                 this.setState({bodyFat: percBodyFat, fatMass, leanMass}, () => {
                     const { bodyFat, fatMass, leanMass } = this.state
-                    this.props.setBodyFat(bodyFat, fatMass, leanMass )
+                    this.props.setBodyFat(bodyFat, fatMass, leanMass)
+                    if(this.props.toggleBodyFatCalc) this.props.toggleBodyFatCalc('calculation complete')
                 })
             })
             .catch(err => console.log(err));
@@ -34,12 +36,12 @@ export default class PinchesFormFemale extends Component {
 
     render() {
     return (
-        <div>
-            <label htmlFor="tricep">Tricep Pincher:</label>
+        <div className="pinches">
+            <label htmlFor="tricep">Tricep(mm):</label>
             <input type="text-field" id="tricep" onChange={this.handleInputChange}/>
-            <label htmlFor="thigh">Thigh Pincher:</label>
+            <label htmlFor="thigh">Thigh(mm):</label>
             <input type="text-field" id="thigh" onChange={this.handleInputChange}/>
-            <label htmlFor="suprailiac">Suprailiac Pincher:</label>
+            <label htmlFor="suprailiac">Suprailiac(mm):</label>
             <input type="text-field" id="suprailiac" onChange={this.handleInputChange}/>
             <button onClick={this.calcBodyFat}>Calculate</button>
         </div>

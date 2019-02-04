@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './css/pinchesform.scss'
 
 export default class PinchesFormMale extends Component {
     state = {};
@@ -18,7 +19,7 @@ export default class PinchesFormMale extends Component {
         const { dob, weight } = this.props
         const config = { headers: {token: localStorage.getItem('token')}}
         console.log(config)
-        const url = "http://localhost:5000/admin/pinches/male";
+        const url = `${process.env.REACT_APP_API_URL}/admin/pinches/male`;
         const data = { chest, abdomen, thigh, dob, weight }
         console.log(data)
         axios.post(url, data, config)
@@ -27,6 +28,7 @@ export default class PinchesFormMale extends Component {
                 this.setState({bodyFat: percBodyFat, fatMass, leanMass}, () => {
                     const { bodyFat, fatMass, leanMass } = this.state
                     this.props.setBodyFat(bodyFat, fatMass, leanMass )
+                    if(this.props.toggleBodyFatCalc) this.props.toggleBodyFatCalc('calculation complete')
                 })
             })
             .catch(err => console.log(err.response))
@@ -34,7 +36,7 @@ export default class PinchesFormMale extends Component {
 
     render() {
     return (
-        <div>
+        <div className="pinches">
             <label htmlFor="chest">Chest(mm):</label>
             <input type="text-field" id="chest" onChange={this.handleInputChange}/>
             <label htmlFor="abdomen">Abdoment(mm):</label>

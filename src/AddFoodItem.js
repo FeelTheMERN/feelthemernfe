@@ -40,7 +40,7 @@ export default class AddFoodItem extends Component {
 
     const config = { headers: {token: localStorage.getItem('token')}}
 
-    axios.post('http://localhost:5000/admin/macros', payload, config)
+    axios.post(`${process.env.REACT_APP_API_URL}/admin/macros`, payload, config)
       .then(resp => {
         this.props.addFoodToMeal(resp.data.foods[0])
         console.log(resp.data.foods[0])
@@ -55,18 +55,20 @@ export default class AddFoodItem extends Component {
     const { foods } = this.state
     foods && console.log(foods)
     return (
-      <div>
+      <div className="addfood">
         <form>
-            <div>
-                <label htmlFor="foodItem">Food Item:</label>
-                <input type="text" id="foodItem" value={this.state.inputValue} onChange={this.handleChange}/>
-                <button onClick={this.submitFood}>+</button>
-                {foods && foods.map((food, i) => {
-                  return(
-                    <p key={i} onClick={() => this.setItem(food)}>{food.food_name}</p>
-                  )
-                })}
-            </div>
+          <div>
+          <label htmlFor="foodItem">Food Item:</label>
+          <input type="text" id="foodItem" value={this.state.inputValue} onChange={this.handleChange}/>
+          <button onClick={this.submitFood}>+</button>
+          </div>
+          {/* {foods && <div className="foodlist">} */}
+            {foods && <div className="foodlist">{foods.map((food, i) => {
+              return(
+                <p key={i} onClick={() => this.setItem(food)}>{food.serving_unit} {food.food_name}</p>
+              )
+            })}</div>}
+          {/* {foods && </div>} */}
         </form>
       </div>
     )
