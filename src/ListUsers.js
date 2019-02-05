@@ -16,7 +16,7 @@ class ListUsers extends Component {
             .then(resp => this.setState({users: resp.data, filteredUsers: resp.data}))
             .catch(err => {
                 if(err.response.status === 401) return console.log("Unauthorized")
-                if(err.response.status === 404) return this.props.history.replace('/admin')
+                if(err.response.status === 404 || err.response.status === 403) return this.props.history.replace('/admin')
             });
   }
 

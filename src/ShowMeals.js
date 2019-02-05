@@ -4,6 +4,7 @@ import SingleMeal from './SingleMeal';
 class ShowMeals extends Component {
   render() {
     const {meals} =  this.props
+    console.log(meals)
     return (
       <div>
         {

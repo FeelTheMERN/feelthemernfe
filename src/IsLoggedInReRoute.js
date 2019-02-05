@@ -8,15 +8,13 @@ export default function IsLoggedInReRoute({component: Component, ...rest}) {
         {...rest}
         render={props => {
           if(localStorage.getItem('token')){
+            const decoded = decode(localStorage.getItem('token'));
             if(window.location.pathname.split('/')[1] === 'admin'){
-                return <Redirect to={{
-                  pathname: '/admin/home',
-                  state: { from: props.location}}}
-              />
-              }
-              const decoded = decode(localStorage.getItem('token'));
-              console.log(decoded)
-              return <Redirect to={{pathname: `/user/users/${decoded.id}/home`}} />
+              if(decoded.username !== 'admin') return <Component {...props} />
+              return <Redirect to={{pathname: '/admin/home', state: { from: props.location}}}/>
+            }
+            if(decoded.username === 'admin') return <Component {...props} />
+            return <Redirect to={{pathname: `/user/users/${decoded.id}/home`}} />
           } else {
             return <Component {...props} />
           }
