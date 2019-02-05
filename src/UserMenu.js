@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import homeIcon from "./assets/icons/home.svg"
 import mealIcon from "./assets/icons/mealplan.svg"
 import exerciseIcon from "./assets/icons/sessions.svg"
-import progressIcon from "./assets/icons/progress.svg"
 import { Link, withRouter } from "react-router-dom"
-
+import userIcon from "./assets/icons/users.svg"
 import './css/navbar.scss'
 
 class UserMenu extends Component {

@@ -10,6 +10,7 @@ class UserHome extends Component {
     axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
       .then(resp => this.setState({user: resp.data}))
       .catch(err => {
+        if(!err.response) return console.log(err)
         if(err.response.status) return this.props.history.replace('/')
       });
   }
@@ -18,14 +19,16 @@ class UserHome extends Component {
     const {user} = this.state;
     if(!user) return <h1>Loading...</h1>
     // console.log(user)
+    const nextSession = user.sessions[user.sessions.length - 1]
     return (
       <div className="background" id="user-home">
         <p id="logo-type">SkyeFIT</p>
           <div className="main-container">
             <div className="content-container">
               <h1>Welcome</h1>
-              <h3>{user.username}</h3>
-              <p>Your next session is: </p>
+              {user.image && <img src={user.image} alt={user.personalAttribute.firstName}/>}
+              <h3>{user.personalAttribute.firstName}</h3>
+              <p>Your next session is: {nextSession}</p>
             </div>
           </div>
       </div>

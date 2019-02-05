@@ -17,6 +17,7 @@ import UserMealPlan from './UserMealPlan'
 import AdminMealPlan from './AdminMealPlan'
 import UserProfileView from './UserProfileView'
 import IsLoggedInReRoute from './IsLoggedInReRoute'
+import AdminSessions from './AdminSessions'
 
 require('dotenv').config()
 
@@ -34,6 +35,7 @@ class App extends Component {
               <IsLoggedInReRoute path="/" component={Welcome} exact/>
               <IsLoggedInReRoute path="/admin" component={AdminLogin} exact/>
               <ProtectedRoute path="/admin/home" component={AdminHome} exact/>
+              <ProtectedRoute path="/admin/sessions" component={AdminSessions} exact/>
               <ProtectedRoute path="/admin/users" component={ListUsers} exact/>
               <ProtectedRoute path="/admin/users/:id" component={UserProfile} exact/>
               <ProtectedRoute path="/admin/users/:id/mealplan" component={AdminMealPlan} exact/>
