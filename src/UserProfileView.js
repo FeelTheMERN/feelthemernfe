@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import PrintKeyValue from './PrintKeyValue';
 import PrintPersonalDetails from './PrintPersonalDetails'
-import PersonalDetailForm from './PersonalDetailForm';
-import ClientNotesForm from './ClientNotesForm';
 import PrintContactDetails from './PrintContactDetails';
 import AccountDetailForm from './AccountDetailForm';
 import PrintPersonalAttributes from './PrintPersonalAttributes';
-import DeleteConfirmation from './DeleteConfirmation'
 import './css/userprofile.scss';
+import UpdatePassword from './UpdatePassword'
 
-class UserProfile extends Component {
+class UserProfileView extends Component {
   state = {};
 
   //when component mounts a get request for a single user is triggered and the user state is set to the data that comes back.
@@ -23,7 +21,6 @@ class UserProfile extends Component {
       .then(resp => {
         this.setState({user: resp.data}, () => {
           this.setState({ 
-            personalDetailsBtnMsg: 'Edit',
             editNotesBtnMsg: 'Edit Notes',
             contactDetailsBtnMsg: 'Edit'
           })
@@ -36,7 +33,7 @@ class UserProfile extends Component {
   }
 
   getUser = () => {
-    const url = `${process.env.REACT_APP_API_URL}/admin/users/${this.props.match.params.id}`
+    const url = `${process.env.REACT_APP_API_URL}/user/users/${this.props.match.params.id}`
     const config = { headers: {token: localStorage.getItem('token')}}
 
     return axios.get(url, config)
@@ -62,19 +59,7 @@ class UserProfile extends Component {
   }
   redirectCurrentPlan = () => {
     const {id} = this.props.match.params
-    this.props.history.push(`/admin/users/${id}/mealplan`)
-  }
-
-  editPersonalDetails = () => {
-    const { editPersonalDetailsBtn } = this.state
-    if(!editPersonalDetailsBtn) this.setState({ editPersonalDetailsBtn: true, personalDetailsBtnMsg: 'Cancel'})
-    if(editPersonalDetailsBtn) {
-      this.getUser()
-        .then(resp => this.setState({ user: resp.data, editPersonalDetailsBtn: false, personalDetailsBtnMsg: 'Edit'}))
-        .catch(err => {
-          if(err.response.status === 403) this.props.history.replace('/admin')
-        });
-    }
+    this.props.history.push(`/user/users/${id}/mealplan`)
   }
 
   editNotes = () => {
@@ -178,10 +163,24 @@ class UserProfile extends Component {
     this.setState({personalAttribute}, () => this.saveEdit())
   }
 
+  toggleEditPassword = () => {
+      const {editPassword} = this.state
+      if(!editPassword) return this.setState({editPassword: true})
+      this.setState({editPassword: false})
+  }
+
+  updatePassword = (pass) => {
+    let {password} = this.state.user
+    password = pass
+    this.setState({password}, () => {
+        // send to password backend
+    })
+  }
+
   render() {
     console.log(this.state.user)
-    const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm } = this.state;
-
+    const { user, printTransaction, editPersonalDetailsBtn, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, editPassword } = this.state;
+    console.log(user)
     if(!user) return <h1>Loading...</h1>
     return (
       <div className="background" id="user-profile">
@@ -194,17 +193,9 @@ class UserProfile extends Component {
               <div className="top-row personal-info">
                 <div className="title">
                   <h1>Personal Info</h1>
-                  <button onClick={this.editPersonalDetails}>{personalDetailsBtnMsg}</button>
                 </div>
+                  <img src={user.image} alt={user.personalAttribute.firstName}/>
                   { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
-                  { editPersonalDetailsBtn && <PersonalDetailForm 
-                        // firstName={user.personalAttribute.firstName}
-                        firstName={user.personalAttribute.firstName}
-                        lastName={user.personalAttribute.lastName}
-                        dob={user.personalAttribute.dob}
-                        gender={user.personalAttribute.gender}
-                        handleInputChange={this.persAttInputChange}/>}
-                  { editPersonalDetailsBtn && <button onClick={() => this.saveEdit('editPersonalDetailsBtn', 'personalDetailsBtnMsg')}>Save</button>}
                 { user.remainingSessions && <div className="box">
                   <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
                 </div>}
@@ -227,44 +218,13 @@ class UserProfile extends Component {
                 </div>
 
               <div className="directory">
-                {/* <div>
-                  <button onClick={this.showTransactions}>Transaction History</button>
-                  { printTransaction && <p>{printTransaction}</p>}
-                </div> */}
                 <div>
+                  <button onClick={this.toggleEditPassword}>Update Password</button>
                   <button onClick={this.redirectCurrentPlan}>Current Meal Plan</button>
-                  <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
                 </div>
-                <div>
-                  <button>Add New Booking</button>
-                  <button className="delete" onClick={this.deleteUser}>Delete User</button>
-                  {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
-
-                  </div>
-                </div>
+                {editPassword && <UpdatePassword updatePassword={this.updatePassword}/>}
               </div>
-
-              <div className="column notes">
-                <div className="title">
-                  <h1>Notes</h1>
-                  <button onClick={this.editNotes}>{editNotesBtnMsg}</button>
-                </div>
-                { !editNotesBtn && <>
-                  <div className="box note">
-                    <p>Notes:</p>
-                    <p>{user.notes}</p>
-                  </div>
-                  <div className="box note">
-                    <p>Dietary Requirements:</p>
-                    <p>{user.dietaryRequirements}</p>
-                  </div>
-                </>}
-                { editNotesBtn && <ClientNotesForm 
-                      notes={user.notes} 
-                      dietaryRequirements={user.dietaryRequirements}
-                      handleInputChange={this.handleInputChange}/>}
-                { editNotesBtn && <button onClick={() => this.saveEdit('editNotesBtn', 'editNotesBtnMsg')}>Save</button>}
-              </div>
+            </div>
 
               <div className="column personal-att">
               <div className="title">
@@ -273,7 +233,8 @@ class UserProfile extends Component {
                 <PrintPersonalAttributes 
                       obj={user.personalAttribute} 
                       updateAttr={this.updateAttr}
-                      setBodyFat={this.setBodyFat}/>
+                      setBodyFat={this.setBodyFat}
+                      user={true}/>
               </div>
           
             </div>
@@ -284,4 +245,4 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+export default UserProfileView;

@@ -11,12 +11,7 @@ class AdminMealPlan extends Component {
     dayFourBtn: true,
     dayFiveBtn: true,
     daySixBtn: true,
-    daySevenBtn: true,
-    // mealPlan: {
-    //   day1:[[{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}]],
-    //   day2:[[{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}]],
-    //   day3:[[{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}]]
-    // }
+    daySevenBtn: true
   }
     
   componentDidMount() {

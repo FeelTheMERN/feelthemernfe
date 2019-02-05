@@ -1,5 +1,5 @@
 .pinches{
-    // background: red;
+    // background: pink;
     width: 400px;
     display: flex;
     flex-flow: row wrap;
@@ -8,9 +8,14 @@
     padding: 5px;
     background: rgba($color: white, $alpha: 0.60);
     font-size: 12px;
-    #tricep, #thigh, #suprailiac, #chest, #abdomen {
-        width: 30px;
-        height: 20px;
+    // height: 200px;
+    .field {
+        // background: yellow;
+        display: flex;
+        #tricep, #thigh, #suprailiac, #chest, #abdomen {
+            width: 30px;
+            height: 20px;
+        }
     }
     button{
         margin-left: 75%;

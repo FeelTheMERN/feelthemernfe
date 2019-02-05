@@ -18,8 +18,8 @@ const AccountDetailForm = (props) => {
             <label htmlFor="contactNumber">Contact Number:</label>
             { props.contactError && <p>{props.contactError}</p>}
             <input type="text" id="contactNumber" onChange={props.handleInputChange} value={props.contactNumber}/>
-            <label htmlFor="password">Password:</label>
-            <input type="text" id="password" onChange={props.handleInputChange} value={props.password}/>
+            { !props.edit && <><label htmlFor="password">Password:</label>
+            <input type="text" id="password" onChange={props.handleInputChange} value={props.password}/></>}
         </form>
     </div>
   )

@@ -70,6 +70,7 @@ class ListUsers extends Component {
                 </div>
             </div>
         </div>
+        </div>
     )
   }
 }

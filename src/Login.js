@@ -37,7 +37,10 @@ class Login extends Component {
                 this.setState({message: 'You are logged in', error: null})
                 this.redirect(isAdmin, id)
                 })
-            .catch(err => console.log(err.response))
+            .catch(err => {
+                if(!err.response) return console.log(err.response)
+                if(err.response.status === 400) return this.setState({error: 'Incorrect username or password'})
+            })
     }
 
     render() {

@@ -11,21 +11,18 @@ class UserSessions extends Component {
     dayFourBtn: true,
     dayFiveBtn: true,
     daySixBtn: true,
-    daySevenBtn: true,
-    mealPlan: {
-      day1:[[{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}], [{food: "apple"}, {food: "apple"}]],
-      day2:[[{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}], [{food: "banana"}, {food: "banana"}]],
-      day3:[[{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}], [{food: "orange"}, {food: "orange"}]]
-    }
+    daySevenBtn: true
   }
     
   componentDidMount() {
     const config = { headers: {token: localStorage.getItem('token')}}
     const { id } = this.props.match.params
     axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
-      .then(resp => this.setState({user: resp.data}))
+      .then(resp => {
+        return this.setState({mealPlan: resp.data.user.mealPlan})})
       .catch(err => {
         console.log(err.response)
+        if(!err.response) return console.log(err)
         if(err.response.status === 404) this.props.history.replace('/')
       });
   }
@@ -40,7 +37,16 @@ class UserSessions extends Component {
   render() {
     const {user, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
     console.log(user)
-    if(!user) return <h1>Loading...</h1>
+    if(!user) return (
+      <div className="background" id="meal-plan">
+        <div className="main-container">
+          <div className="content-container">
+            <h1>There is no meal plan</h1>
+            <button onClick={() => this.props.history.goBack()}>back</button>
+          </div>
+        </div>
+      </div>
+    )
     return (
       <div className="background" id="meal-plan">
         <p id="logo-type">SkyeFIT</p>
