@@ -37,7 +37,7 @@ class UserSessions extends Component {
   render() {
     const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
     if(!mealPlan) return (
-      <div className="background" id="meal-plan">
+      <div className="background" id="meal-plan-image">
         <div className="main-container">
           <div className="content-container">
             <h1>There is no meal plan</h1>
@@ -47,11 +47,12 @@ class UserSessions extends Component {
       </div>
     )
     return (
-      <div className="background" id="meal-plan">
+      <div className="background" id="meal-plan-image">
         <p id="logo-type">SkyeFIT</p>
           <div className="main-container">
             <div className="mealplan-content-container">
-              <h1>Meal Plan</h1>
+              <h1>Meal Plan <br/><button onClick={() => this.props.history.goBack()}>back</button></h1>
+              
               <div className="btn-container">
                 { dayOneBtn && <button onClick={() => this.showMeals(1)}>Day 1</button>}
                 { dayTwoBtn && <button onClick={() => this.showMeals(2)}>Day 2</button>}

@@ -37,22 +37,24 @@ class AdminMealPlan extends Component {
     const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
     console.log(mealPlan)
     if(!mealPlan) return (
-      <div className="main-container">
-        <div className="content-container">
-          <h1>There is no meal plans</h1>
-          <div className="btns">
-            <button onClick={() => this.props.history.goBack()}>back</button>
-            <button onClick={() => this.props.history.replace(`/admin/users/${this.props.match.params.id}/new-mealplan`)}>Add Meal Plan</button>
+      <div className="background" id="meal-plan-image">
+        <div className="main-container">
+          <div className="content-container">
+            <h1>There is no meal plans</h1>
+            <div className="btns">
+              <button onClick={() => this.props.history.goBack()}>back</button>
+              <button onClick={() => this.props.history.replace(`/admin/users/${this.props.match.params.id}/new-mealplan`)}>Add Meal Plan</button>
+            </div>
           </div>
         </div>
       </div>
     )
     return (
-      <div className="background" id="admin-meal-plan">
+      <div className="background" id="meal-plan-image">
         <p id="logo-type">SkyeFIT</p>
           <div className="main-container">
             <div className="content-container">
-              <h1>Meal Plan</h1>
+              <h1>Meal Plan <br/><button onClick={() => this.props.history.goBack()}>back</button></h1>
               <div className="btn-container">
                 { dayOneBtn && <button onClick={() => this.showMeals(1)}>Day 1</button>}
                 { dayTwoBtn && <button onClick={() => this.showMeals(2)}>Day 2</button>}
