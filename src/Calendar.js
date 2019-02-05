@@ -190,7 +190,7 @@ class Calendar extends Component {
           );
       }
 
-      console.log("blanks: ", blanks);
+    //   console.log("blanks: ", blanks);
 
       let daysInMonth = [];
       for (let d = 1; d <= this.daysInMonth(); d++) {
@@ -203,7 +203,7 @@ class Calendar extends Component {
           );
       }
 
-      console.log("days: ", daysInMonth);
+    //   console.log("days: ", daysInMonth);
 
       // creating cells for all blank days and regular days in the month
       var totalSlots = [...blanks, ...daysInMonth];
@@ -239,7 +239,7 @@ class Calendar extends Component {
               <table className="calendar">
                   <thead>
                       <tr className="calendar-header">
-                          <td colSpan="5">
+                          <td colSpan="3">
                               <this.MonthNav />
                               {" "}
                               <this.YearNav />

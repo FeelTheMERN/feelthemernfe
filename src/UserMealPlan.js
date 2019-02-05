@@ -51,7 +51,7 @@ class UserSessions extends Component {
       <div className="background" id="meal-plan">
         <p id="logo-type">SkyeFIT</p>
           <div className="main-container">
-            <div className="content-container">
+            <div className="mealplan-content-container">
               <h1>Meal Plan</h1>
               <div className="btn-container">
                 { dayOneBtn && <button onClick={() => this.showMeals(1)}>Day 1</button>}

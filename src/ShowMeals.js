@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import SingleMeal from './SingleMeal';
-
+import './css/showmeals.scss'
 class ShowMeals extends Component {
   render() {
     const {meals} =  this.props
     return (
-      <div>
+      <div className="meal-plan-container">
         {
           meals.map((meal, i) => {
             return (
