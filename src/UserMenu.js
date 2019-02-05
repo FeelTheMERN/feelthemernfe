@@ -5,6 +5,7 @@ import exerciseIcon from "./assets/icons/sessions.svg"
 import { Link, withRouter } from "react-router-dom"
 import userIcon from "./assets/icons/users.svg"
 import './css/navbar.scss'
+import decode from 'jwt-decode'
 
 class UserMenu extends Component {
   constructor() {
@@ -43,7 +44,9 @@ class UserMenu extends Component {
 
   render() {
     console.log(this.state.showMenu)
-    const { id } = this.props.match.params
+    // const { id } = this.props.match.params
+    const decoded = decode(localStorage.getItem('token'))
+    const id = decoded.id
     const homePageLink = `/user/users/${id}/home`
     const mealPlanLink = `/user/users/${id}/mealplan`
     const sessionsLink = `/user/users/${id}/sessions`

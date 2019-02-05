@@ -18,7 +18,7 @@ class UserHome extends Component {
   render() {
     const {user} = this.state;
     if(!user) return <h1>Loading...</h1>
-    // console.log(user)
+    console.log(user)
     const nextSession = user.sessions[user.sessions.length - 1]
     return (
       <div className="background" id="user-home">
@@ -28,7 +28,7 @@ class UserHome extends Component {
               <h1>Welcome</h1>
               {user.image && <img src={user.image} alt={user.personalAttribute.firstName}/>}
               <h3>{user.personalAttribute.firstName}</h3>
-              <p>Your next session is: {nextSession}</p>
+              {nextSession && <p>Your next session is: {nextSession.date} {nextSession.time} {nextSession.location}</p>}
             </div>
           </div>
       </div>

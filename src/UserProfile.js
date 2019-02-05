@@ -179,20 +179,22 @@ class UserProfile extends Component {
     this.setState({personalAttribute}, () => this.saveEdit())
   }
 
-  toggleSession = (e) => {
-    e.preventDefault()
+  toggleSession = () => {
+    // e.preventDefault()
     if(!this.state.addSession) return this.setState({addSession: true})
     this.setState({addSession: false})
   }
 
   addSession = (date, time, location) => {
     const config = { headers: {token: localStorage.getItem('token')}}
-    const {id} = this.state.user
+    const id = this.state.user._id
     const session = { date, time, location}
     const data = {id, session}
-    const url = `${process.env.REACT_APP_API_URL}/admin/users/edit`
-    axios.put(url, data, config)
-      .then(resp => {})
+    console.log(data)
+    const url = `${process.env.REACT_APP_API_URL}/admin/addsession`
+    axios.post(url, data, config)
+      .then(resp => this.setState({user: resp.data}, () => this.toggleSession()))
+      .catch(err => console.log(err.response))
   }
 
   render() {
@@ -226,7 +228,7 @@ class UserProfile extends Component {
                   <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
                 </div>}
                 { user.sessions && user.sessions[user.sessions.length - 1] && <div className="box">
-                  <p>Next Sessions: </p><p>{user.sessions[user.sessions.length - 1].date} {user.sessions[user.sessions.length - 1].time} {user.sessions[user.sessions.length - 1].location}</p></div>}
+                  <p>Next Sessions: </p><p>{user.sessions[user.sessions.length - 1].date.split('-').reverse().join('/')} {user.sessions[user.sessions.length - 1].time} {user.sessions[user.sessions.length - 1].location}</p></div>}
               </div>
 
                 <div className="top-row contact">
@@ -258,7 +260,6 @@ class UserProfile extends Component {
                   {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
                   <button onClick={this.toggleSession}>Add Next Session</button>
                   {addSession && <AddSession addSession={this.addSession}/>}
-
                   </div>
                 </div>
               </div>
