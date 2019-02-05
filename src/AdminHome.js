@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
 import './css/adminhome.scss';
 import logo from "./assets/icons/skyefit_logo.svg"
+import decode from 'jwt-decode'
 
 
 export default class AdminHome extends Component {
+  componentDidMount =() => {
+    const decoded = decode(localStorage.getItem('token'));
+    if(decoded.username !== 'admin') return this.props.history.replace('/admin')
+  }
+
   render() {
     return (
       <div className="background" id="admin-home">

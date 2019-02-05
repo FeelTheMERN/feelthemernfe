@@ -19,7 +19,7 @@ class UserSessions extends Component {
     const { id } = this.props.match.params
     axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
       .then(resp => {
-        return this.setState({mealPlan: resp.data.user.mealPlan})})
+        return this.setState({mealPlan: resp.data.mealPlans[resp.data.mealPlans.length - 1]})})
       .catch(err => {
         console.log(err.response)
         if(!err.response) return console.log(err)
@@ -35,9 +35,8 @@ class UserSessions extends Component {
   }
 
   render() {
-    const {user, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
-    console.log(user)
-    if(!user) return (
+    const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
+    if(!mealPlan) return (
       <div className="background" id="meal-plan">
         <div className="main-container">
           <div className="content-container">

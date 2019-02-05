@@ -9,7 +9,9 @@ class UserHome extends Component {
     const { id } = this.props.match.params
     axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
       .then(resp => this.setState({user: resp.data}))
-      .catch(err => console.log(err));
+      .catch(err => {
+        if(err.response.status) return this.props.history.replace('/')
+      });
   }
 
   render() {

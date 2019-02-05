@@ -4,6 +4,7 @@ import './css/showmeals.scss'
 class ShowMeals extends Component {
   render() {
     const {meals} =  this.props
+    console.log(meals)
     return (
       <div className="meal-plan-container">
         {
