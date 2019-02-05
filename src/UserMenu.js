@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import homeIcon from "./assets/icons/home.svg"
 import mealIcon from "./assets/icons/mealplan.svg"
 import exerciseIcon from "./assets/icons/sessions.svg"
-import progressIcon from "./assets/icons/progress.svg"
 import userIcon from "./assets/icons/users.svg"
 import {Link} from "react-router-dom"
 import './css/navbar.scss'
