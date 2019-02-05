@@ -21,7 +21,8 @@ export default class ClientAttributeForm extends Component {
     console.log(gender)
     return (
       // <div className="main-container">
-      <div className="content-container">
+      // <div className="content-container">
+      <div>
         <form>
              <label htmlFor="height">Client Height:</label>
              <input type="text" id="height" onChange={handleInputChange} value={this.props.height}/>

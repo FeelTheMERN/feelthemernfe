@@ -31,6 +31,13 @@ $yellow: #fefe8a;
                 flex-flow: column;
             }
             .personal-info {
+                img{
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                    border-radius: 100%;
+                    margin: 0px 0px 10px 10px;
+                }
                 .title{
                     height: 53.13px;
                     // background: red;

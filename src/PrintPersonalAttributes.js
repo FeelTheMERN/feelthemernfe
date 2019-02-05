@@ -69,7 +69,7 @@ export default class PrintPersonalAttributes extends Component {
   }
   
   render() {
-    const {obj} = this.props
+    const {obj, user} = this.props
     const {bodyFatCalc, calcMessage} = this.state
     return (
       <div>
@@ -78,10 +78,10 @@ export default class PrintPersonalAttributes extends Component {
       </div>
       <div className="box">
         <p>Weight:</p><p>{obj.weightLog[obj.weightLog.length - 1]} kg</p>
-        <div>
+        { !user && <div>
           <input type="text" placeholder="New weight" id="weightLog" onChangege={this.handleInputChange}></input>
           <button onClick={this.updateAttr}>Update</button>
-        </div>
+        </div>}
       </div>
       { obj.bodyFatLog[obj.bodyFatLog.length - 1] && <div className="box">
         <p>Body Fat:</p><p>{obj.bodyFatLog[obj.bodyFatLog.length - 1].toFixed(2)} %</p>
@@ -92,7 +92,7 @@ export default class PrintPersonalAttributes extends Component {
       {obj.leanMass[obj.leanMass.length - 1] && <div className="box">
         <p>Lean Mass:</p><p>{obj.leanMass[obj.leanMass.length - 1].toFixed(2)} %</p>
       </div>}
-        <button onClick={this.toggleBodyFatCalc}>Calculate Body Fat</button>
+        {!user && <button onClick={this.toggleBodyFatCalc}>Calculate Body Fat</button>}
         {bodyFatCalc && obj.gender === 'female' && <PinchesFormFemale 
               dob={obj.dob} 
               weight={obj.weightLog[obj.weightLog.length - 1]}
@@ -106,17 +106,17 @@ export default class PrintPersonalAttributes extends Component {
         {calcMessage && <p>{calcMessage}</p>}
       <div className="box">
         <p>Goal Weight:</p><p>{obj.goalWeight} kg</p>
-        <div>
+        {!user && <div>
           <input type="text" placeholder="New goal weight" id="goalWeight" onChangege={this.handleInputChange}></input>
           <button onClick={this.updateAttr}>Update</button>
-        </div>
+        </div>}
       </div>
       <div className="box">
         <p>Goal Body Fat:</p><p>{obj.goalBodyFat} %</p>
-        <div>
+        {!user && <div>
           <input type="text" placeholder="New goal body fat" id="goalBodyFat" onChangege={this.handleInputChange}></input>
           <button onClick={this.updateAttr}>Update</button>
-        </div>
+        </div>}
       </div>
     </div>
     )

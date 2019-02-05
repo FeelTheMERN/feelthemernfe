@@ -42,7 +42,8 @@ class NewUser extends Component {
         if (e.currentTarget.value) {
             e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
         }
-        const {value, id} = e.currentTarget;
+        const { id, value } = e.currentTarget;
+        // const value = e.currentTarget.type === 'radio' ? e.currentTarget. : e.currentTarget.value;
         this.setState({[id]: value})
     }
 

@@ -15,6 +15,8 @@ import ProtectedRoute from './ProtectedRoute';
 import UserSessions from './UserSessions'
 import UserMealPlan from './UserMealPlan'
 import AdminMealPlan from './AdminMealPlan'
+import UserProfileView from './UserProfileView'
+import IsLoggedInReRoute from './IsLoggedInReRoute'
 
 require('dotenv').config()
 
@@ -33,20 +35,20 @@ class App extends Component {
   // }
 
   render() {
-    // console.log(user)
+    console.log(window.location.pathname.split('/')[1])
     return (
       <BrowserRouter>{/* Using react-router-dom */}
         <div className="App">
           <div className="content-container">
             <hr></hr>
             {/* {this.renderNavBar()} */}
-            {window.location.pathname.split('/')[1] === 'user' && <Route path="/:user/:database/:id" component={Navbar} />}
+            { window.location.pathname.split('/')[1] === 'user' && <Route path="/:user/:database/:id" component={Navbar} /> }
                       
-            {window.location.pathname.split('/')[1] === 'admin' && <Route path="/:admin/:action" component={Navbar}/>}
+            { window.location.pathname.split('/')[1] === 'admin' && <Route path="/:admin/:action" component={Navbar}/> }
 
             <Switch>
-              <Route path="/" component={Welcome} exact/>
-              <Route path="/admin" component={AdminLogin} exact/>
+              <IsLoggedInReRoute path="/" component={Welcome} exact/>
+              <IsLoggedInReRoute path="/admin" component={AdminLogin} exact/>
               <ProtectedRoute path="/admin/home" component={AdminHome} exact/>
               <ProtectedRoute path="/admin/users" component={ListUsers} exact/>
               <ProtectedRoute path="/admin/users/:id" component={UserProfile} exact/>
@@ -56,6 +58,7 @@ class App extends Component {
               <ProtectedRoute path="/user/users/:id/home" component={UserHome} exact/>
               <ProtectedRoute path="/user/users/:id/sessions" component={UserSessions} exact/>
               <ProtectedRoute path="/user/users/:id/mealplan" component={UserMealPlan} exact/>
+              <ProtectedRoute path="/user/users/:id/profile" component={UserProfileView} exact/>
               <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
             </Switch>
           </div>

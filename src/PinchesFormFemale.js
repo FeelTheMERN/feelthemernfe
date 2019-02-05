@@ -34,7 +34,7 @@ export default class PinchesFormFemale extends Component {
         
     }
 
-    render() {
+    render() { 
     return (
         <div className="pinches">
             <div className="field">
