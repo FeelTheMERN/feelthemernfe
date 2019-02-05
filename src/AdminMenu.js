@@ -4,7 +4,7 @@ import userIcon from "./assets/icons/users.svg"
 import addUser from "./assets/icons/adduser.svg"
 import exerciseIcon from "./assets/icons/sessions.svg"
 import './css/navbar.scss';
-import {Link} from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 class AdminMenu extends Component {
   constructor() {
@@ -77,4 +77,4 @@ class AdminMenu extends Component {
   }
 }
 
-export default AdminMenu;
+export default withRouter(AdminMenu);

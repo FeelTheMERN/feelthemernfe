@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import homeIcon from "./assets/icons/home.svg"
 import mealIcon from "./assets/icons/mealplan.svg"
 import exerciseIcon from "./assets/icons/sessions.svg"
+import { Link, withRouter } from "react-router-dom"
 import userIcon from "./assets/icons/users.svg"
-import {Link} from "react-router-dom"
 import './css/navbar.scss'
 
 class UserMenu extends Component {
@@ -84,4 +84,4 @@ class UserMenu extends Component {
   }
 }
 
-export default UserMenu
+export default withRouter(UserMenu)

@@ -52,9 +52,9 @@ class Login extends Component {
                     <input type="text" id="username" onChange={this.handleInputChange} />
                     <label htmlFor="password">Password:</label>
                     <input type="password" id="password" onChange={this.handleInputChange}/>
+                    { error && <div className="error-msg"><p>{error}</p></div>}
                     <button onClick={this.submitForm}>Login</button>
                 </form>
-                { error && <p>{error}</p>}
                 { message && <p>{message}</p>}
             </>
         )

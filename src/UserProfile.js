@@ -9,6 +9,7 @@ import AccountDetailForm from './AccountDetailForm';
 import PrintPersonalAttributes from './PrintPersonalAttributes';
 import DeleteConfirmation from './DeleteConfirmation'
 import './css/userprofile.scss';
+import AddSession from './AddSession'
 
 class UserProfile extends Component {
   state = {};
@@ -178,9 +179,25 @@ class UserProfile extends Component {
     this.setState({personalAttribute}, () => this.saveEdit())
   }
 
+  toggleSession = (e) => {
+    e.preventDefault()
+    if(!this.state.addSession) return this.setState({addSession: true})
+    this.setState({addSession: false})
+  }
+
+  addSession = (date, time, location) => {
+    const config = { headers: {token: localStorage.getItem('token')}}
+    const {id} = this.state.user
+    const session = { date, time, location}
+    const data = {id, session}
+    const url = `${process.env.REACT_APP_API_URL}/admin/users/edit`
+    axios.put(url, data, config)
+      .then(resp => {})
+  }
+
   render() {
     console.log(this.state.user)
-    const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm } = this.state;
+    const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm, addSession } = this.state;
 
     if(!user) return <h1>Loading...</h1>
     return (
@@ -208,8 +225,9 @@ class UserProfile extends Component {
                 { user.remainingSessions && <div className="box">
                   <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
                 </div>}
+                { user.sessions && user.sessions[user.sessions.length - 1] && <div className="box">
+                  <p>Next Sessions: </p><p>{user.sessions[user.sessions.length - 1].date} {user.sessions[user.sessions.length - 1].time} {user.sessions[user.sessions.length - 1].location}</p></div>}
               </div>
-
 
                 <div className="top-row contact">
                   <div className="title">
@@ -236,9 +254,10 @@ class UserProfile extends Component {
                   <button onClick={this.redirectMealPlan}>Add Meal Plan</button>
                 </div>
                 <div>
-                  <button>Add New Booking</button>
                   <button className="delete" onClick={this.deleteUser}>Delete User</button>
                   {deleteConfirm && <DeleteConfirmation history={this.props.history}/>}
+                  <button onClick={this.toggleSession}>Add Next Session</button>
+                  {addSession && <AddSession addSession={this.addSession}/>}
 
                   </div>
                 </div>
