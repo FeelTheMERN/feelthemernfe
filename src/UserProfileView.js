@@ -184,6 +184,7 @@ class UserProfileView extends Component {
     if(!user) return <h1>Loading...</h1>
     return (
       <div className="background" id="user-profile">
+        <p id="logo-type">SkyeFIT</p>
         <div className="user-profile">
           <div className="main-container">
             <div className="content-container">

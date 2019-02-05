@@ -3,6 +3,7 @@ import homeIcon from "./assets/icons/home.svg"
 import mealIcon from "./assets/icons/mealplan.svg"
 import exerciseIcon from "./assets/icons/sessions.svg"
 import progressIcon from "./assets/icons/progress.svg"
+import userIcon from "./assets/icons/users.svg"
 import {Link} from "react-router-dom"
 import './css/navbar.scss'
 
@@ -47,6 +48,7 @@ class UserMenu extends Component {
     const homePageLink = `/user/users/${id}/home`
     const mealPlanLink = `/user/users/${id}/mealplan`
     const sessionsLink = `/user/users/${id}/sessions`
+    const profileLink = `/user/users/${id}/profile`
 
     return (
       <div>
@@ -66,8 +68,8 @@ class UserMenu extends Component {
                   <img id="menu-icon" src={mealIcon} alt="Meal Plan Icon"></img>
                   <Link to={sessionsLink} className="menu-item" onClick={this.closeMenu}>Sessions</Link>
                   <img id="menu-icon" src={exerciseIcon} alt="Sessions Icon"></img>
-                  <Link to={sessionsLink} className="menu-item" onClick={this.closeMenu}>Progress</Link>
-                  <img id="menu-icon" src={progressIcon} alt="Progress Icon"></img>
+                  <Link to={profileLink} className="menu-item" onClick={this.closeMenu}>Profile</Link>
+                  <img id="menu-icon" src={userIcon} alt="Profile Icon"></img>
                   <Link to="/" className="menu-item" onClick={this.deleteToken}>Log Out</Link>
                   {/* <p className="menu-item" onClick={this.deleteToken} alt="Log Out">Log Out</p> */}
                 </div>
