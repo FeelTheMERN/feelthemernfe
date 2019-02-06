@@ -49,6 +49,13 @@ $yellow: #fefe8a;
   position: fixed;
 }
 
+.menu-background { 
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #nav-text {
   display: flex;
   justify-content: center;

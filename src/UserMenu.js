@@ -81,7 +81,7 @@ class UserMenu extends Component {
               null
             )
         }
-        <div className="background">
+        <div className="menu-background">
           <div className="menu-textbox"><p id="nav-text" onClick={this.showMenu} alt="Menu">MENU</p></div>
         </div>
       </div>
