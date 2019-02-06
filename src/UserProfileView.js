@@ -181,11 +181,34 @@ class UserProfileView extends Component {
     })
   }
 
+  compareDate = (a,b) => {
+    if(a.date < b.date) return -1;
+    if(a.date > b.date) return 1;
+    return 0;
+  }
+
+  upComingSess = () => {
+    const {sessions} = this.state.user
+
+    sessions.sort(this.compareDate)
+
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
+
+    if(dd < 10) dd = '0' + dd;
+    if(mm < 10) mm = '0' + mm;
+
+    today = yyyy + '-' + mm + '-' + dd ;
+    const upComingSess = sessions.filter(session => session.date > today)
+    return upComingSess[0]
+  }
+
   render() {
-    console.log(this.state.user)
-    const { user, printTransaction, editPersonalDetailsBtn, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, editPassword } = this.state;
-    console.log(user)
+    const { user, editPersonalDetailsBtn, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, editPassword } = this.state;
     if(!user) return <h1>Loading...</h1>
+    const nextSess = this.upComingSess()
     return (
       <div className="background" id="user-profile">
         <p id="logo-type">SkyeFIT</p>
@@ -202,9 +225,11 @@ class UserProfileView extends Component {
                   {user.image && <img src={user.image} alt={user.personalAttribute.firstName}/>}
                   {!user.image && <img src={profilePic} alt={user.personalAttribute.firstName}/>}
                   { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
+                  { user.sessions && user.sessions[0] && <div className="box">
+                  <p>Next Sessions: </p><p>{nextSess.date.split('-').reverse().join('/')} {nextSess.time} {nextSess.location}</p></div>}
                   { user.remainingSessions && <div className="box">
                   <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
-                </div>}
+                  </div>}
               </div>
 
 
