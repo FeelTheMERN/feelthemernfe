@@ -6,6 +6,7 @@ class Calendar extends Component {
   state = {
     dateContext: moment(),
     today: moment(),
+    selectedDate: moment(),
     showMonthPopup: false,
     showYearPopup: false,
     selectedDay: null
@@ -163,13 +164,16 @@ class Calendar extends Component {
   }
 
   onDayClick = (e, day) => {
+    let selectedDate = Object.assign({}, this.state.selectedDate);
+    let dateString = `${this.state.dateContext.format('YYYY-MM')}-${String(day).padStart(2, '0')}`;
+    selectedDate = moment(dateString);
       this.setState({
-          selectedDay: day
+          selectedDay: day,
+          selectedDate
       }, () => {
           console.log("SELECTED DAY: ", this.state.selectedDay);
+          this.props.onDayClick && this.props.onDayClick(e, this.state.selectedDate);
       });
-
-      this.props.onDayClick && this.props.onDayClick(e, day);
   }
 
   render() {
@@ -193,11 +197,20 @@ class Calendar extends Component {
     //   console.log("blanks: ", blanks);
 
       let daysInMonth = [];
+    //   console.log(this.props.sessions)
+      this.props.sessions.forEach(s => console.log(moment(s.date).year()))
+      const filteredSessionDays = this.props.sessions.filter(s => moment(s.date).year() === this.state.dateContext.year() && moment(s.date).month() === this.state.dateContext.month()).map(s => moment(s.date).date())
+
+    //   console.log(filteredSessionDays)
+    // filteredSessionDays.forEach(s => console.log(s))
       for (let d = 1; d <= this.daysInMonth(); d++) {
+          console.log(filteredSessionDays.includes(d))
           let className = (d == this.currentDay() ? "day current-day": "day");
           let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
+          let sessionDay = (filteredSessionDays.includes(d) ? " session " : "")
+     
           daysInMonth.push(
-              <td key={d} className={className + selectedClass} >
+              <td key={d} className={className + selectedClass + sessionDay} >
                   <span onClick={(e)=>{this.onDayClick(e, d)}}>{d}</span>
               </td>
           );
@@ -227,6 +240,7 @@ class Calendar extends Component {
       });
 
       let trElems = rows.map((d, i) => {
+          console.log(d)
           return (
               <tr key={i*100}>
                   {d}
@@ -251,7 +265,6 @@ class Calendar extends Component {
                               <i className="prev fa fa-fw fa-chevron-right"
                                   onClick={(e)=> {this.nextMonth()}}>
                               </i>
-
                           </td>
                       </tr>
                   </thead>
@@ -262,9 +275,7 @@ class Calendar extends Component {
                       {trElems}
                   </tbody>
               </table>
-
           </div>
-
       );
   }
 }
