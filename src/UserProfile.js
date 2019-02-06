@@ -200,11 +200,36 @@ class UserProfile extends Component {
       .catch(err => console.log(err.response))
   }
 
+  compareDate = (a,b) => {
+    if(a.date < b.date) return -1;
+    if(a.date > b.date) return 1;
+    return 0;
+  }
+
+  upComingSess = () => {
+    const {sessions} = this.state.user
+
+    sessions.sort(this.compareDate)
+
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
+
+    if(dd < 10) dd = '0' + dd;
+    if(mm < 10) mm = '0' + mm;
+
+    today = yyyy + '-' + mm + '-' + dd ;
+    const upComingSess = sessions.filter(session => session.date > today)
+    return upComingSess[0]
+  }
+
   render() {
     console.log(this.state.user)
     const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm, addSession } = this.state;
 
     if(!user) return <h1>Loading...</h1>
+    const nextSess = this.upComingSess()
     return (
       <div className="background" id="user-profile">
         <div className="user-profile">
@@ -230,8 +255,8 @@ class UserProfile extends Component {
                 { user.remainingSessions && <div className="box">
                   <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
                 </div>}
-                { user.sessions && user.sessions[user.sessions.length - 1] && <div className="box">
-                  <p>Next Sessions: </p><p>{user.sessions[user.sessions.length - 1].date.split('-').reverse().join('/')} {user.sessions[user.sessions.length - 1].time} {user.sessions[user.sessions.length - 1].location}</p></div>}
+                { user.sessions && user.sessions[0] && <div className="box">
+                  <p>Next Sessions: </p><p>{nextSess.date.split('-').reverse().join('/')} {nextSess.time} {nextSess.location}</p></div>}
               </div>
 
                 <div className="top-row contact">

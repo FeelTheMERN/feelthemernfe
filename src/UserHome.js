@@ -17,11 +17,35 @@ class UserHome extends Component {
       });
   }
 
+  compareDate = (a,b) => {
+    if(a.date < b.date) return -1;
+    if(a.date > b.date) return 1;
+    return 0;
+  }
+
+  upComingSess = () => {
+    const {sessions} = this.state.user
+
+    sessions.sort(this.compareDate)
+
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
+
+    if(dd < 10) dd = '0' + dd;
+    if(mm < 10) mm = '0' + mm;
+
+    today = yyyy + '-' + mm + '-' + dd ;
+    const upComingSess = sessions.filter(session => session.date > today)
+    return upComingSess[0]
+  }
+
   render() {
     const {user} = this.state;
     if(!user) return <h1>Loading...</h1>
     console.log(user)
-    const nextSession = user.sessions[user.sessions.length - 1]
+    const nextSession = this.upComingSess()
     return (
       <div className="background" id="user-home">
         <p id="logo-type">SkyeFIT</p>
@@ -31,7 +55,7 @@ class UserHome extends Component {
               {user.image && <img src={user.image} alt={user.personalAttribute.firstName}/>}
               {!user.image && <img src={profilePic} alt={user.personalAttribute.firstName}/>}
               <h3>{user.personalAttribute.firstName}</h3>
-              {nextSession && <p>Your next session is: <br/> {nextSession.date} {nextSession.time} {nextSession.location}</p>}
+              {nextSession && <p>Your next session is: <br/> {nextSession.date.split('-').reverse().join('/')} {nextSession.time} {nextSession.location}</p>}
             </div>
           </div>
       </div>
