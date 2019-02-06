@@ -11,6 +11,7 @@ export default class AdminHome extends Component {
   }
 
   render() {
+    // const nextSession = user.sessions[user.sessions.length - 1]
     return (
       <div className="background" id="admin-home">
         <p id="logo-type">SkyeFIT</p>
@@ -20,7 +21,7 @@ export default class AdminHome extends Component {
                 <img src={profilePic} alt="Skye"/>
               <div className="adminhome-container">
                 <h3>Skye</h3>
-                <p>Your next session is: </p>
+                {/* {nextSession && <p>Your next session is: <br/> {nextSession.date} {nextSession.time} {nextSession.location}</p>} */}
               </div>
             </div>
           </div>
