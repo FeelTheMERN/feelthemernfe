@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './css/adminhome.scss';
-import logo from "./assets/icons/skyefit_logo.svg"
+import profilePic from "./assets/img/Skye.png"
 import decode from 'jwt-decode'
 
 
@@ -16,10 +16,11 @@ export default class AdminHome extends Component {
         <p id="logo-type">SkyeFIT</p>
           <div className="main-container">
             <div className="adminhome-container">
-              <img id="logo" src={logo} alt="SkyeFIT Logo"></img>
+              <h1>Welcome</h1>
+                <img src={profilePic} alt="Skye"/>
               <div className="adminhome-container">
-                <p>Welcome back</p>
-                <h1>Skye</h1>
+                <h3>Skye</h3>
+                <p>Your next session is: </p>
               </div>
             </div>
           </div>

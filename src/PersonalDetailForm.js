@@ -1,4 +1,5 @@
 import React from 'react'
+import './css/personaldetailsform.scss';
 
 const PersonalDetailForm = (props) => {
   console.log(props.gender)
