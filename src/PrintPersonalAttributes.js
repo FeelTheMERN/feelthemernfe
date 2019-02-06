@@ -52,6 +52,9 @@ export default class PrintPersonalAttributes extends Component {
   handleInputChange = (e) => {
     const {value, id} = e.currentTarget
     this.setState({[id]: value})
+    if (e.currentTarget.value) {
+      e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+    }
   }
 
   updateAttr = (e) => {

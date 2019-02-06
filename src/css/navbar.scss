@@ -5,7 +5,7 @@ $yellow: #fefe8a;
 .Navbar {
   p {
     margin: 0;
-    color: white;
+    color: black;
     font-weight: bold;
   }
   width: 100%;
@@ -42,15 +42,29 @@ $yellow: #fefe8a;
   color: $yellow;
 }
 
+.menu-textbox {
+  display: flex;
+  width: 85vw;
+  bottom: 0;
+  position: fixed;
+}
+
 #nav-text {
   display: flex;
   justify-content: center;
   padding-bottom: 25px;
+  padding-top: 5px;
   letter-spacing: 1px;
+  background-color: $yellow;
+  width: 60px;
+  height: 15px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  cursor: pointer;
 }
 
 #nav-text:hover {
-  color: $yellow;
+  background: rgba($yellow, $alpha: 0.85)
 }
 
 #menu-icon {
