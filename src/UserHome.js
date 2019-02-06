@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import profilePic from "./assets/img/default-profile-pic.jpg"
+
 import './css/userhome.scss';
 class UserHome extends Component {
   state = {};
@@ -27,8 +29,9 @@ class UserHome extends Component {
             <div className="content-container">
               <h1>Welcome</h1>
               {user.image && <img src={user.image} alt={user.personalAttribute.firstName}/>}
+              {!user.image && <img src={profilePic} alt={user.personalAttribute.firstName}/>}
               <h3>{user.personalAttribute.firstName}</h3>
-              {nextSession && <p>Your next session is: {nextSession.date} {nextSession.time} {nextSession.location}</p>}
+              {nextSession && <p>Your next session is: <br/> {nextSession.date} {nextSession.time} {nextSession.location}</p>}
             </div>
           </div>
       </div>
