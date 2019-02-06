@@ -7,6 +7,7 @@ import AccountDetailForm from './AccountDetailForm';
 import PrintPersonalAttributes from './PrintPersonalAttributes';
 import './css/userprofile.scss';
 import UpdatePassword from './UpdatePassword'
+import profilePic from "./assets/img/default-profile-pic.jpg"
 
 class UserProfileView extends Component {
   state = {};
@@ -106,6 +107,9 @@ class UserProfileView extends Component {
       contact[id] = value
       this.setState({contact})
     }
+    if (e.currentTarget.value) {
+      e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+    }
   }
 
   updateAttr = (id, value) => {
@@ -195,9 +199,10 @@ class UserProfileView extends Component {
                 <div className="title">
                   <h1>Personal Info</h1>
                 </div>
-                  <img src={user.image} alt={user.personalAttribute.firstName}/>
+                  {user.image && <img src={user.image} alt={user.personalAttribute.firstName}/>}
+                  {!user.image && <img src={profilePic} alt={user.personalAttribute.firstName}/>}
                   { !editPersonalDetailsBtn && <PrintPersonalDetails obj={user.personalAttribute} key={user._id}/>}
-                { user.remainingSessions && <div className="box">
+                  { user.remainingSessions && <div className="box">
                   <p>Remaining Sessions: </p><p>{user.remainingSessions}</p>
                 </div>}
               </div>

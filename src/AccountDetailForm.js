@@ -1,10 +1,11 @@
 import React from 'react'
 import ImageUpload from './ImageUpload'
+import './css/accountdetailsform.scss';
 
 const AccountDetailForm = (props) => {
   console.log(props) 
   return (
-    <div>
+    <div className="account-container">
       <form>
             <label>Profile picture:</label>
             { props.image && <img src={props.image} alt="user profile"/>}

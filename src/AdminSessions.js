@@ -23,6 +23,7 @@ class AdminSessions extends Component {
     const selectedSessions = sessions.filter(date => moment(date.date).isSame(dateContext))
     selectedSessions.sort(this.compareTime)
     this.setState({selectedSessions})
+
   }
 
   compareTime = (a,b) => {
@@ -61,6 +62,7 @@ class AdminSessions extends Component {
         if (dd < 10) {
         dd = '0' + dd;
         }
+  }
 
         if (mm < 10) {
         mm = '0' + mm;
@@ -76,8 +78,9 @@ class AdminSessions extends Component {
 
   render() {
     const {sessions, selectedSessions, upComingSess } = this.state;
-    console.log(sessions)
+
     if(!sessions) return <h1>Loading...</h1>
+    console.log(sessions)
     // const nextSession = user.sessions[user.sessions.length - 1]
     return (
       <div className="background" id="user-sessions">
@@ -89,6 +92,7 @@ class AdminSessions extends Component {
                 <p>Next Session:</p>
                 {upComingSess && <p>{upComingSess[0].date.split('-').reverse().join('/')}</p>}
                 {!upComingSess && <p>No upcoming sessions</p>}
+
               </div>
               <div className="calendar-container">
                 <Calendar 
@@ -116,6 +120,7 @@ class AdminSessions extends Component {
                   })
                 }
                 </div>
+
               </div>
           </div>
         </div>
