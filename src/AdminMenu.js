@@ -71,7 +71,9 @@ class AdminMenu extends Component {
               null
             )
         }
-        <p id="nav-text" onClick={this.showMenu} alt="Menu">MENU</p>
+        <div className="background">
+          <div className="menu-textbox"><p id="nav-text" onClick={this.showMenu} alt="Menu">MENU</p></div>
+        </div>
       </div>
     );
   }

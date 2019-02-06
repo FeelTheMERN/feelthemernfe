@@ -122,6 +122,9 @@ class UserProfile extends Component {
       contact[id] = value
       this.setState({contact})
     }
+    if (e.currentTarget.value) {
+      e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+    }
   }
 
   updateAttr = (id, value) => {
