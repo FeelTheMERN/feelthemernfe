@@ -8,35 +8,61 @@ import Calendar from './Calendar'
 class UserSessions extends Component {
   state = {}
 
-  onDayClick = (e, day) => {
-    const {user} = this.state;
-    const nextSession = user.sessions[0].date
-    const sessionTime = moment(nextSession).format("hA")
-    const sessionDate = moment(nextSession).format("hA dddd, MMM DD")
-    const month = e.target.parentElement.parentElement.parentElement.previousSibling.childNodes[0].childNodes[0].childNodes[0].innerHTML
-    const year = e.target.parentElement.parentElement.parentElement.previousSibling.childNodes[0].childNodes[0].childNodes[2].innerHTML
-    const currentDay = day
-    const date = month + " " + currentDay
-    this.setState({sessionTime, sessionDate, currentDay, month, year, date})  
+  onDayClick = (e, dateContext) => {
+    console.log(dateContext)
+    const {sessions} = this.state
+    const selectedSessions = sessions.filter(date => moment(date.date).isSame(dateContext))
+    selectedSessions.sort(this.compareTime)
+    this.setState({selectedSessions})
+  }
+
+  compareTime = (a,b) => {
+    if (a.time < b.time)
+      return -1;
+    if (a.time > b.time)
+      return 1;
+    return 0;
   }
 
   displayCurrentDate = () => {
     const currentDate = moment().format("mm","dd")
     this.setState({currentDate})
   }
+
+  compareDate = (a,b) => {
+    if(a.date < b.date) return -1;
+    if(a.date > b.date) return 1;
+    return 0;
+  }
     
   componentDidMount() {
     const config = { headers: {token: localStorage.getItem('token')}}
     const { id } = this.props.match.params
     axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
-      .then(resp => this.setState({user: resp.data}))
-      .catch(err => console.log(err));
+      .then(resp => {
+        const {sessions} = resp.data
+        console.log(sessions)
+        sessions.sort(this.compareDate)
+        this.setState({sessions}, () => {
+          let today = new Date();
+          let dd = today.getDate();
+          let mm = today.getMonth() + 1; //January is 0!
+          let yyyy = today.getFullYear();
+
+          if(dd < 10) dd = '0' + dd;
+          if(mm < 10) mm = '0' + mm;
+
+          today = yyyy + '-' + mm + '-' + dd ;
+          const upComingSess = this.state.sessions.filter(session => session.date > today)
+          this.setState({upComingSess})
+        })
+      })
+      .catch(err => console.log(err.response));
   }
 
   render() {
-    const {user, sessionTime, sessionDate, date } = this.state;
-    if(!user) return <h1>Loading...</h1>
-    const nextSession = user.sessions[user.sessions.length - 1]
+    const {sessions, upComingSess, selectedSessions } = this.state;
+    if(!sessions) return <h1>Loading...</h1>
     return (
       <div className="background" id="user-sessions">
         <p id="logo-type">SkyeFIT</p>
@@ -45,14 +71,29 @@ class UserSessions extends Component {
             <h1>Sessions</h1>
               <div>
                 <p>Next Session:</p>
-                {sessionDate ? <p>{sessionDate}</p> : <p>no sessions coming up</p>}  
+                {upComingSess && <p>{upComingSess[0].date.split('-').reverse().join('/')}</p>}
+                {!upComingSess && <p>No upcoming sessions</p>}
               </div>
               <div className="calendar-container">
-                <Calendar width="302px"
+                <Calendar 
+                  sessions={sessions}
+                  width="302px"
                   onDayClick={(e, day)=> 
                   this.onDayClick(e, day)}/>
-                {date ? <small>{date}: </small> : <small>no date selected</small>}
-                {sessionTime ? <small>You're booked in at {sessionTime}</small> : <p>no sessions on this day</p>}
+                <div className="card-cont">
+                {!selectedSessions && <p>There are no sessions on this day!</p>}
+                {selectedSessions && !selectedSessions[0] && <p>There are no sessions on this day!</p>}
+                {selectedSessions &&
+                  selectedSessions.map(session => {
+                    return (
+                      <div key={session.firstName} className="sess-card">
+                        <p>time: {session.time} </p>
+                        <p>location: {session.location}</p>
+                      </div>
+                    )
+                  })
+                }
+                </div>
               </div>
           </div>
         </div>

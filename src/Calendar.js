@@ -34,7 +34,7 @@ class Calendar extends Component {
       return this.state.dateContext.daysInMonth();
   }
   currentDate = () => {
-      console.log("currentDate: ", this.state.dateContext.get("date"));
+    //   console.log("currentDate: ", this.state.dateContext.get("date"));
       return this.state.dateContext.get("date");
   }
   currentDay = () => {
@@ -198,13 +198,13 @@ class Calendar extends Component {
 
       let daysInMonth = [];
     //   console.log(this.props.sessions)
-      this.props.sessions.forEach(s => console.log(moment(s.date).year()))
+    //   this.props.sessions.forEach(s => console.log(moment(s.date).year()))
       const filteredSessionDays = this.props.sessions.filter(s => moment(s.date).year() === this.state.dateContext.year() && moment(s.date).month() === this.state.dateContext.month()).map(s => moment(s.date).date())
 
     //   console.log(filteredSessionDays)
     // filteredSessionDays.forEach(s => console.log(s))
       for (let d = 1; d <= this.daysInMonth(); d++) {
-          console.log(filteredSessionDays.includes(d))
+        //   console.log(filteredSessionDays.includes(d))
           let className = (d == this.currentDay() ? "day current-day": "day");
           let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
           let sessionDay = (filteredSessionDays.includes(d) ? " session " : "")
@@ -240,7 +240,7 @@ class Calendar extends Component {
       });
 
       let trElems = rows.map((d, i) => {
-          console.log(d)
+        //   console.log(d)
           return (
               <tr key={i*100}>
                   {d}
