@@ -11,4 +11,10 @@
 
 #admin-home { 
   background-image: url("../assets/img/r-h-lee-609997-unsplash.jpg");
+  img {
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+    border-radius: 100%;
+  }
 }
