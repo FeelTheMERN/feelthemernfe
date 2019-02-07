@@ -22,7 +22,7 @@ export default class MealPlan extends Component {
     submitForm = (e) => {
         e.preventDefault()
         const config = { headers: {token: localStorage.getItem('token')}}
-        const url = 'http://localhost:5000/admin/users/editmealplan'
+        const url = `${process.env.REACT_APP_API_URL}/admin/users/editmealplan`
         const { mealPlan } = this.state
         const {id} = this.props.match.params
         const data = { mealPlan, id }
