@@ -184,7 +184,7 @@ class UserProfileView extends Component {
     const data = {newPassword: password}
     const url = `${process.env.REACT_APP_API_URL}/user/users/updatepassword`
     axios.put(url, data, config)
-      .then(resp => this.setState({user: resp.data}))
+      .then(resp => this.setState({user: resp.data}, () => this.toggleEditPassword()))
       .catch(err => {
         if(!err.response) return console.error(err)
         if(err.response.status === 500) return this.props.history.replace('/servererror')

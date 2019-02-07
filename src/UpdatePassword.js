@@ -17,6 +17,7 @@ export default class UpdatePassword extends Component {
       const {password, confirmPassword} = this.state
       if(password !== confirmPassword) return this.setState({error: 'Password does not match'})
       this.props.updatePassword(password)
+      e.target.value = ''
   }
 
   render() {
