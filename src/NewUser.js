@@ -21,7 +21,6 @@ class NewUser extends Component {
         bodyFat: '',
         height: '',
         weight: '',
-        bodyFat: '',
         fatMass: '',
         leanMass: '',
         goalWeight: '',
@@ -79,7 +78,14 @@ class NewUser extends Component {
                 const {_id} = resp.data
                 this.redirect(_id)
             })
-            .catch(err => console.log(err.response))
+            .catch(err => {
+                if(!err.response) return console.error(err)
+                if(err.response.status === 500) return this.props.history.replace('/servererror')
+                if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+                if(err.response.status === 404) return this.setState({error: "Invalid user"})
+                if(err.response.status === 409) return this.setState({error: 'Username already taken'})
+                if(err.response.status === 400) return this.setState({error: 'Username cannot be admin'})
+            })
     }
 
     //this funtion runs when the next button is clicked. it will check what page the form is currently on and will render the next component and update the page number.
@@ -160,8 +166,7 @@ class NewUser extends Component {
     }
 
     render() {
-        console.log(this.state)
-        const { title, formPage } = this.state
+        const { title, formPage, error } = this.state
         return (
             <div className="background" id="new-user">
             <p id="logo-type">SkyeFIT</p>
@@ -214,6 +219,7 @@ class NewUser extends Component {
                                 { formPage > 1 && <button onClick={this.backForm}>back</button>}
                                 { formPage !== 4 && <button onClick={this.nextForm}>next</button>}
                                 { formPage === 4 && <button onClick={this.submitForm}>Submit</button>}
+                                { error && <p>{error}</p>}
                             </div>
                         </div>
                     </div>

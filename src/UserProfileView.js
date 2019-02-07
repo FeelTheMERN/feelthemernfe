@@ -28,8 +28,10 @@ class UserProfileView extends Component {
         })
       })
       .catch(err => {
-        if(!err.response) return console.log(err)
-        if(err.response.status === 403) this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
   }
 
@@ -70,7 +72,10 @@ class UserProfileView extends Component {
       this.getUser()
       .then(resp => this.setState({ user: resp.data, editNotesBtn: false, editNotesBtnMsg: 'Edit Notes'}))
       .catch(err => {
-        if(err.response.status === 403) this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
     }
   }
@@ -82,15 +87,16 @@ class UserProfileView extends Component {
       this.getUser()
       .then(resp => this.setState({ user: resp.data, editContactDetailsBtn: false, contactDetailsBtnMsg: 'Edit'}))
       .catch(err => {
-        if(err.response.status === 403) this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
     }
   }
 
   persAttInputChange = (e) => {
     const {value, id} = e.currentTarget;
-    // console.log(this.state.user.personalAttribute[id])
-    // this.setState({[id]: value})
     const {personalAttribute} = this.state.user
     personalAttribute[id] = value
     this.setState({personalAttribute})
@@ -131,16 +137,16 @@ class UserProfileView extends Component {
     const data = {
       id: this.state.user._id
     }
-    console.log(data)
     axios.delete(url, {headers: {token: localStorage.getItem('token')}, data})
       .then(resp => {
         if(resp.data.message === 'User successfully deleted') this.setState({deleteConfirm: true})
       })
       .catch(err => {
-        if(!err.response) return console.log(err)
-        if(err.response.status === 401) return console.log("Unauthorized")
-        if(err.response.status === 403) return this.props.history.replace('/admin')
-        console.log(err.response)})
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
+      })
   }
 
   saveEdit = (btn, btnmsg) => {
@@ -149,13 +155,13 @@ class UserProfileView extends Component {
     const config = { headers: {token: localStorage.getItem('token')}}
     const url = `${process.env.REACT_APP_API_URL}/admin/users/edit`
     const data = { user }
-    console.log(data)
     axios.put(url, data, config)
       .then(resp => this.setState({user: resp.data}))
       .catch(err => {
-        if(!err.response) return console.log(err)
-        if(err.response.status === 401) return console.log("Unauthorized")
-        if(err.response.status === 403) return this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       })
   }
 
@@ -206,7 +212,7 @@ class UserProfileView extends Component {
   }
 
   render() {
-    const { user, editPersonalDetailsBtn, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, editPassword } = this.state;
+    const { user, editPersonalDetailsBtn, editContactDetailsBtn, contactDetailsBtnMsg, editPassword } = this.state;
     if(!user) return <h1>Loading...</h1>
     const nextSess = this.upComingSess()
     return (

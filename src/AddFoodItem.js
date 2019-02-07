@@ -23,7 +23,10 @@ export default class AddFoodItem extends Component {
     // Querying the API with user input
     axios.get(`https://trackapi.nutritionix.com/v2/search/instant?query=${value}`, headers)
       .then(resp => this.setState({ foods: resp.data.common}))
-      .catch(err => console.log(err.response))
+      .catch(err => {
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+      })
   }
 
   setItem = (food) => {
@@ -43,9 +46,12 @@ export default class AddFoodItem extends Component {
     axios.post(`${process.env.REACT_APP_API_URL}/admin/macros`, payload, config)
       .then(resp => {
         this.props.addFoodToMeal(resp.data.foods[0])
-        console.log(resp.data.foods[0])
       })
-      .catch(err => console.log(err.response))
+      .catch(err => {
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+      })
 
     e.target.previousSibling.value = ''//empties the input field when submitted
     this.setState({ foods: null})
@@ -53,7 +59,6 @@ export default class AddFoodItem extends Component {
 
   render() {
     const { foods } = this.state
-    foods && console.log(foods)
     return (
       <div className="addfood">
         <form>

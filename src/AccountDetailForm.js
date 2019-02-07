@@ -3,7 +3,6 @@ import ImageUpload from './ImageUpload'
 import './css/accountdetailsform.scss';
 
 const AccountDetailForm = (props) => {
-  console.log(props) 
   return (
     <div className="account-container">
       <form>

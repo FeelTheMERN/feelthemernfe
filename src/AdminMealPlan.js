@@ -19,23 +19,24 @@ class AdminMealPlan extends Component {
     const { id } = this.props.match.params
     axios.get(`http://localhost:5000/admin/users/${id}`, config)
       .then(resp => {
-        console.log(resp.data.mealPlans)
         this.setState({mealPlan: resp.data.mealPlans[resp.data.mealPlans.length - 1]})})
       .catch(err => {
-        if(err.response.status === 404) this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        if(err.response.status === 404) return this.setState({message: "User not valid"})
       });
   }
 
   showMeals = (dayNum) => {
     const {mealPlan} = this.state
     const day = `day${dayNum}`
-    // console.log(mealPlan[day])
     this.setState({showMealPlan: <ShowMeals meals={mealPlan[day]}/>, addMealBtn: false})
   }
 
   render() {
-    const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
-    console.log(mealPlan)
+    const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan, message } = this.state;
+    if(message) return <h1>{message}</h1>
     if(!mealPlan) return (
       <div className="background" id="meal-plan-image">
         <div className="main-container">

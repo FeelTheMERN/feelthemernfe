@@ -14,7 +14,11 @@ export default class AdminHome extends Component {
     const config = { headers: {token: localStorage.getItem('token')}}
     axios.get(url, config)
       .then(resp => this.setState({user: resp.data}))
-      .catch(err => console.log(err.response))
+      .catch(err => {
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403  || err.response.status === 404) return this.props.history.replace('/admin')
+      })
   }
 
   compareDate = (a,b) => {
@@ -29,7 +33,6 @@ export default class AdminHome extends Component {
     sessions.sort(this.compareDate)
 
     let today = new Date();
-    console.log(today)
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
     let yyyy = today.getFullYear();

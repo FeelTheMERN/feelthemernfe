@@ -15,8 +15,10 @@ class ListUsers extends Component {
         axios.get(`${process.env.REACT_APP_API_URL}/admin/users`, config)
             .then(resp => this.setState({users: resp.data, filteredUsers: resp.data}))
             .catch(err => {
-                if(err.response.status === 401) return console.log("Unauthorized")
-                if(err.response.status === 404 || err.response.status === 403) return this.props.history.replace('/admin')
+                if(!err.response) return console.error(err)
+                if(err.response.status === 500) return this.props.history.replace('/servererror')
+                if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+                if(err.response.status === 404) return this.setState({message: "Users not found"})
             });
   }
 
@@ -28,9 +30,8 @@ class ListUsers extends Component {
     if(!users) return null
     let filteredUsers = users.filter(user => {
         // Check the desired search with the first and last name of the user
-        if(user.personalAttribute.firstName.toLowerCase().includes(search) || user.personalAttribute.lastName.toLowerCase().includes(search)) {
-            return user
-        }
+        if(user.personalAttribute.firstName.toLowerCase().includes(search) || user.personalAttribute.lastName.toLowerCase().includes(search)) return user
+        return null
     })
 
     if(filteredUsers.length === 0) {
@@ -43,7 +44,8 @@ class ListUsers extends Component {
   //with each user in the users array, we will render a UserCard component passing id, firstname and lastname as props. if there is no users it will render loading...
   render() {
 
-    const {users, filteredUsers} = this.state;
+    const {users, filteredUsers, message} = this.state;
+    if(message) return <h1>{message}</h1>
     if(!users) return <h1>Loading...</h1>
     return (
         <div className="list-user">
@@ -56,7 +58,7 @@ class ListUsers extends Component {
                     {filteredUsers &&
                     filteredUsers.map(user => {
                         return (
-                            <div>
+                            <div key={user._id}>
                                 <UserCard
                                 key={user._id}
                                 id={user._id}

@@ -82,7 +82,7 @@ export default class PrintPersonalAttributes extends Component {
       <div className="box">
         <p>Weight:</p><p>{obj.weightLog[obj.weightLog.length - 1]} kg</p>
         { !user && <div>
-          <input type="text" placeholder="New weight" id="weightLog" onChangege={this.handleInputChange}></input>
+          <input type="text" placeholder="New weight" id="weightLog" onChange={this.handleInputChange}></input>
           <button onClick={this.updateAttr}>Update</button>
         </div>}
       </div>
@@ -110,14 +110,14 @@ export default class PrintPersonalAttributes extends Component {
       <div className="box">
         <p>Goal Weight:</p><p>{obj.goalWeight} kg</p>
         {!user && <div>
-          <input type="text" placeholder="New goal weight" id="goalWeight" onChangege={this.handleInputChange}></input>
+          <input type="text" placeholder="New goal weight" id="goalWeight" onChange={this.handleInputChange}></input>
           <button onClick={this.updateAttr}>Update</button>
         </div>}
       </div>
       <div className="box">
         <p>Goal Body Fat:</p><p>{obj.goalBodyFat} %</p>
         {!user && <div>
-          <input type="text" placeholder="New goal body fat" id="goalBodyFat" onChangege={this.handleInputChange}></input>
+          <input type="text" placeholder="New goal body fat" id="goalBodyFat" onChange={this.handleInputChange}></input>
           <button onClick={this.updateAttr}>Update</button>
         </div>}
       </div>

@@ -21,12 +21,14 @@ export default class ImageUpload extends Component {
             this.setState({image})
             this.props.addImage(image)
         })
-        .catch(err => console.log(err.response))
+        .catch(err => {
+          if(!err.response) return console.error(err)
+          if(err.response.status === 500) return this.props.history.replace('/servererror')
+          if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        })
   }
 
   render() {
-      console.log(this.state)
-    const {image} = this.state
     return (
       <>
         {/* { image && <img src={image} alt="user profile"/>} */}

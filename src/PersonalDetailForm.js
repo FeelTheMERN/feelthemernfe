@@ -1,7 +1,6 @@
 import React from 'react'
 
 const PersonalDetailForm = (props) => {
-  console.log(props.gender)
   return (
     <form>
       <label htmlFor="firstName">First Name:</label>
@@ -17,11 +16,11 @@ const PersonalDetailForm = (props) => {
       <div>
         <div className="radio-input">
           <label htmlFor="gender">Male</label><br></br>
-          <input className="radio" type="radio" id="gender" name="gender" value="male" onClick={props.handleInputChange} checked={props.gender === 'male'} />
+          <input className="radio" type="radio" id="gender" name="gender" value="male" onClick={props.handleInputChange} checked={props.gender === 'male'} onChange={() => null} />
         </div>
         <div className="radio-input">
           <label htmlFor="gender">Female</label>
-          <input className="radio" type="radio" id="gender" name="gender" value="female" onClick={props.handleInputChange} checked={props.gender === 'female'} />
+          <input className="radio" type="radio" id="gender" name="gender" value="female" onClick={props.handleInputChange} checked={props.gender === 'female'} onChange={() => null} />
         </div>                
       </div>
     </form>

@@ -12,8 +12,10 @@ class UserHome extends Component {
     axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
       .then(resp => this.setState({user: resp.data}))
       .catch(err => {
-        if(!err.response) return console.log(err)
-        if(err.response.status) return this.props.history.replace('/')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
   }
 
@@ -42,9 +44,9 @@ class UserHome extends Component {
   }
 
   render() {
-    const {user} = this.state;
+    const {user, error} = this.state;
+    if(error) return <h1>{error}</h1>
     if(!user) return <h1>Loading...</h1>
-    console.log(user)
     const nextSession = this.upComingSess()
     return (
       <div className="background" id="user-home">

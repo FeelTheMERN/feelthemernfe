@@ -21,21 +21,22 @@ class UserSessions extends Component {
       .then(resp => {
         return this.setState({mealPlan: resp.data.mealPlans[resp.data.mealPlans.length - 1]})})
       .catch(err => {
-        console.log(err.response)
-        if(!err.response) return console.log(err)
-        if(err.response.status === 404) this.props.history.replace('/')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
   }
 
   showMeals = (dayNum) => {
     const {mealPlan} = this.state
     const day = `day${dayNum}`
-    // console.log(mealPlan[day])
     this.setState({showMealPlan: <ShowMeals meals={mealPlan[day]}/>, addMealBtn: false})
   }
 
   render() {
-    const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan } = this.state;
+    const {mealPlan, dayOneBtn, dayTwoBtn, dayThreeBtn, dayFourBtn, dayFiveBtn, daySixBtn, daySevenBtn, showMealPlan, error } = this.state;
+    if(error) return <h1>{error}</h1>
     if(!mealPlan) return (
       <div className="background" id="meal-plan-image">
         <div className="main-container">

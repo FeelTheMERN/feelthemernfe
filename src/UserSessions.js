@@ -9,7 +9,6 @@ class UserSessions extends Component {
   state = {}
 
   onDayClick = (e, dateContext) => {
-    console.log(dateContext)
     const {sessions} = this.state
     const selectedSessions = sessions.filter(date => moment(date.date).isSame(dateContext))
     selectedSessions.sort(this.compareTime)
@@ -41,7 +40,6 @@ class UserSessions extends Component {
     axios.get(`${process.env.REACT_APP_API_URL}/user/users/${id}`, config)
       .then(resp => {
         const {sessions} = resp.data
-        console.log(sessions)
         sessions.sort(this.compareDate)
         this.setState({sessions}, () => {
           let today = new Date();
@@ -57,7 +55,12 @@ class UserSessions extends Component {
           this.setState({upComingSess})
         })
       })
-      .catch(err => console.log(err.response));
+      .catch(err => {
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
+      });
   }
 
   render() {
@@ -71,8 +74,8 @@ class UserSessions extends Component {
             <h1>Sessions</h1>
               <div>
                 <p>Next Session:</p>
-                {upComingSess && <p>{upComingSess[0].date.split('-').reverse().join('/')}</p>}
-                {!upComingSess && <p>No upcoming sessions</p>}
+                {upComingSess && upComingSess[0] && <p>{upComingSess[0].date.split('-').reverse().join('/')}</p>}
+                {upComingSess && !upComingSess[0] && <p>No upcoming sessions</p>}
               </div>
               <div className="calendar-container">
                 <Calendar 

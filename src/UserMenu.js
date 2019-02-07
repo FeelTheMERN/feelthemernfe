@@ -43,8 +43,7 @@ class UserMenu extends Component {
   }
 
   render() {
-    console.log(this.state.showMenu)
-    // const { id } = this.props.match.params
+    if(!localStorage.getItem('token')) return this.props.history.replace('/')
     const decoded = decode(localStorage.getItem('token'))
     const id = decoded.id
     const homePageLink = `/user/users/${id}/home`
