@@ -84,7 +84,7 @@ class Calendar extends Component {
       let popup = props.data.map((data) => {
           return (
               <div key={data}>
-                  <a href="https://calendar.google.com/calendar/" onClick={(e)=> {this.onSelectChange(e, data)}}>
+                  <a href="#" onClick={(e)=> {this.onSelectChange(e, data)}}>
                       {data}
                   </a>
               </div>
