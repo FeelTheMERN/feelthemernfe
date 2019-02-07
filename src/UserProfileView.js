@@ -179,12 +179,18 @@ class UserProfileView extends Component {
       this.setState({editPassword: false})
   }
 
-  updatePassword = (pass) => {
-    let {password} = this.state.user
-    password = pass
-    this.setState({password}, () => {
-        // send to password backend
-    })
+  updatePassword = (password) => {
+    const config = { headers: {token: localStorage.getItem('token')}}
+    const data = {newPassword: password}
+    const url = `${process.env.REACT_APP_API_URL}/user/users/updatepassword`
+    axios.put(url, data, config)
+      .then(resp => this.setState({user: resp.data}))
+      .catch(err => {
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
+      })
   }
 
   compareDate = (a,b) => {
