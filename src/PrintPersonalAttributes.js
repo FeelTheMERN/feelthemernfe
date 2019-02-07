@@ -90,10 +90,10 @@ export default class PrintPersonalAttributes extends Component {
         <p>Body Fat:</p><p>{obj.bodyFatLog[obj.bodyFatLog.length - 1].toFixed(2)} %</p>
       </div>}
       {obj.fatMass[obj.fatMass.length - 1] && <div className="box">
-        <p>Fat Mass:</p><p>{obj.fatMass[obj.fatMass.length - 1].toFixed(2)} %</p>
+        <p>Fat Mass:</p><p>{obj.fatMass[obj.fatMass.length - 1].toFixed(2)} kg</p>
       </div>}
       {obj.leanMass[obj.leanMass.length - 1] && <div className="box">
-        <p>Lean Mass:</p><p>{obj.leanMass[obj.leanMass.length - 1].toFixed(2)} %</p>
+        <p>Lean Mass:</p><p>{obj.leanMass[obj.leanMass.length - 1].toFixed(2)} kg</p>
       </div>}
         {!user && <button onClick={this.toggleBodyFatCalc}>Calculate Body Fat</button>}
         {bodyFatCalc && obj.gender === 'female' && <PinchesFormFemale 

@@ -46,7 +46,7 @@ export default class PinchesFormMale extends Component {
                 <input type="text-field" id="chest" onChange={this.handleInputChange}/>
             </div>
             <div className="field">
-                <label htmlFor="abdomen">Abdoment(mm):</label>
+                <label htmlFor="abdomen">Abdomen(mm):</label>
                 <input type="text-field" id="abdomen" onChange={this.handleInputChange}/>
             </div>
             <div className="field">

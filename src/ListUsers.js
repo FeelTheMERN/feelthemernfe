@@ -53,6 +53,7 @@ class ListUsers extends Component {
           <p id="logo-type">SkyeFIT</p>
             <div className="main-container">
                 <div className="content-container">
+                <h1>Clients:</h1>
                 <SearchBar search={this.handleSearch}/>
                     {!users[0] && <p>There are no users</p>}
                     {filteredUsers &&
