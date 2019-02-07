@@ -17,7 +17,7 @@ class AdminMealPlan extends Component {
   componentDidMount() {
     const config = { headers: {token: localStorage.getItem('token')}}
     const { id } = this.props.match.params
-    axios.get(`http://localhost:5000/admin/users/${id}`, config)
+    axios.get(`${process.env.REACT_APP_API_URL}/admin/users/${id}`, config)
       .then(resp => {
         this.setState({mealPlan: resp.data.mealPlans[resp.data.mealPlans.length - 1]})})
       .catch(err => {
