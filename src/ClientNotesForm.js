@@ -1,16 +1,13 @@
 import React from 'react'
 
 const ClientNotesForm = (props) => {
-console.log(props)
   return (
-    
-      <form>
-            <label htmlFor="notes">Client Notes:</label>
-            <textarea id="notes" onChange={props.handleInputChange} value={props.notes}/>
-            <label htmlFor="dietaryRequirements">Dietary Requirements:</label>
-            <textarea id="dietaryRequirements" onChange={props.handleInputChange} value={props.dietaryRequirements}/>
-      </form>
-    
+    <form>
+          <label htmlFor="notes">Client Notes:</label>
+          <textarea id="notes" onChange={props.handleInputChange} value={props.notes}/>
+          <label htmlFor="dietaryRequirements">Dietary Requirements:</label>
+          <textarea id="dietaryRequirements" onChange={props.handleInputChange} value={props.dietaryRequirements}/>
+    </form>
   )
 }
 

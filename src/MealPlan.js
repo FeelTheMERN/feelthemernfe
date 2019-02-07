@@ -24,15 +24,18 @@ export default class MealPlan extends Component {
         const config = { headers: {token: localStorage.getItem('token')}}
         const url = 'http://localhost:5000/admin/users/editmealplan'
         const { mealPlan } = this.state
-        console.log(mealPlan)
         const {id} = this.props.match.params
         const data = { mealPlan, id }
-        console.log(data)
-        console.log(url)
         axios.put(url, data, config)
             .then(resp => {
                 this.props.history.replace(`/admin/users/${resp.data._id}/mealplan`)})
-            .catch(err => console.log(err.response))
+            .catch(err => {
+                if(!err.response) return console.error(err)
+                if(err.response.status === 500) return this.props.history.replace('/servererror')
+                if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+                if(err.response.status === 404) return this.setState({error404: "Users not found"})
+                if(err.response.status === 400) return this.setState({error: 'Could Not Save'})
+            })
     }
 
     deleteMeal = (day, i) => {
@@ -49,7 +52,6 @@ export default class MealPlan extends Component {
     deleteFood = (day, mealIndex, foodIndex) => {
         //day: [[{}],[{},{}]] got to find the meal array the food is in day[x] => get array back
         //then find the food item in the meal array mealPlan[day][mealIndex].splice[foodIndex, 1]
-        console.log("in delete food")
         const {mealPlan} = this.state
         mealPlan[day][mealIndex].splice(foodIndex, 1)
         if(mealPlan[day][mealIndex].length === 0) mealPlan[day].splice(mealIndex, 1)
@@ -130,8 +132,8 @@ export default class MealPlan extends Component {
     }
 
     render() {
-        const { formPage, mealPlan, message, a, b, c, d, e, f, g } = this.state
-        console.log(this.state.mealPlan)
+        const { formPage, mealPlan, message, a, b, c, d, e, f, g, error404, error} = this.state
+        if(error404) return <h1>{error404}</h1>
         return (
             <div className="background" id="meal-plan-image">
                 <div className="meal-plan">
@@ -193,6 +195,7 @@ export default class MealPlan extends Component {
                                         { formPage === 1 && <button onClick={this.redirectUser}>back</button>}
                                         { formPage !== 7 && <button onClick={this.nextForm}>next</button>}
                                         { formPage === 7 && <button onClick={this.submitForm}>Submit</button>}
+                                        { error && <p>{error}</p>}
                                         { message && <>{message}</>}
                                     </div>
                             </div>

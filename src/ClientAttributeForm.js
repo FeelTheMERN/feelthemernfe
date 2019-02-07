@@ -18,7 +18,6 @@ export default class ClientAttributeForm extends Component {
   render() {
     const {handleInputChange, dob, gender, weight} = this.props
     // const {bodyFat} = this.state
-    console.log(gender)
     return (
       // <div className="main-container">
       // <div className="content-container">

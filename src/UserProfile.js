@@ -31,8 +31,10 @@ class UserProfile extends Component {
         })
       })
       .catch(err => {
-        if(!err.response) return console.log(err)
-        if(err.response.status === 403) this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
   }
 
@@ -73,7 +75,10 @@ class UserProfile extends Component {
       this.getUser()
         .then(resp => this.setState({ user: resp.data, editPersonalDetailsBtn: false, personalDetailsBtnMsg: 'Edit'}))
         .catch(err => {
-          if(err.response.status === 403) this.props.history.replace('/admin')
+          if(!err.response) return console.error(err)
+          if(err.response.status === 500) return this.props.history.replace('/servererror')
+          if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+          if(err.response.status === 404) return this.setState({error: "Invalid user"})
         });
     }
   }
@@ -85,7 +90,10 @@ class UserProfile extends Component {
       this.getUser()
       .then(resp => this.setState({ user: resp.data, editNotesBtn: false, editNotesBtnMsg: 'Edit Notes'}))
       .catch(err => {
-        if(err.response.status === 403) this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
     }
   }
@@ -97,7 +105,10 @@ class UserProfile extends Component {
       this.getUser()
       .then(resp => this.setState({ user: resp.data, editContactDetailsBtn: false, contactDetailsBtnMsg: 'Edit'}))
       .catch(err => {
-        if(err.response.status === 403) this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       });
     }
   }
@@ -146,16 +157,16 @@ class UserProfile extends Component {
     const data = {
       id: this.state.user._id
     }
-    console.log(data)
     axios.delete(url, {headers: {token: localStorage.getItem('token')}, data})
       .then(resp => {
         if(resp.data.message === 'User successfully deleted') this.setState({deleteConfirm: true})
       })
       .catch(err => {
-        if(!err.response) return console.log(err)
-        if(err.response.status === 401) return console.log("Unauthorized")
-        if(err.response.status === 403) return this.props.history.replace('/admin')
-        console.log(err.response)})
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
+      })
   }
 
   saveEdit = (btn, btnmsg) => {
@@ -168,9 +179,10 @@ class UserProfile extends Component {
     axios.put(url, data, config)
       .then(resp => this.setState({user: resp.data}))
       .catch(err => {
-        if(!err.response) return console.log(err)
-        if(err.response.status === 401) return console.log("Unauthorized")
-        if(err.response.status === 403) return this.props.history.replace('/admin')
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
       })
   }
 
@@ -197,7 +209,12 @@ class UserProfile extends Component {
     const url = `${process.env.REACT_APP_API_URL}/admin/addsession`
     axios.post(url, data, config)
       .then(resp => this.setState({user: resp.data}, () => this.toggleSession()))
-      .catch(err => console.log(err.response))
+      .catch(err => {
+        if(!err.response) return console.error(err)
+        if(err.response.status === 500) return this.props.history.replace('/servererror')
+        if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+        if(err.response.status === 404) return this.setState({error: "Invalid user"})
+      })
   }
 
   compareDate = (a,b) => {
@@ -225,8 +242,7 @@ class UserProfile extends Component {
   }
 
   render() {
-    console.log(this.state.user)
-    const { user, printTransaction, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, personalAttributeBtn, deleteConfirm, addSession } = this.state;
+    const { user, editPersonalDetailsBtn, personalDetailsBtnMsg, editNotesBtn, editNotesBtnMsg, editContactDetailsBtn, contactDetailsBtnMsg, deleteConfirm, addSession } = this.state;
 
     if(!user) return <h1>Loading...</h1>
     const nextSess = this.upComingSess()

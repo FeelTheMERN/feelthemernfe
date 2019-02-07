@@ -7,7 +7,9 @@ export default class PinchesFormMale extends Component {
 
     //handleInputChange keeps track of the imput fields by setting state of username and password
     handleInputChange = (e) => {
-        console.log(e.currentTarget.id)
+        if (e.currentTarget.value) {
+            e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+        }
         const {value, id} = e.currentTarget;
         this.setState({[id]: value})
     }
@@ -18,10 +20,8 @@ export default class PinchesFormMale extends Component {
         const { chest, abdomen, thigh } = this.state
         const { dob, weight } = this.props
         const config = { headers: {token: localStorage.getItem('token')}}
-        console.log(config)
         const url = `${process.env.REACT_APP_API_URL}/admin/pinches/male`;
         const data = { chest, abdomen, thigh, dob, weight }
-        console.log(data)
         axios.post(url, data, config)
             .then(resp => {
                 const {percBodyFat, fatMass, leanMass} = resp.data
@@ -31,7 +31,11 @@ export default class PinchesFormMale extends Component {
                     if(this.props.toggleBodyFatCalc) this.props.toggleBodyFatCalc('calculation complete')
                 })
             })
-            .catch(err => console.log(err.response))
+            .catch(err => {
+                if(!err.response) return console.error(err)
+                if(err.response.status === 500) return this.props.history.replace('/servererror')
+                if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+            })
     }
 
     render() {

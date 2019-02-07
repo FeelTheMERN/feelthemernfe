@@ -5,6 +5,9 @@ export default class UpdatePassword extends Component {
   state ={}
 
   handleInputChange = (e) => {
+      if (e.currentTarget.value) {
+          e.currentTarget.style.background="rgba(0, 0, 0, 0.5)";
+      }
       const {id, value} = e.currentTarget
       this.setState({[id]: value})
   }
@@ -12,7 +15,6 @@ export default class UpdatePassword extends Component {
   handleSubmit = (e) => {
       e.preventDefault()
       const {password, confirmPassword} = this.state
-      console.log(password, confirmPassword)
       if(password !== confirmPassword) return this.setState({error: 'Password does not match'})
       this.props.updatePassword(password)
   }

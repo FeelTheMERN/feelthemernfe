@@ -84,7 +84,7 @@ class Calendar extends Component {
       let popup = props.data.map((data) => {
           return (
               <div key={data}>
-                  <a href="#" onClick={(e)=> {this.onSelectChange(e, data)}}>
+                  <a href="https://calendar.google.com/calendar/" onClick={(e)=> {this.onSelectChange(e, data)}}>
                       {data}
                   </a>
               </div>
@@ -171,7 +171,7 @@ class Calendar extends Component {
           selectedDay: day,
           selectedDate
       }, () => {
-          console.log("SELECTED DAY: ", this.state.selectedDay);
+        //   console.log("SELECTED DAY: ", this.state.selectedDay);
           this.props.onDayClick && this.props.onDayClick(e, this.state.selectedDate);
       });
   }
@@ -205,8 +205,8 @@ class Calendar extends Component {
     // filteredSessionDays.forEach(s => console.log(s))
       for (let d = 1; d <= this.daysInMonth(); d++) {
         //   console.log(filteredSessionDays.includes(d))
-          let className = (d == this.currentDay() ? "day current-day": "day");
-          let selectedClass = (d == this.state.selectedDay ? " selected-day " : "")
+          let className = (d === this.currentDay() ? "day current-day": "day");
+          let selectedClass = (d === this.state.selectedDay ? " selected-day " : "")
           let sessionDay = (filteredSessionDays.includes(d) ? " session " : "")
      
           daysInMonth.push(

@@ -10,7 +10,6 @@ export default class DisplayMeal extends Component {
 
   render() {
     const { day, dayIndex } = this.props
-    console.log(dayIndex)
     return (
       <div>
         {

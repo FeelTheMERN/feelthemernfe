@@ -15,7 +15,6 @@ class Login extends Component {
 
     //redirect() redirects the user to their home page based on the user role
     redirect = (isAdmin, id) => {
-        console.log(isAdmin)
         if(isAdmin) return this.props.history.push('/admin/home')
         this.props.history.push(`user/users/${id}/home`)
     }
@@ -29,7 +28,6 @@ class Login extends Component {
 
         const { username, password } = this.state        
         const data = { username, password }
-        console.log(data)
         axios.post(url, data)
             .then(resp => { // save token to local storage
                 const { token, isAdmin, id } = resp.data
@@ -38,7 +36,9 @@ class Login extends Component {
                 this.redirect(isAdmin, id)
                 })
             .catch(err => {
-                if(!err.response) return console.log(err.response)
+                if(!err.response) return console.error(err)
+                if(err.response.status === 500) return this.props.history.replace('/servererror')
+                if(err.response.status === 409) return this.setState({error: 'Username already taken'})
                 if(err.response.status === 400) return this.setState({error: 'Incorrect username or password'})
             })
     }

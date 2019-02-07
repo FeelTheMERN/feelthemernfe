@@ -18,12 +18,12 @@ import AdminMealPlan from './AdminMealPlan'
 import UserProfileView from './UserProfileView'
 import IsLoggedInReRoute from './IsLoggedInReRoute'
 import AdminSessions from './AdminSessions'
+import ServerError from './ServerError'
 
 require('dotenv').config()
 
 class App extends Component {
   render() {
-    console.log(window.location.pathname.split('/')[1])
     return (
       <BrowserRouter>{/* Using react-router-dom */}
         <div className="App">
@@ -45,6 +45,7 @@ class App extends Component {
               <ProtectedRoute path="/user/users/:id/sessions" component={UserSessions} exact/>
               <ProtectedRoute path="/user/users/:id/mealplan" component={UserMealPlan} exact/>
               <ProtectedRoute path="/user/users/:id/profile" component={UserProfileView} exact/>
+              <Route path="/servererror" component={ServerError} exact/>
               <Route component={Error}/>{/* error page will render if the incorrect endpoint is entered */}
             </Switch>
           </div>

@@ -9,21 +9,10 @@ class AdminSessions extends Component {
   state = {}
 
   onDayClick = (e, dateContext) => {
-    // const {user} = this.state;
-    // const nextSession = user.sessions[0].date
-    // const sessionTime = moment(nextSession).format("hA")
-    // const sessionDate = moment(nextSession).format("hA dddd, MMM DD")
-    // const month = e.target.parentElement.parentElement.parentElement.previousSibling.childNodes[0].childNodes[0].childNodes[0].innerHTML
-    // const year = e.target.parentElement.parentElement.parentElement.previousSibling.childNodes[0].childNodes[0].childNodes[2].innerHTML
-    // const currentDay = day
-    // const date = month + " " + currentDay
-    // this.setState({sessionTime, sessionDate, currentDay, month, year, date})  
-    console.log(dateContext)
     const {sessions} = this.state
     const selectedSessions = sessions.filter(date => moment(date.date).isSame(dateContext))
     selectedSessions.sort(this.compareTime)
     this.setState({selectedSessions})
-
   }
 
   compareTime = (a,b) => {
@@ -48,8 +37,8 @@ class AdminSessions extends Component {
     .then(resp => {
       const sessions = []
       resp.data.map(user => {
-        user.sessions.map(session => {
-          sessions.push({date: session.date,  firstName: user.personalAttribute.firstName, lastName: user.personalAttribute.lastName, image: user.image, time: session.time, location: session.location})
+        return user.sessions.map(session => {
+          return sessions.push({date: session.date,  firstName: user.personalAttribute.firstName, lastName: user.personalAttribute.lastName, image: user.image, time: session.time, location: session.location})
         })
       })
       sessions.sort(this.compareDate)
@@ -67,14 +56,19 @@ class AdminSessions extends Component {
         this.setState({upComingSess})
       })
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      if(!err.response) return console.error(err)
+      if(err.response.status === 500) return this.props.history.replace('/servererror')
+      if(err.response.status === 401 || err.response.status === 403) return this.props.history.replace('/admin')
+      if(err.response.status === 404) return this.setState({message: "User not valid"})
+    });
   }
 
   render() {
-    const {sessions, selectedSessions, upComingSess } = this.state;
+    const {sessions, selectedSessions, upComingSess, message } = this.state;
 
+    if(message) return <h1>{message}</h1>
     if(!sessions) return <h1>Loading...</h1>
-    console.log(sessions)
     // const nextSession = user.sessions[user.sessions.length - 1]
     return (
       <div className="background" id="user-sessions">
@@ -84,8 +78,8 @@ class AdminSessions extends Component {
             <h1>Sessions</h1>
               <div>
                 <p>Next Session:</p>
-                {upComingSess && <p>{upComingSess[0].date.split('-').reverse().join('/')}</p>}
-                {!upComingSess && <p>No upcoming sessions</p>}
+                {upComingSess && upComingSess[0] && <p>{upComingSess[0].date.split('-').reverse().join('/')}</p>}
+                {upComingSess && !upComingSess[0] && <p>No upcoming sessions</p>}
 
               </div>
               <div className="calendar-container">
@@ -94,8 +88,6 @@ class AdminSessions extends Component {
                   width="302px"
                   onDayClick={(e, day)=> 
                   this.onDayClick(e, day)}/>
-                {/* {date ? <small>{date}: </small> : <small>no date selected</small>} */}
-                {/* {sessionTime ? <small>You're booked in at {sessionTime}</small> : <p>no sessions on this day</p>} */}
                 <div className="card-cont">
                 {!selectedSessions && <p>There are no sessions on this day!</p>}
                 {selectedSessions && !selectedSessions[0] && <p>There are no sessions on this day!</p>}
@@ -103,7 +95,7 @@ class AdminSessions extends Component {
                   selectedSessions.map(session => {
                     return (
                       <div key={session.firstName} className="sess-card">
-                        <img src={session.image}/>
+                        <img src={session.image} alt={session.firstName}/>
                         <div>
                         <p>time: {session.time} </p>
                         <p>client: {session.firstName} {session.lastName} </p>

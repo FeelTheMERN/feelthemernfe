@@ -1,14 +1,14 @@
 import React from 'react'
 import errorImg from './assets/icons/error-image.png'
 
-function Error() {
+function ServerError() {
   return (
     <div className="background" id="user-sessions">
       <p id="logo-type">SkyeFIT</p>
         <div className="main-container">
           <div className="content-container">
-            <h2>Error 404: Page Not Found</h2>
-            <p>For further support please contact:</p>
+            <h2>ServerError 500: Internal Server Error</h2>
+            <p>For more info please contact:</p>
             <img width="200" src={errorImg} alt="error icon" />
             <a href="https://github.com/dijonmusters" target="blank">Dijon Musters</a>
           </div>
@@ -17,4 +17,4 @@ function Error() {
   )
 }
 
-export default Error;
+export default ServerError;

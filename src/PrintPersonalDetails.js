@@ -2,9 +2,7 @@ import React from 'react'
 
 export default function PrintPersonalDetails(props) {
     const {obj} = props
-
-    console.log(obj.dob.split('T')[0].split('-').reverse().join('/'))
-     
+         
     return (
       <>
       {/* <div className="persDetails"> */}
